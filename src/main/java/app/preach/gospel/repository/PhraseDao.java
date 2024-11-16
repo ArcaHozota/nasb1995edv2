@@ -22,6 +22,6 @@ public interface PhraseDao {
 	 * @param phrase 節別エンティティ
 	 */
 	@SqlUpdate("insert into phrases(id, name, text_en, text_jp, chapter_id, change_line) "
-			+ "value(:id, :name, textEn, textJp, chapterId, changeLine)")
+			+ "value(:id, :name, :textEn, :textJp, :chapterId, :changeLine)")
 	void insertOne(@BindBean Phrase phrase) throws TransactionException;
 }
