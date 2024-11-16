@@ -1,0 +1,135 @@
+/* General Font */
+@font-face {
+	font-family: 'SourceHanSans';
+	src: local('../fonts/SourceHanSans-Regular.otf'),
+		local('../fonts/SourceHanSans-Medium.otf');
+}
+
+/* General CSS */
+body {
+	font-style: normal;
+	font-weight: normal;
+	font-family: 'SourceHanSans', sans-serif;
+}
+
+.text-bg-klein {
+	color: #fff !important;
+	background-color: #002fa7 !important;
+}
+
+.border-klein {
+	--bs-border-opacity: 1;
+	border-color: #002fa7 !important;
+}
+
+.text-bg-darkgreen {
+	color: #fff !important;
+	background-color: #006b3c !important;
+}
+
+.border-darkgreen {
+	--bs-border-opacity: 1;
+	border-color: #006b3c !important;
+}
+
+.text-bg-burgundy {
+	color: #fff !important;
+	background-color: #7f0020 !important;
+}
+
+.border-burgundy {
+	--bs-border-opacity: 1;
+	border-color: #7f0020 !important;
+}
+
+.text-bg-naples {
+	color: #353542 !important;
+	background-color: #f6c91c !important;
+}
+
+.border-naples {
+	--bs-border-opacity: 1;
+	border-color: #f6c91c !important;
+}
+
+.text-bg-tunagray {
+	color: #fff !important;
+	background-color: #353542 !important;
+}
+
+.border-tunagray {
+	border-color: #353542 !important;
+}
+
+.text-bg-steelblue {
+	color: #fff !important;
+	background-color: #4682b4 !important;
+}
+
+.border-steelblue {
+	border-color: #4682b4 !important;
+}
+
+.text-bg-reflexblue {
+	color: #fff !important;
+	background-color: #0055a4 !important;
+}
+
+.border-reflexblue {
+	border-color: #0055a4 !important;
+}
+
+.btn-primary {
+	color: #fff !important;
+	background-color: #0055a4 !important;
+	border-color: #0055a4 !important;
+}
+
+.btn-primary:hover {
+	background-color: #1773cd !important;
+	border-color: #1773cd !important;
+}
+
+.btn-success {
+	color: #fff !important;
+	background-color: #006b3c !important;
+	border-color: #006b3c !important;
+}
+
+.btn-success:hover {
+	background-color: #008700 !important;
+	border-color: #008700 !important;
+}
+
+.btn-danger {
+	color: #fff !important;
+	background-color: #7f0020 !important;
+	border-color: #7f0020 !important;
+}
+
+.btn-danger:hover {
+	background-color: #a32444 !important;
+	border-color: #a32444 !important;
+}
+
+.btn-warning {
+	color: #000 !important;
+	background-color: #f6c91c !important;
+	border-color: #f6c91c !important;
+}
+
+.btn-warning:hover {
+	background-color: #ffd700 !important;
+	border-color: #ffd700 !important;
+}
+
+.btn-info {
+	color: #000 !important;
+	background-color: #81d8d0 !important;
+	border-color: #81d8d0 !important;
+}
+
+.btn-info:hover {
+	background-color: #76e3d9 !important;
+	border-color: #76e3d9 !important;
+}

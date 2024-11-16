@@ -1,0 +1,22 @@
+server:
+  port: 8277
+spring:
+  application:
+    name: nasb1995edv2
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://52.199.163.241:5432/nasb1995
+    username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 10
+      max-lifetime: 1200000
+  output:
+    ansi:
+      enabled: ALWAYS
+  freemarker:
+    allow-request-override: true
+    allow-session-override: true
+    suffix: .ftl
+    settings:
+      {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0ms}
