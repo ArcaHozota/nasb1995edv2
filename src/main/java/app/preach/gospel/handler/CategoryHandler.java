@@ -104,7 +104,7 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR)
 	public String loginWithError() {
-		ActionContext.getContext().put("torokuMsg", ProjectConstants.MESSAGE_STRING_NOTLOGIN);
+		ActionContext.getContext().put("torokuMsg", ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
 		return LOGIN;
 	}
 

@@ -22,7 +22,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_INITIAL_TEMPLATE = "initial";
 
-	public static final String URL_CHECK_NAME = "checkDuplicated";
+	public static final String URL_CHECK_NAME = "/checkDuplicated";
+
+	public static final String URL_CHECK_NAME2 = "/checkDuplicated2";
 
 	public static final String URL_CHECK_EDITION = "editionCheck";
 
@@ -43,6 +45,8 @@ public final class ProjectURLConstants {
 	public static final String URL_TO_ERROR = "toSystemError";
 
 	public static final String URL_TO_MAINMENU = "toMainmenu";
+
+	public static final String URL_TO_MAINMENU_WITH_LOGIN = "toMainmenuWithLogin";
 
 	public static final String URL_TO_ADDITION = "toAddition";
 

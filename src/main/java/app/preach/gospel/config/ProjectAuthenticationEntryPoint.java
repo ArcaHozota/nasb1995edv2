@@ -33,6 +33,6 @@ public class ProjectAuthenticationEntryPoint implements AuthenticationEntryPoint
 		response.setContentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE);
 		response.sendRedirect(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
 				.concat(ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR));
-		log.warn(ProjectConstants.MESSAGE_STRING_NOTLOGIN);
+		log.warn(ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
 	}
 }

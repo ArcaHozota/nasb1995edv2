@@ -18,11 +18,17 @@ public final class ProjectConstants {
 
 	public static final String DEFAULT_PASSWORD = "00000000";
 
+	public static final String MESSAGE_SPRING_MVCCONVERTOR = "拡張メッセージコンバーターの設置は完了しました。";
+
+	public static final String MESSAGE_SPRING_MAPPER = "静的リソースのマッピングが開始しました。";
+
 	public static final String MESSAGE_SPRING_APPLICATION = "アプリは正常に起動されました。";
 
 	public static final String ATTRNAME_EXCEPTION = "exception";
 
 	public static final String ATTRNAME_EDITED_INFO = "arawaseta";
+
+	public static final String ATTRNAME_PAGE_INFO = "pageInfo";
 
 	public static final String ATTRNAME_PAGE_NUMBER = "pageNum";
 
@@ -30,7 +36,7 @@ public final class ProjectConstants {
 
 	public static final String MESSAGE_STRING_INVALIDATE = "入力した文字列は不規則。";
 
-	public static final String MESSAGE_STRING_NOTLOGIN = "ログインしてください";
+	public static final String MESSAGE_STRING_NOT_LOGIN = "ログインしてください";
 
 	public static final String MESSAGE_STRING_LOGIN_SUCCESS = "ログイン成功";
 

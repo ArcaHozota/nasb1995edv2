@@ -1,7 +1,9 @@
 package app.preach.gospel.listener;
 
+import java.io.Serial;
 import java.util.Collection;
 
+import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -14,13 +16,15 @@ import lombok.EqualsAndHashCode;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public final class SecurityAdmin extends User {
 
+	@Serial
 	private static final long serialVersionUID = 3827955098466369880L;
 
 	/**
-	 * 社員管理DTO
+	 * 社員管理DTO -- GETTER -- getter for originalAdmin
 	 */
 	private final StudentDto originalAdmin;
 
@@ -35,12 +39,4 @@ public final class SecurityAdmin extends User {
 		this.originalAdmin = admin;
 	}
 
-	/**
-	 * getter for originalAdmin
-	 *
-	 * @return EmployeeDto
-	 */
-	public StudentDto getOriginalAdmin() {
-		return this.originalAdmin;
-	}
 }
