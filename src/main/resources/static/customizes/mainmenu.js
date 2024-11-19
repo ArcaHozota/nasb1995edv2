@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    let loginMsg = $("#loginMsgContainer").val().trim();
+    if(loginMsg !== emptyString){
+        layer.msg(loginMsg);
+    }
 	let message = localStorage.getItem('redirectMessage');
 	if (message) {
 		layer.msg(message);

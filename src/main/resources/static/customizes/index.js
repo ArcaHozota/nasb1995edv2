@@ -28,7 +28,8 @@ function commonRetrieve(keyword) {
 function buildTableBody(response) {
 	$("#tableBody").empty();
 	$.each(response, (response, item) => {
-		let nameMixTd = $("<td class='text-left' style='width: 160px;vertical-align: middle;'></td>").append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "　/　" + item.nameKr + "</a>"));
+		let nameMixTd = $("<td class='text-left' style='width: 160px;vertical-align: middle;'></td>")
+			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
 		let scoreTd = $("<td class='text-center' style='width: 20px;vertical-align: middle;'></td>")
 			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
 		$("<tr></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");

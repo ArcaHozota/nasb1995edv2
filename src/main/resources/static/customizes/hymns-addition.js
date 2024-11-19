@@ -11,6 +11,9 @@ $("#toHymnPages").on("click", function(e) {
 $("#nameJpInput").on("change", function() {
 	checkHymnName(this, null);
 });
+$("#nameKrInput").on("change", function() {
+	checkHymnName2(this, null);
+});
 $("#infoStorageBtn").on("click", function() {
 	let inputArrays = ["#nameJpInput", "#nameKrInput", "#linkInput", "#serifInput"];
 	for (const array of inputArrays) {
@@ -36,6 +39,9 @@ $("#infoStorageBtn").on("click", function() {
 });
 $("#nameJpEdit").on("change", function() {
 	checkHymnName(this, $("#idContainer").val());
+});
+$("#nameKrEdit").on("change", function() {
+	checkHymnName2(this, $("#idContainer").val());
 });
 $("#infoUpdationBtn").on("click", function() {
 	let inputArrays = ["#nameJpEdit", "#nameKrEdit", "#linkEdit", "#serifEdit"];
@@ -79,14 +85,34 @@ $("#restoreBtn").on("click", function() {
 });
 function checkHymnName(hymnName, idVal) {
 	let nameVal = $(hymnName).val().trim();
-	if (nameVal === "") {
-		showValidationMsg(hymnName, responseFailure, "名称を空になってはいけません。");
+	if (nameVal === emptyString) {
+		showValidationMsg(hymnName, responseFailure, '名称を空になってはいけません。');
 	} else {
 		$.ajax({
 			url: '/hymns/checkDuplicated',
 			data: {
 				'id': idVal,
 				'nameJp': nameVal
+			},
+			success: function(response) {
+				showValidationMsg(hymnName, responseSuccess, response);
+			},
+			error: function(xhr) {
+				showValidationMsg(hymnName, responseFailure, xhr.responseText);
+			}
+		});
+	}
+}
+function checkHymnName2(hymnName, idVal) {
+	let nameVal = $(hymnName).val().trim();
+	if (nameVal === emptyString) {
+		showValidationMsg(hymnName, responseFailure, '名称を空になってはいけません。');
+	} else {
+		$.ajax({
+			url: '/hymns/checkDuplicated2',
+			data: {
+				'id': idVal,
+				'nameKr': nameVal
 			},
 			success: function(response) {
 				showValidationMsg(hymnName, responseSuccess, response);
