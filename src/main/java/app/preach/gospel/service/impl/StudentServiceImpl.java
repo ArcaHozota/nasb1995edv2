@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.collector.NoSuchCollectorException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -75,7 +76,7 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public CoResult<String, JdbiException> infoUpdation(final StudentDto studentDto) {
+	public CoResult<String, JdbiException> infoUpdation(final @NotNull StudentDto studentDto) {
 		final Student originalEntity = new Student();
 		try {
 			final Student student = this.studentDao.selectById(Long.parseLong(studentDto.id()));
