@@ -1,8 +1,8 @@
 package app.preach.gospel.utils;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 雪花のアルゴリズムID生成ツール

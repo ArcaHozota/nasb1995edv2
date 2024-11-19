@@ -1,8 +1,9 @@
 package app.preach.gospel.utils;
 
-import lombok.Getter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+
+import lombok.Getter;
 
 /**
  * 共通返却クラス
