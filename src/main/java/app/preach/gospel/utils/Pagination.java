@@ -1,11 +1,14 @@
 package app.preach.gospel.utils;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 共通ページングクラス
@@ -23,6 +26,7 @@ public final class Pagination<T> {
 	 */
 	static class PaginationException extends RuntimeException {
 
+		@Serial
 		private static final long serialVersionUID = 4906724781325178457L;
 
 		public PaginationException(final String message) {
@@ -37,7 +41,8 @@ public final class Pagination<T> {
 	 * @param totalRecords すべてのレコード数
 	 * @param pageNum      当ページ
 	 */
-	public static <T> Pagination<T> of(final List<T> records, final long totalRecords, final int pageNum) {
+	@Contract("_, _, _ -> new")
+	public static <T> @NotNull Pagination<T> of(final List<T> records, final long totalRecords, final int pageNum) {
 		return new Pagination<>(records, totalRecords, pageNum, 12, 5);
 	}
 
@@ -49,7 +54,8 @@ public final class Pagination<T> {
 	 * @param pageNum      当ページ
 	 * @param pageSize     ページサイズ
 	 */
-	public static <T> Pagination<T> of(final List<T> records, final long totalRecords, final int pageNum,
+	@Contract("_, _, _, _ -> new")
+	public static <T> @NotNull Pagination<T> of(final List<T> records, final long totalRecords, final int pageNum,
 			final int pageSize) {
 		return new Pagination<>(records, totalRecords, pageNum, pageSize, 5);
 	}
@@ -63,7 +69,8 @@ public final class Pagination<T> {
 	 * @param pageSize      ページサイズ
 	 * @param navigatePages ナビゲーションのページ数
 	 */
-	public static <T> Pagination<T> of(final List<T> records, final long totalRecords, final int pageNum,
+	@Contract("_, _, _, _, _ -> new")
+	public static <T> @NotNull Pagination<T> of(final List<T> records, final long totalRecords, final int pageNum,
 			final int pageSize, final int navigatePages) {
 		return new Pagination<>(records, totalRecords, pageNum, pageSize, navigatePages);
 	}
@@ -246,8 +253,9 @@ public final class Pagination<T> {
 	/**
 	 * toString
 	 */
+	@Contract(pure = true)
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "Pagination [records=" + this.records + ", pageNum=" + this.pageNum + ", pageSize=" + this.pageSize
 				+ ", totalPages=" + this.totalPages + ", totalRecords=" + this.totalRecords + ", hasPrePage="
 				+ this.hasPreviousPage + ", hasNextPage=" + this.hasNextPage + ", previousPage=" + this.previousPage

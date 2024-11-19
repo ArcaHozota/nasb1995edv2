@@ -1,6 +1,8 @@
 package app.preach.gospel.utils;
 
 import lombok.Getter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 共通返却クラス
@@ -19,7 +21,8 @@ public final class CoResult<T, E> {
 	 * @param err エラー
 	 * @return Result<T, E>
 	 */
-	public static <T, E> CoResult<T, E> err(final E err) {
+	@Contract(value = "_ -> new", pure = true)
+	public static <T, E> @NotNull CoResult<T, E> err(final E err) {
 		return new CoResult<>(null, err, false);
 	}
 
@@ -30,7 +33,8 @@ public final class CoResult<T, E> {
 	 * @param <E> エラー
 	 * @return Result<T, E>
 	 */
-	public static <T, E> CoResult<T, E> getInstance() {
+	@Contract(value = " -> new", pure = true)
+	public static <T, E> @NotNull CoResult<T, E> getInstance() {
 		return new CoResult<>(null, null, false);
 	}
 
@@ -42,7 +46,8 @@ public final class CoResult<T, E> {
 	 * @param data データ
 	 * @return Result<T, E>
 	 */
-	public static <T, E> CoResult<T, E> ok(final T data) {
+	@Contract(value = "_ -> new", pure = true)
+	public static <T, E> @NotNull CoResult<T, E> ok(final T data) {
 		return new CoResult<>(data, null, true);
 	}
 
@@ -113,7 +118,7 @@ public final class CoResult<T, E> {
 	 *
 	 * @param self 自分
 	 */
-	public void setSelf(final CoResult<T, E> self) {
+	public void setSelf(final @NotNull CoResult<T, E> self) {
 		this.setOk(self.getOk());
 		this.setErr(self.getErr());
 		this.setHandan(self.isOk());

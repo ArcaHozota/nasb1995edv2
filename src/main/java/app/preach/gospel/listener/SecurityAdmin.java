@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.util.Collection;
 
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -34,7 +35,7 @@ public final class SecurityAdmin extends User {
 	 * @param admin       社員管理DTO
 	 * @param authorities 権限リスト
 	 */
-	SecurityAdmin(final StudentDto admin, final Collection<SimpleGrantedAuthority> authorities) {
+	SecurityAdmin(final @NotNull StudentDto admin, final Collection<SimpleGrantedAuthority> authorities) {
 		super(admin.loginAccount(), admin.password(), true, true, true, true, authorities);
 		this.originalAdmin = admin;
 	}

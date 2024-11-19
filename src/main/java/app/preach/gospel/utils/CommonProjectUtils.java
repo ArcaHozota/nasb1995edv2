@@ -10,7 +10,8 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.springframework.lang.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -245,11 +246,10 @@ public final class CommonProjectUtils {
 	 * ページングのインデクス改善
 	 *
 	 * @param totalRecords レコード数
-	 * @param pageNum      ページナンバー
 	 * @return レコード数
 	 */
-	public static int discernLargestPage(final Long totalRecords) {
-		int largestPage = 0;
+	public static int discernLargestPage(final @NotNull Long totalRecords) {
+		int largestPage;
 		final int discernment = totalRecords.intValue() % ProjectConstants.DEFAULT_PAGE_SIZE;
 		if (discernment != 0) {
 			largestPage = (totalRecords.intValue() / ProjectConstants.DEFAULT_PAGE_SIZE) + 1;
@@ -265,7 +265,7 @@ public final class CommonProjectUtils {
 	 * @param request リクエスト
 	 * @return true: ajax-request, false: no-ajax
 	 */
-	public static boolean discernRequestType(final HttpServletRequest request) {
+	public static boolean discernRequestType(final @NotNull HttpServletRequest request) {
 		// リクエストヘッダー情報の取得する
 		final String acceptInformation = request.getHeader("Accept");
 		final String xRequestInformation = request.getHeader("X-Requested-With");
@@ -282,7 +282,7 @@ public final class CommonProjectUtils {
 	 * @param stream 権限ストリーム
 	 * @return List<String>
 	 */
-	public static List<String> getAuthNames(final Stream<SimpleGrantedAuthority> stream) {
+	public static List<String> getAuthNames(final @NotNull Stream<SimpleGrantedAuthority> stream) {
 		return stream.map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList());
 	}
 
@@ -311,7 +311,7 @@ public final class CommonProjectUtils {
 	 * @param hankaku 文字列
 	 * @return true: すべて半角文字列, false: 全角文字も含める
 	 */
-	public static boolean isAllHankaku(final String hankaku) {
+	public static boolean isAllHankaku(final @NotNull String hankaku) {
 		final List<String> zenkakuList = new ArrayList<>(ZENHANKAKU_CONVERTOR.keySet());
 		for (final char aChar : hankaku.toCharArray()) {
 			if (zenkakuList.contains(String.valueOf(aChar))) {
@@ -327,7 +327,7 @@ public final class CommonProjectUtils {
 	 * @param zenkaku 文字列
 	 * @return true: すべて全角文字列, false: 半角文字も含める
 	 */
-	public static boolean isAllZenkaku(final String zenkaku) {
+	public static boolean isAllZenkaku(final @NotNull String zenkaku) {
 		final List<String> hankakuList = new ArrayList<>(ZENHANKAKU_CONVERTOR.values());
 		for (final char aChar : zenkaku.toCharArray()) {
 			if (hankakuList.contains(String.valueOf(aChar))) {

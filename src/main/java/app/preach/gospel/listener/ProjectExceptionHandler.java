@@ -2,6 +2,7 @@ package app.preach.gospel.listener;
 
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
 import org.jdbi.v3.core.JdbiException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -26,7 +27,7 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 	private static final String SLASH = "\u002f";
 
 	@Override
-	protected void sendErrorResponse(final HttpServletRequest request, final HttpServletResponse response,
+	protected void sendErrorResponse(final HttpServletRequest request, final @NotNull HttpServletResponse response,
 			final int code, final Exception exception) {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());

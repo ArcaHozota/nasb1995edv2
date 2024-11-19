@@ -4,6 +4,7 @@ import java.beans.PropertyDescriptor;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -38,7 +39,7 @@ public final class SecondBeanUtils extends BeanUtils {
 	 * @param source コピー元
 	 * @return NULLプロパティ
 	 */
-	private static String[] getNullProperties(final Object source) {
+	private static String @NotNull [] getNullProperties(final Object source) {
 		final BeanWrapper beanWrapper = new BeanWrapperImpl(source);
 		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
 		final Set<String> nullFields = new HashSet<>();

@@ -1,5 +1,7 @@
 package app.preach.gospel.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Random;
 
 /**
@@ -17,7 +19,7 @@ public final class SnowflakeUtils extends SnowflakeIdGenerator {
 	 *
 	 * @return long ID
 	 */
-	public static Long snowflakeId() {
+	public static @NotNull Long snowflakeId() {
 		final int nextInt1 = RANDOM.nextInt(31);
 		final int nextInt2 = RANDOM.nextInt(31);
 		return new SnowflakeUtils(nextInt1, nextInt2).nextId();

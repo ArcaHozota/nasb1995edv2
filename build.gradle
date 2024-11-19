@@ -39,24 +39,26 @@ ext.strutsVersion = '7.0.0-M9'
 ext.commonsLangVersion = '3.16.0'
 
 dependencies {
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation ('org.springframework.boot:spring-boot-starter-security') {
-	    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
-	implementation ('org.springframework.boot:spring-boot-starter-tomcat') {
-	    exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-freemarker
-	implementation ('org.springframework.boot:spring-boot-starter-freemarker') {
-       exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
+    implementation('org.springframework.boot:spring-boot-starter-security') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-	// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-	implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-tomcat
+    implementation('org.springframework.boot:spring-boot-starter-tomcat') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-freemarker
+    implementation('org.springframework.boot:spring-boot-starter-freemarker') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    // https://mvnrepository.com/artifact/org.jetbrains/annotations
+    implementation 'org.jetbrains:annotations:26.0.1'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-core
-    implementation ("org.apache.struts:struts2-core:${strutsVersion}") {
+    implementation("org.apache.struts:struts2-core:${strutsVersion}") {
         exclude group: 'org.apache.commons', module: 'commons-lang3'
     }
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-convention-plugin
@@ -66,31 +68,31 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-json-plugin
     implementation "org.apache.struts:struts2-json-plugin:${strutsVersion}"
     // https://mvnrepository.com/artifact/org.jdbi/jdbi3-core
-	implementation 'org.jdbi:jdbi3-core:3.47.0'
-	// https://mvnrepository.com/artifact/org.jdbi/jdbi3-sqlobject
-	implementation 'org.jdbi:jdbi3-sqlobject:3.47.0'
+    implementation 'org.jdbi:jdbi3-core:3.47.0'
+    // https://mvnrepository.com/artifact/org.jdbi/jdbi3-sqlobject
+    implementation 'org.jdbi:jdbi3-sqlobject:3.47.0'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
-	implementation 'com.fasterxml.jackson.core:jackson-databind'
-	// https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
-	implementation 'org.apache.commons:commons-collections4:4.4'
-	// https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2
-	implementation 'com.alibaba.fastjson2:fastjson2:2.0.53'
-	// https://mvnrepository.com/artifact/org.postgresql/postgresql
-	implementation 'org.postgresql:postgresql'
-	// https://mvnrepository.com/artifact/org.eclipse/yasson
-	implementation 'org.eclipse:yasson:3.0.4'
-	// https://mvnrepository.com/artifact/com.atilika.kuromoji/kuromoji-ipadic
-	implementation 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
-	// https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api
-	implementation 'jakarta.servlet.jsp:jakarta.servlet.jsp-api:4.0.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    // https://mvnrepository.com/artifact/com.alibaba.fastjson2/fastjson2
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.53'
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation 'org.postgresql:postgresql'
+    // https://mvnrepository.com/artifact/org.eclipse/yasson
+    implementation 'org.eclipse:yasson:3.0.4'
+    // https://mvnrepository.com/artifact/com.atilika.kuromoji/kuromoji-ipadic
+    implementation 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
+    // https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api
+    implementation 'jakarta.servlet.jsp:jakarta.servlet.jsp-api:4.0.0'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
-	compileOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.springframework.boot:spring-boot-devtools'
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-	compileOnly 'org.projectlombok:lombok'
-	// https://mvnrepository.com/artifact/org.projectlombok/lombok
-	annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    annotationProcessor 'org.projectlombok:lombok'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {

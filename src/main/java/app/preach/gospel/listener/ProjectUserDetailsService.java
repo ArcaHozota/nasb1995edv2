@@ -87,4 +87,5 @@ public class ProjectUserDetailsService implements UserDetailsService {
 				.map(item -> new SimpleGrantedAuthority(item.getName())).collect(Collectors.toList());
 		return new SecurityAdmin(studentDto, authorities);
 	}
+
 }
