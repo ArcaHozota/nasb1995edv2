@@ -21,7 +21,7 @@ public interface IHymnService {
 	 *
 	 * @param id     ID
 	 * @param nameJp 日本語名称
-	 * @return CommonResult<Integer, ProjectDataUpdationException>
+	 * @return CoResult<Integer, JdbiException>
 	 */
 	CoResult<Integer, JdbiException> checkDuplicated(String id, String nameJp);
 
@@ -29,7 +29,7 @@ public interface IHymnService {
 	 * IDによって歌の情報を取得する
 	 *
 	 * @param id ID
-	 * @return CommonResult<HymnDto, ProjectDataUpdationException>
+	 * @return CoResult<HymnDto, JdbiException>
 	 */
 	CoResult<HymnDto, JdbiException> getHymnInfoById(Long id);
 
@@ -38,7 +38,7 @@ public interface IHymnService {
 	 *
 	 * @param pageNum ページ数
 	 * @param keyword キーワード
-	 * @return CommonResult<Pagination<HymnDto>, ProjectDataUpdationException>
+	 * @return CoResult<Pagination<HymnDto>, JdbiException>
 	 */
 	CoResult<Pagination<HymnDto>, JdbiException> getHymnsByKeyword(Integer pageNum, String keyword);
 
@@ -46,14 +46,14 @@ public interface IHymnService {
 	 * ランドム選択の五つの賛美歌情報を取得する
 	 *
 	 * @param keyword キーワード
-	 * @return CommonResult<List<HymnDto>, ProjectDataUpdationException>
+	 * @return CoResult<List<HymnDto>, JdbiException>
 	 */
 	CoResult<List<HymnDto>, JdbiException> getHymnsRandomFive(String keyword);
 
 	/**
 	 * 賛美歌のレコード数を取得する
 	 *
-	 * @return CommonResult<Long, ProjectDataUpdationException>
+	 * @return CoResult<Long, JdbiException>
 	 */
 	CoResult<Long, JdbiException> getTotalRecords();
 
@@ -61,7 +61,7 @@ public interface IHymnService {
 	 * 賛美情報を削除する
 	 *
 	 * @param id ID
-	 * @return CommonResult<String, ProjectDataUpdationException>
+	 * @return CoResult<String, JdbiException>
 	 */
 	CoResult<String, JdbiException> infoDeletion(Long id);
 
@@ -69,7 +69,7 @@ public interface IHymnService {
 	 * 賛美情報を保存する
 	 *
 	 * @param hymnDto 賛美情報転送クラス
-	 * @return CommonResult<Integer, ProjectDataUpdationException>
+	 * @return CoResult<Integer, JdbiException>
 	 */
 	CoResult<Integer, JdbiException> infoStorage(HymnDto hymnDto);
 
@@ -77,7 +77,7 @@ public interface IHymnService {
 	 * 賛美情報を更新する
 	 *
 	 * @param hymnDto 賛美情報転送クラス
-	 * @return CommonResult<String, ProjectDataUpdationException>
+	 * @return CoResult<String, JdbiException>
 	 */
 	CoResult<String, JdbiException> infoUpdation(HymnDto hymnDto);
 
@@ -86,7 +86,7 @@ public interface IHymnService {
 	 *
 	 * @param file 楽譜ファイル
 	 * @param id   ID
-	 * @return CommonResult<String, ProjectDataUpdationException>
+	 * @return CoResult<String, JdbiException>
 	 */
 	CoResult<String, JdbiException> scoreStorage(byte[] file, Long id);
 }

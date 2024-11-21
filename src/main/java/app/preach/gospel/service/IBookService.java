@@ -20,7 +20,7 @@ public interface IBookService {
 	/**
 	 * 聖書書別情報を取得する
 	 *
-	 * @return List<BookDto>
+	 * @return CoResult<List<BookDto>, JdbiException>
 	 */
 	CoResult<List<BookDto>, JdbiException> getBooks();
 
@@ -28,7 +28,7 @@ public interface IBookService {
 	 * 聖書章節情報を取得する
 	 *
 	 * @param id 書別ID
-	 * @return List<ChapterDto>
+	 * @return CoResult<List<ChapterDto>, JdbiException>
 	 */
 	CoResult<List<ChapterDto>, JdbiException> getChaptersByBookId(String id);
 
@@ -36,6 +36,7 @@ public interface IBookService {
 	 * 聖書節別情報を保存する
 	 *
 	 * @param phraseDto 節別情報転送クラス
+	 * @return CoResult<String, JdbiException>
 	 */
 	CoResult<String, JdbiException> infoStorage(PhraseDto phraseDto);
 }

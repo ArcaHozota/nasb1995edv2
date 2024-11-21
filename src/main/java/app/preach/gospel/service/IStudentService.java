@@ -18,7 +18,7 @@ public interface IStudentService {
 	 *
 	 * @param id           ID
 	 * @param loginAccount アカウント
-	 * @return CommonResult<Integer, ProjectDataUpdationException>
+	 * @return CoResult<Integer, JdbiException>
 	 */
 	CoResult<Integer, JdbiException> checkDuplicated(String id, String loginAccount);
 
@@ -26,7 +26,7 @@ public interface IStudentService {
 	 * IDによって奉仕者の情報を取得する
 	 *
 	 * @param id ID
-	 * @return CommonResult<StudentDto, ProjectDataUpdationException>
+	 * @return CoResult<StudentDto, JdbiException>
 	 */
 	CoResult<StudentDto, JdbiException> getStudentInfoById(Long id);
 
@@ -34,7 +34,7 @@ public interface IStudentService {
 	 * 奉仕者情報を更新する
 	 *
 	 * @param studentDto 奉仕者情報転送クラス
-	 * @return CommonResult<String, ProjectDataUpdationException>
+	 * @return CoResult<String, JdbiException>
 	 */
 	CoResult<String, JdbiException> infoUpdation(StudentDto studentDto);
 
@@ -43,7 +43,7 @@ public interface IStudentService {
 	 *
 	 * @param loginAccount アカウント
 	 * @param password     パスワード
-	 * @return CommonResult<String, ProjectDataUpdationException>
+	 * @return CoResult<String, JdbiException>
 	 */
 	CoResult<String, JdbiException> preLoginUpdation(String loginAccount, String password);
 }
