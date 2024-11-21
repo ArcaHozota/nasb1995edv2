@@ -15,9 +15,9 @@ import app.preach.gospel.repository.BookDao;
 import app.preach.gospel.repository.ChapterDao;
 import app.preach.gospel.repository.PhraseDao;
 import app.preach.gospel.service.IBookService;
+import app.preach.gospel.utils.CoBeanUtils;
 import app.preach.gospel.utils.CoResult;
-import app.preach.gospel.utils.CommonProjectUtils;
-import app.preach.gospel.utils.SecondBeanUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -61,7 +61,7 @@ public final class BookServiceImpl implements IBookService {
 	public CoResult<List<ChapterDto>, JdbiException> getChaptersByBookId(final String id) {
 		try {
 			List<ChapterDto> chapterDtos;
-			if (CommonProjectUtils.isDigital(id)) {
+			if (CoProjectUtils.isDigital(id)) {
 				chapterDtos = this.chapterDao.findByBookId(Short.parseShort(id)).stream()
 						.map(item -> new ChapterDto(item.getId(), item.getName(), item.getNameJp(), item.getBookId()))
 						.toList();
@@ -83,7 +83,7 @@ public final class BookServiceImpl implements IBookService {
 		try {
 			final Chapter chapter = this.chapterDao.selectById(chapterId);
 			final Phrase phrase = new Phrase();
-			SecondBeanUtils.copyNullableProperties(phraseDto, phrase);
+			CoBeanUtils.copyNullableProperties(phraseDto, phrase);
 			phrase.setId((chapterId * 1000) + id);
 			phrase.setName(chapter.getName().concat("\u003a").concat(phraseDto.id().toString()));
 			phrase.setChapterId(chapterId);

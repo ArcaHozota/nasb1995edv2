@@ -22,7 +22,7 @@ import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.StudentDto;
 import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoResult;
-import app.preach.gospel.utils.CommonProjectUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -116,7 +116,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 			this.setResponseError(ProjectConstants.MESSAGE_STUDENT_NAME_DUPLICATED);
 			return ERROR;
 		}
-		this.setResponseJsonData(CommonProjectUtils.EMPTY_STRING);
+		this.setResponseJsonData(CoProjectUtils.EMPTY_STRING);
 		return NONE;
 	}
 

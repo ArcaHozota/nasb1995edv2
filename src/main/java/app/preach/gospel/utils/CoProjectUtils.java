@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.BidiMap;
@@ -26,7 +25,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class CommonProjectUtils {
+public final class CoProjectUtils {
 
 	/**
 	 * UTF-8キャラセット
@@ -283,7 +282,7 @@ public final class CommonProjectUtils {
 	 * @return List<String>
 	 */
 	public static List<String> getAuthNames(final @NotNull Stream<SimpleGrantedAuthority> stream) {
-		return stream.map(SimpleGrantedAuthority::getAuthority).collect(Collectors.toList());
+		return stream.map(SimpleGrantedAuthority::getAuthority).toList();
 	}
 
 	/**
@@ -293,7 +292,7 @@ public final class CommonProjectUtils {
 	 * @return ファジークエリ
 	 */
 	public static String getDetailKeyword(final String keyword) {
-		if (CommonProjectUtils.isEmpty(keyword)) {
+		if (CoProjectUtils.isEmpty(keyword)) {
 			return HANKAKU_PERCENTSIGN;
 		}
 		final StringBuilder builder = new StringBuilder();
@@ -344,7 +343,7 @@ public final class CommonProjectUtils {
 	 * @return true: すべて数字, false: 文字も含める
 	 */
 	public static boolean isDigital(@Nullable final String string) {
-		if (CommonProjectUtils.isEmpty(string)) {
+		if (CoProjectUtils.isEmpty(string)) {
 			return false;
 		}
 		return Pattern.compile("\\d*").matcher(string).matches();
@@ -385,10 +384,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコール, false: イコールしない
 	 */
 	public static boolean isEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
-		if (((obj1 == null) && (obj2 == null)) || ((obj1 != null) && obj1.equals(obj2))) {
-			return true;
-		}
-		return false;
+		return ((obj1 == null) && (obj2 == null)) || ((obj1 != null) && obj1.equals(obj2));
 	}
 
 	/**
@@ -415,7 +411,7 @@ public final class CommonProjectUtils {
 	 * @return true: 空ではない, false: 空
 	 */
 	public static boolean isNotEmpty(@Nullable final String str) {
-		return !CommonProjectUtils.isEmpty(str);
+		return !CoProjectUtils.isEmpty(str);
 	}
 
 	/**
@@ -426,7 +422,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final Long long1, @Nullable final Long long2) {
-		return !CommonProjectUtils.isEqual(long1, long2);
+		return !CoProjectUtils.isEqual(long1, long2);
 	}
 
 	/**
@@ -437,7 +433,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final Object obj1, @Nullable final Object obj2) {
-		return !CommonProjectUtils.isEqual(obj1, obj2);
+		return !CoProjectUtils.isEqual(obj1, obj2);
 	}
 
 	/**
@@ -448,7 +444,7 @@ public final class CommonProjectUtils {
 	 * @return true: イコールしない, false: イコール
 	 */
 	public static boolean isNotEqual(@Nullable final String str1, @Nullable final String str2) {
-		return !CommonProjectUtils.isEqual(str1, str2);
+		return !CoProjectUtils.isEqual(str1, str2);
 	}
 
 	/**
@@ -458,7 +454,7 @@ public final class CommonProjectUtils {
 	 * @return 半角文字
 	 */
 	public static String toHankaku(@Nullable final String zenkaku) {
-		if (CommonProjectUtils.isEmpty(zenkaku)) {
+		if (CoProjectUtils.isEmpty(zenkaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();
@@ -481,7 +477,7 @@ public final class CommonProjectUtils {
 	 * @return 全角文字
 	 */
 	public static String toZenkaku(@Nullable final String hankaku) {
-		if (CommonProjectUtils.isEmpty(hankaku)) {
+		if (CoProjectUtils.isEmpty(hankaku)) {
 			return EMPTY_STRING;
 		}
 		final StringBuilder builder = new StringBuilder();

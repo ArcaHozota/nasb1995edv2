@@ -23,7 +23,7 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
-import app.preach.gospel.utils.CommonProjectUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -71,7 +71,7 @@ public class HomePageHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Actions({ @Action(ProjectURLConstants.URL_HOMEPAGE1), @Action(ProjectURLConstants.URL_HOMEPAGE2),
 			@Action(ProjectURLConstants.URL_HOMEPAGE3), @Action(ProjectURLConstants.URL_HOMEPAGE5),
-			@Action(CommonProjectUtils.EMPTY_STRING) })
+			@Action(CoProjectUtils.EMPTY_STRING) })
 	public String toHomePage() {
 		final CoResult<Long, JdbiException> totalRecords = this.iHymnService.getTotalRecords();
 		if (!totalRecords.isOk()) {

@@ -16,9 +16,9 @@ import app.preach.gospel.dto.StudentDto;
 import app.preach.gospel.entity.Student;
 import app.preach.gospel.repository.StudentDao;
 import app.preach.gospel.service.IStudentService;
+import app.preach.gospel.utils.CoBeanUtils;
 import app.preach.gospel.utils.CoResult;
-import app.preach.gospel.utils.CommonProjectUtils;
-import app.preach.gospel.utils.SecondBeanUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -50,7 +50,7 @@ public final class StudentServiceImpl implements IStudentService {
 	@Override
 	public CoResult<Integer, JdbiException> checkDuplicated(final String id, final String loginAccount) {
 		try {
-			if (CommonProjectUtils.isDigital(id)) {
+			if (CoProjectUtils.isDigital(id)) {
 				final Integer countDuplicated = this.studentDao.countDuplicated(Long.parseLong(id), loginAccount);
 				return CoResult.ok(countDuplicated);
 			}
@@ -79,20 +79,20 @@ public final class StudentServiceImpl implements IStudentService {
 		final Student originalEntity = new Student();
 		try {
 			final Student student = this.studentDao.selectById(Long.parseLong(studentDto.id()));
-			SecondBeanUtils.copyNullableProperties(student, originalEntity);
-			SecondBeanUtils.copyNullableProperties(studentDto, student);
+			CoBeanUtils.copyNullableProperties(student, originalEntity);
+			CoBeanUtils.copyNullableProperties(studentDto, student);
 			student.setDateOfBirth(LocalDate.parse(studentDto.dateOfBirth(), FORMATTER));
 			final String rawPassword = student.getPassword();
 			final String password = originalEntity.getPassword();
 			student.setPassword(null);
 			originalEntity.setPassword(null);
 			boolean passwordDiscernment = false;
-			if (CommonProjectUtils.isEqual(rawPassword, password)) {
+			if (CoProjectUtils.isEqual(rawPassword, password)) {
 				passwordDiscernment = true;
 			} else {
 				passwordDiscernment = ENCODER.matches(rawPassword, password);
 			}
-			if (CommonProjectUtils.isEqual(student, originalEntity) && passwordDiscernment) {
+			if (CoProjectUtils.isEqual(student, originalEntity) && passwordDiscernment) {
 				return CoResult.err(new NoSuchCollectorException(ProjectConstants.MESSAGE_STRING_NO_CHANGE));
 			}
 			if (passwordDiscernment) {

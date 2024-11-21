@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
-import app.preach.gospel.utils.CommonProjectUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -79,7 +79,7 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 		inputStream.read(buffer);
 		inputStream.close();
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
-		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		ActionContext.getContext().getServletResponse().setCharacterEncoding(CoProjectUtils.CHARSET_UTF8.name());
 		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
 		outputStream.write(buffer);
 		outputStream.flush();
@@ -122,7 +122,7 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 		inputStream.read(buffer);
 		inputStream.close();
 		ActionContext.getContext().getServletResponse().setContentType("image/svg+xml");
-		ActionContext.getContext().getServletResponse().setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		ActionContext.getContext().getServletResponse().setCharacterEncoding(CoProjectUtils.CHARSET_UTF8.name());
 		final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
 		outputStream.write(buffer);
 		outputStream.flush();

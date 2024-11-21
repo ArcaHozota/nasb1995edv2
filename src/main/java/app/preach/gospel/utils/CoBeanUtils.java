@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class SecondBeanUtils extends BeanUtils {
+public final class CoBeanUtils extends BeanUtils {
 
 	/**
 	 * NULLではないプロパティだけコピーする
@@ -30,7 +30,7 @@ public final class SecondBeanUtils extends BeanUtils {
 	 * @throws BeansException
 	 */
 	public static void copyNullableProperties(final Object source, final Object target) throws BeansException {
-		BeanUtils.copyProperties(source, target, SecondBeanUtils.getNullProperties(source));
+		BeanUtils.copyProperties(source, target, CoBeanUtils.getNullProperties(source));
 	}
 
 	/**
@@ -43,15 +43,13 @@ public final class SecondBeanUtils extends BeanUtils {
 		final BeanWrapper beanWrapper = new BeanWrapperImpl(source);
 		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
 		final Set<String> nullFields = new HashSet<>();
-		if (propertyDescriptors.length > 0) {
-			for (final PropertyDescriptor p : propertyDescriptors) {
-				final String name = p.getName();
-				final Object value = beanWrapper.getPropertyValue(name);
-				if (value == null) {
-					nullFields.add(name);
-				}
+		for (final PropertyDescriptor p : propertyDescriptors) {
+			final String name = p.getName();
+			final Object value = beanWrapper.getPropertyValue(name);
+			if (value == null) {
+				nullFields.add(name);
 			}
 		}
-		return nullFields.toArray(new String[nullFields.size()]);
+		return nullFields.toArray(new String[0]);
 	}
 }

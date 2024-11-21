@@ -10,7 +10,7 @@ import com.alibaba.fastjson2.JSON;
 
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
-import app.preach.gospel.utils.CommonProjectUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
@@ -30,7 +30,7 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 	protected void sendErrorResponse(final HttpServletRequest request, final @NotNull HttpServletResponse response,
 			final int code, final Exception exception) {
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-		response.setCharacterEncoding(CommonProjectUtils.CHARSET_UTF8.name());
+		response.setCharacterEncoding(CoProjectUtils.CHARSET_UTF8.name());
 		try {
 			// WW-1977: Only put errors in the request when code is a 500 error
 			if (exception instanceof AccessDeniedException) {

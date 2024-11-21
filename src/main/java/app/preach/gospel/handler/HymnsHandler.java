@@ -27,7 +27,7 @@ import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
-import app.preach.gospel.utils.CommonProjectUtils;
+import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.Pagination;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -128,7 +128,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 			this.setResponseError(ProjectConstants.MESSAGE_HYMN_NAME_DUPLICATED);
 			return ERROR;
 		}
-		this.setResponseJsonData(CommonProjectUtils.EMPTY_STRING);
+		this.setResponseJsonData(CoProjectUtils.EMPTY_STRING);
 		return NONE;
 	}
 
@@ -265,7 +265,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	@Action(ProjectURLConstants.URL_TO_PAGES)
 	public String toPages() {
 		final String pageNum = this.getServletRequest().getParameter("pageNum");
-		if (CommonProjectUtils.isDigital(pageNum)) {
+		if (CoProjectUtils.isDigital(pageNum)) {
 			ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 			return SUCCESS;
 		}
