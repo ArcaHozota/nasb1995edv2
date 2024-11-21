@@ -106,17 +106,18 @@
 				<table class="table table-sm table-hover">
 					<thead>
 						<tr class="table-primary">
-							<th scope="col" class="text-center">名称</th>
+							<th scope="col" class="text-center" style="width: 160px;">名称</th>
+							<th scope="col" class="text-center" style="width: 20px;">楽譜</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody" class="table-group-divider"></tbody>
-					<caption>賛美歌${totalRecords}曲レコード済み</caption>
 				</table>
+				<p class="d-flex justify-content-end" style="font-size: 10px;color: #353542;"
+					th:text="'賛美歌' + ${totalRecords} + '曲レコード済み'" />
 			</div>
 		</div>
 		<div class="row">
-			<p style="font-size: 11px;color: #006B3C;">※ファジークエリを行います。アキュレイトクエリが必要の場合にキーワードの後ろに$マークを付けてください。(例：花も$)
-			</p>
+			<p style="font-size: 11px;color: #006B3C;">※赤色：アキュレイトクエリの結果、黄色：ファジークエリの結果。五つに満たされなかった場合にシステムが補充されます。</p>
 		</div>
 	</div>
 	<script type="text/javascript" src="/static/customizes/index.js"></script>

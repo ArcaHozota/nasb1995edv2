@@ -32,7 +32,13 @@ function buildTableBody(response) {
 			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
 		let scoreTd = $("<td class='text-center' style='width: 20px;vertical-align: middle;'></td>")
 			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
-		$("<tr></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+		if (item.linenumber === 'BUNRGUNDY') {
+			$("<tr class='table-danger'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+		} else if (item.linenumber === 'NAPLES') {
+			$("<tr class='table-warning'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+		} else {
+			$("<tr></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+		}
 	});
 }
 $("#tableBody").on('click', '.link-btn', function(e) {
