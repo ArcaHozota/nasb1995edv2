@@ -18,7 +18,7 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.listener.ProjectUserDetailsService;
 import jakarta.annotation.Resource;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * SpringSecurity配置クラス
@@ -26,7 +26,7 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @version
  */
-@Log4j2
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {

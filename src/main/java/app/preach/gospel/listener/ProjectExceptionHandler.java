@@ -13,7 +13,7 @@ import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Struts2例外処理インターセプト
@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @since 2.98
  */
-@Log4j2
+@Slf4j
 public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler {
 
 	private static final String SLASH = "\u002f";

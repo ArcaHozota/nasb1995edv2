@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Struts2設定クラス
@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @version
  */
-@Log4j2
+@Slf4j
 @Configuration
 public class ServletFilterConfiguration {
 

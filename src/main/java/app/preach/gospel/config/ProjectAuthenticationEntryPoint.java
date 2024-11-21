@@ -12,7 +12,7 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * ログインエラーコントローラ
@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @version
  */
-@Log4j2
+@Slf4j
 @Component
 public class ProjectAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

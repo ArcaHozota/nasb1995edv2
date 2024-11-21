@@ -69,7 +69,7 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 * クロスアイコン取得する
 	 *
 	 * @return String
-     */
+	 */
 	@Action(value = ProjectURLConstants.URL_INITIAL_TEMPLATE, results = { @Result(type = "stream") })
 	public String initial() throws IOException {
 		final String svgSource = this.getServletRequest().getParameter("icons");
@@ -137,6 +137,17 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_TO_MAINMENU)
 	public String toMainmenu() {
+		return SUCCESS;
+	}
+
+	/**
+	 * メインメニューへ移動する
+	 *
+	 * @return String
+	 */
+	@Action(ProjectURLConstants.URL_TO_MAINMENU_WITH_LOGIN)
+	public String toMainmenuWithLogin() {
+		ActionContext.getContext().put("loginMsg", ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS);
 		return SUCCESS;
 	}
 

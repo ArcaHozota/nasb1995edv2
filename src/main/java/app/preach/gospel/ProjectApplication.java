@@ -3,9 +3,10 @@ package app.preach.gospel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.context.annotation.ComponentScan;
 
 import app.preach.gospel.common.ProjectConstants;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * プロジェクトアプリケーション
@@ -13,9 +14,10 @@ import lombok.extern.log4j.Log4j2;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Log4j2
+@Slf4j
 @SpringBootApplication
 @ServletComponentScan
+@ComponentScan(basePackages = "app.preach.gospel.repository")
 public class ProjectApplication {
 	public static void main(final String[] args) {
 		SpringApplication.run(ProjectApplication.class, args);
