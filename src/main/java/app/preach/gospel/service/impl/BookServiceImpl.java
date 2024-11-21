@@ -3,6 +3,7 @@ package app.preach.gospel.service.impl;
 import java.util.List;
 
 import org.jdbi.v3.core.JdbiException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -77,15 +78,15 @@ public final class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public CoResult<String, JdbiException> infoStorage(final PhraseDto phraseDto) {
-		final Long id = Long.parseLong(phraseDto.id());
+	public CoResult<String, JdbiException> infoStorage(final @NotNull PhraseDto phraseDto) {
+		final long id = Long.parseLong(phraseDto.id());
 		final Integer chapterId = phraseDto.chapterId();
 		try {
 			final Chapter chapter = this.chapterDao.selectById(chapterId);
 			final Phrase phrase = new Phrase();
 			CoBeanUtils.copyNullableProperties(phraseDto, phrase);
 			phrase.setId((chapterId * 1000) + id);
-			phrase.setName(chapter.getName().concat("\u003a").concat(phraseDto.id().toString()));
+			phrase.setName(chapter.getName().concat("\u003a").concat(phraseDto.id()));
 			phrase.setChapterId(chapterId);
 			phrase.setChangeLine(Boolean.FALSE);
 			this.phraseDao.insertOne(phrase);

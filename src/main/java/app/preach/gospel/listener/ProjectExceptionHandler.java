@@ -54,4 +54,5 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 			log.warn("Unable to send error response, code: {}; isCommited: {};", code, response.isCommitted(), e);
 		}
 	}
+
 }
