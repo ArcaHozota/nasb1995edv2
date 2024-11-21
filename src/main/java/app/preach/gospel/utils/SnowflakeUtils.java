@@ -34,4 +34,5 @@ public final class SnowflakeUtils extends SnowflakeIdGenerator {
 	private SnowflakeUtils(final long workerId, final long datacenterId) {
 		super(workerId, datacenterId);
 	}
+
 }

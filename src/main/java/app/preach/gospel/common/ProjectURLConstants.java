@@ -22,9 +22,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_INITIAL_TEMPLATE = "initial";
 
-	public static final String URL_CHECK_NAME = "/checkDuplicated";
+	public static final String URL_CHECK_NAME = "checkDuplicated";
 
-	public static final String URL_CHECK_NAME2 = "/checkDuplicated2";
+	public static final String URL_CHECK_NAME2 = "checkDuplicated2";
 
 	public static final String URL_CHECK_EDITION = "editionCheck";
 

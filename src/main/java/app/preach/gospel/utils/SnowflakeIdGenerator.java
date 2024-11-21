@@ -117,4 +117,5 @@ public class SnowflakeIdGenerator {
 		}
 		return timestamp;
 	}
+
 }
