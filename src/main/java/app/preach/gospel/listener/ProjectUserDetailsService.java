@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.result.NoResultsException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
@@ -39,46 +40,31 @@ import lombok.RequiredArgsConstructor;
 public class ProjectUserDetailsService implements UserDetailsService {
 
 	/**
-	 * 権限管理リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final AuthorityDao authorityDao;
-
-	/**
-	 * 権限管理リポジトリ
-	 */
-	private final RoleAuthorityDao roleAuthorityDao;
-
-	/**
-	 * 奉仕者管理リポジトリ
-	 */
-	private final StudentDao studentDao;
-
-	/**
-	 * 奉仕者役割連携リポジトリ
-	 */
-	private final StudentRoleDao studentRoleDao;
+	private final Jdbi jdbi;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		final Student studentEntity = new Student();
 		studentEntity.setLoginAccount(username);
 		studentEntity.setEmail(username);
-		final Student student = this.studentDao.selectOne(studentEntity);
+		final Student student = this.jdbi.onDemand(StudentDao.class).selectOne(studentEntity);
 		if (student == null) {
 			throw new DisabledException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		}
 		StudentRole studentRole;
 		try {
-			studentRole = this.studentRoleDao.selectById(student.getId());
+			studentRole = this.jdbi.onDemand(StudentRoleDao.class).selectById(student.getId());
 		} catch (final NoResultsException e) {
 			throw new InsufficientAuthenticationException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final List<Long> authIds = this.roleAuthorityDao.findByRoleId(studentRole.getRoleId()).stream()
-				.map(RoleAuthority::getAuthId).toList();
+		final List<Long> authIds = this.jdbi.onDemand(RoleAuthorityDao.class).findByRoleId(studentRole.getRoleId())
+				.stream().map(RoleAuthority::getAuthId).toList();
 		if (CollectionUtils.isEmpty(authIds)) {
 			throw new AuthenticationCredentialsNotFoundException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
-		final List<Authority> authoritiesRecords = this.authorityDao.findByIds(authIds);
+		final List<Authority> authoritiesRecords = this.jdbi.onDemand(AuthorityDao.class).findByIds(authIds);
 		final StudentDto studentDto = new StudentDto(student.getId().toString(), student.getLoginAccount(),
 				student.getUsername(), student.getPassword(), student.getEmail(),
 				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(student.getDateOfBirth()),
