@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
+import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.RoleAuthority;
 
@@ -13,6 +14,7 @@ import app.preach.gospel.entity.RoleAuthority;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Repository
 @RegisterBeanMapper(RoleAuthority.class)
 public interface RoleAuthorityDao {
 

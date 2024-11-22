@@ -36,6 +36,8 @@ function buildTableBody(response) {
 			$("<tr class='table-danger'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else if (item.linenumber === 'NAPLES') {
 			$("<tr class='table-warning'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+		} else if (item.linenumber === 'CADIMIUM') {
+			$("<tr class='table-success'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else {
 			$("<tr></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		}

@@ -6,6 +6,7 @@ import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.Student;
 
@@ -15,6 +16,7 @@ import app.preach.gospel.entity.Student;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Repository
 @RegisterBeanMapper(Student.class)
 public interface StudentDao {
 

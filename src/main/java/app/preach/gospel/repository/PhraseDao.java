@@ -4,6 +4,7 @@ import org.jdbi.v3.core.transaction.TransactionException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
+import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.Phrase;
 
@@ -13,6 +14,7 @@ import app.preach.gospel.entity.Phrase;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Repository
 @RegisterBeanMapper(Phrase.class)
 public interface PhraseDao {
 

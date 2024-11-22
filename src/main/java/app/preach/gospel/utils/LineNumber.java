@@ -10,6 +10,8 @@ public enum LineNumber {
 
 	BUNRGUNDY("Burgundy Red"),
 
+	CADIMIUM("Cadmium Green"),
+
 	NAPLES("Napoli Yellow"),
 
 	SNOWY("Standard White");
