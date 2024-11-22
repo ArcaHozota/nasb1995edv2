@@ -21,8 +21,8 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.StudentDto;
 import app.preach.gospel.service.IStudentService;
-import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.CoProjectUtils;
+import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -50,7 +50,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	/**
 	 * リクエスト
 	 */
-	private transient HttpServletRequest request;
+	private transient HttpServletRequest servletRequest;
 
 	/**
 	 * JSONリスポンス
@@ -150,8 +150,9 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_PRE_LOGIN)
 	public String preLogin() {
-		final CoResult<String, JdbiException> preLoginUpdation = this.iStudentService
-				.preLoginUpdation(this.getLoginAccount(), this.getPassword());
+		final CoResult<String, JdbiException> preLoginUpdation = this.iStudentService.preLoginUpdation(
+				this.getServletRequest().getParameter("loginAccount"),
+				this.getServletRequest().getParameter("password"));
 		if (!preLoginUpdation.isOk()) {
 			throw preLoginUpdation.getErr();
 		}
@@ -167,7 +168,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_TO_EDITION)
 	public String toEdition() {
-		final String editId = this.getRequest().getParameter("editId");
+		final String editId = this.getServletRequest().getParameter("editId");
 		final CoResult<StudentDto, JdbiException> studentInfoById = this.iStudentService
 				.getStudentInfoById(Long.parseLong(editId));
 		if (!studentInfoById.isOk()) {
@@ -180,7 +181,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 
 	@Override
 	public void withServletRequest(final HttpServletRequest request) {
-		this.request = request;
+		this.servletRequest = request;
 	}
 
 }

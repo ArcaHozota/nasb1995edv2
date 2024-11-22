@@ -24,6 +24,6 @@ public interface AuthorityDao {
 	 * @param ids IDリスト
 	 * @return List<Authority>
 	 */
-	@SqlQuery("select * from authorities as at where at.id in (:ids) order by at.id asc")
+	@SqlQuery("select * from authorities as at where at.id in (<ids>) order by at.id asc")
 	List<Authority> findByIds(@BindList("ids") List<Long> ids) throws NoResultsException;
 }

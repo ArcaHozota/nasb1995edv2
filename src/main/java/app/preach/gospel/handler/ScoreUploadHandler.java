@@ -56,7 +56,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	/**
 	 * リクエスト
 	 */
-	private transient HttpServletRequest request;
+	private transient HttpServletRequest servletRequest;
 
 	/**
 	 * JSONリスポンス
@@ -86,7 +86,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 			// 获取 JSON 数据
 			final ObjectMapper mapper = new ObjectMapper();
 			@SuppressWarnings("unchecked")
-			final Map<String, String> data = mapper.readValue(this.getRequest().getReader(), Map.class);
+			final Map<String, String> data = mapper.readValue(this.getServletRequest().getReader(), Map.class);
 			// 获取参数
 			final String editId = data.get("id");
 			final String fileData = data.get("score");
@@ -114,7 +114,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	 */
 	@Action(value = ProjectURLConstants.URL_SCORE_DOWNLOAD, results = { @Result(type = "stream") })
 	public String scoreDownload() {
-		final String scoreId = this.getRequest().getParameter("scoreId");
+		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final CoResult<HymnDto, JdbiException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(scoreId));
 		if (!hymnInfoById.isOk()) {
@@ -144,8 +144,8 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	 */
 	@Action(ProjectURLConstants.URL_TO_SCORE_UPLOAD)
 	public String toScoreUpload() {
-		final String scoreId = this.getRequest().getParameter("scoreId");
-		final String pageNum = this.getRequest().getParameter("pageNum");
+		final String scoreId = this.getServletRequest().getParameter("scoreId");
+		final String pageNum = this.getServletRequest().getParameter("pageNum");
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		final CoResult<HymnDto, JdbiException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(scoreId));
@@ -159,7 +159,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 
 	@Override
 	public void withServletRequest(final HttpServletRequest request) {
-		this.request = request;
+		this.servletRequest = request;
 	}
 
 }
