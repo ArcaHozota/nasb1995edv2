@@ -50,9 +50,9 @@ public interface StudentDao {
 	Student selectOne(@BindBean Student student);
 
 	/**
-	 * 節別の情報を保存する
+	 * 奉仕者情報を保存する
 	 *
-	 * @param phrase 節別エンティティ
+	 * @param student 奉仕者エンティティ
 	 */
 	@SqlUpdate("update students set login_account =:loginAccount, password =:password, "
 			+ "username =:username, date_of_birth =:dateOfBirth, email =:email, updated_time =:updatedTime "

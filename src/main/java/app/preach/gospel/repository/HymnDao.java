@@ -41,6 +41,28 @@ public interface HymnDao {
 	Integer countDuplicated2(@Bind("id") Long id, @Bind("nameKr") String nameKr);
 
 	/**
+	 * レコードの数を数える
+	 *
+	 * @param keyword アカウント
+	 * @return Integer
+	 */
+	@SqlQuery("select count(*) from hymns as hm where hm.visible_flg = true "
+			+ "and hm.name_jp like :keyword or hm.name_kr like :keyword")
+	Integer countRecords(@Bind("keyword") String keyword);
+
+	/**
+	 * ランドム選択検索
+	 *
+	 * @param keyword キーワード
+	 * @return List<Hymn>
+	 */
+	@SqlQuery(value = "select hm.* from hymns as hm where hm.visible_flg = true "
+			+ "and hm.name_jp like :keyword or hm.name_kr like :keyword order by hm.id asc "
+			+ "limit :limitFetch offset :offset")
+	List<Hymn> pagination(@Bind("keyword") String keyword, @Bind("offset") Integer offset,
+			@Bind("limitFetch") Integer limit);
+
+	/**
 	 * ランドム選択検索
 	 *
 	 * @param keyword キーワード

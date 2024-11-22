@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import app.preach.gospel.common.ProjectConstants;
 import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * 日時フォマーター
 	 */
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-//
+
 //	/**
 //	 * ランドム選択
 //	 */
@@ -93,7 +94,23 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public CoResult<Pagination<HymnDto>, JdbiException> getHymnsByKeyword(final Integer pageNum, final String keyword) {
-		return null;
+		try {
+			final String searchStr = CoProjectUtils.getDetailKeyword(keyword);
+			final Integer totalRecords = this.jdbi.onDemand(HymnDao.class).countRecords(searchStr);
+			final int offset = (pageNum - 1) * ProjectConstants.DEFAULT_PAGE_SIZE;
+			final List<Hymn> hymns = this.jdbi.onDemand(HymnDao.class).pagination(searchStr, offset,
+					ProjectConstants.DEFAULT_PAGE_SIZE);
+			final List<HymnDto> hymnDtos = hymns.stream()
+					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
+							hymnsRecord.getScore(), null, null, null))
+					.toList();
+			final Pagination<HymnDto> pagination = Pagination.of(hymnDtos, totalRecords, pageNum,
+					ProjectConstants.DEFAULT_PAGE_SIZE);
+			return CoResult.ok(pagination);
+		} catch (final JdbiException e) {
+			return CoResult.err(e);
+		}
 	}
 
 	@Override
