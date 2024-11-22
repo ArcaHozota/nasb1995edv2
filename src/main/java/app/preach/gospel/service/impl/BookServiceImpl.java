@@ -2,6 +2,7 @@ package app.preach.gospel.service.impl;
 
 import java.util.List;
 
+import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.JdbiException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ import app.preach.gospel.repository.ChapterDao;
 import app.preach.gospel.repository.PhraseDao;
 import app.preach.gospel.service.IBookService;
 import app.preach.gospel.utils.CoBeanUtils;
-import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.CoProjectUtils;
+import app.preach.gospel.utils.CoResult;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -33,24 +34,14 @@ import lombok.RequiredArgsConstructor;
 public final class BookServiceImpl implements IBookService {
 
 	/**
-	 * 聖書書別リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final BookDao bookDao;
-
-	/**
-	 * 聖書章節リポジトリ
-	 */
-	private final ChapterDao chapterDao;
-
-	/**
-	 * 節別リポジトリ
-	 */
-	private final PhraseDao phraseDao;
+	private final Jdbi jdbi;
 
 	@Override
 	public CoResult<List<BookDto>, JdbiException> getBooks() {
 		try {
-			final List<BookDto> bookDtos = this.bookDao.findAll().stream()
+			final List<BookDto> bookDtos = this.jdbi.onDemand(BookDao.class).findAll().stream()
 					.map(item -> new BookDto(item.getId(), item.getName(), item.getNameJp())).toList();
 			return CoResult.ok(bookDtos);
 		} catch (final JdbiException e) {
@@ -63,11 +54,11 @@ public final class BookServiceImpl implements IBookService {
 		try {
 			List<ChapterDto> chapterDtos;
 			if (CoProjectUtils.isDigital(id)) {
-				chapterDtos = this.chapterDao.findByBookId(Short.parseShort(id)).stream()
+				chapterDtos = this.jdbi.onDemand(ChapterDao.class).findByBookId(Short.parseShort(id)).stream()
 						.map(item -> new ChapterDto(item.getId(), item.getName(), item.getNameJp(), item.getBookId()))
 						.toList();
 			} else {
-				chapterDtos = this.chapterDao.findByBookId((short) 1).stream()
+				chapterDtos = this.jdbi.onDemand(ChapterDao.class).findByBookId((short) 1).stream()
 						.map(item -> new ChapterDto(item.getId(), item.getName(), item.getNameJp(), item.getBookId()))
 						.toList();
 			}
@@ -82,14 +73,14 @@ public final class BookServiceImpl implements IBookService {
 		final long id = Long.parseLong(phraseDto.id());
 		final Integer chapterId = phraseDto.chapterId();
 		try {
-			final Chapter chapter = this.chapterDao.selectById(chapterId);
+			final Chapter chapter = this.jdbi.onDemand(ChapterDao.class).selectById(chapterId);
 			final Phrase phrase = new Phrase();
 			CoBeanUtils.copyNullableProperties(phraseDto, phrase);
 			phrase.setId((chapterId * 1000) + id);
 			phrase.setName(chapter.getName().concat("\u003a").concat(phraseDto.id()));
 			phrase.setChapterId(chapterId);
 			phrase.setChangeLine(Boolean.FALSE);
-			this.phraseDao.insertOne(phrase);
+			this.jdbi.onDemand(PhraseDao.class).insertOne(phrase);
 			return CoResult.ok(ProjectConstants.MESSAGE_STRING_INSERTED);
 		} catch (final JdbiException e) {
 			return CoResult.err(e);
