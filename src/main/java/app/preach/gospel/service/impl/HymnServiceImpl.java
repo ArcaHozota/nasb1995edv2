@@ -1,12 +1,21 @@
 package app.preach.gospel.service.impl;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Service;
 
 import app.preach.gospel.dto.HymnDto;
+import app.preach.gospel.entity.Hymn;
+import app.preach.gospel.entity.Student;
+import app.preach.gospel.repository.HymnDao;
+import app.preach.gospel.repository.StudentDao;
 import app.preach.gospel.service.IHymnService;
+import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.Pagination;
 import lombok.AccessLevel;
@@ -22,24 +31,64 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HymnServiceImpl implements IHymnService {
 
-//	/**
-//	 * 日時フォマーター
-//	 */
-//	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+	/**
+	 * 日時フォマーター
+	 */
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 //
 //	/**
 //	 * ランドム選択
 //	 */
 //	private static final Random RANDOM = new Random();
 
+	/**
+	 * 共通リポジトリ
+	 */
+	private final Jdbi jdbi;
+
 	@Override
 	public CoResult<Integer, JdbiException> checkDuplicated(final String id, final String nameJp) {
-		return null;
+		try {
+			if (CoProjectUtils.isDigital(id)) {
+				final Integer checkDuplicated = this.jdbi.onDemand(HymnDao.class).countDuplicated(Long.parseLong(id),
+						nameJp);
+				return CoResult.ok(checkDuplicated);
+			}
+			final Integer checkDuplicated = this.jdbi.onDemand(HymnDao.class).countDuplicated(null, nameJp);
+			return CoResult.ok(checkDuplicated);
+		} catch (final JdbiException e) {
+			return CoResult.err(e);
+		}
+	}
+
+	@Override
+	public CoResult<Integer, JdbiException> checkDuplicated2(final String id, final String nameKr) {
+		try {
+			if (CoProjectUtils.isDigital(id)) {
+				final Integer checkDuplicated = this.jdbi.onDemand(HymnDao.class).countDuplicated2(Long.parseLong(id),
+						nameKr);
+				return CoResult.ok(checkDuplicated);
+			}
+			final Integer checkDuplicated = this.jdbi.onDemand(HymnDao.class).countDuplicated2(null, nameKr);
+			return CoResult.ok(checkDuplicated);
+		} catch (final JdbiException e) {
+			return CoResult.err(e);
+		}
 	}
 
 	@Override
 	public CoResult<HymnDto, JdbiException> getHymnInfoById(final Long id) {
-		return null;
+		try {
+			final Hymn hymn = this.jdbi.onDemand(HymnDao.class).selectById(id);
+			final Student student = this.jdbi.onDemand(StudentDao.class).selectById(hymn.getUpdatedUser());
+			final ZonedDateTime zonedDateTime = hymn.getUpdatedTime().atZoneSameInstant(ZoneOffset.ofHours(9));
+			final HymnDto hymnDto = new HymnDto(hymn.getId().toString(), hymn.getNameJp(), hymn.getNameKr(),
+					hymn.getSerif(), hymn.getLink(), hymn.getScore(), student.getUsername(),
+					FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
+			return CoResult.ok(hymnDto);
+		} catch (final JdbiException e) {
+			return CoResult.err(e);
+		}
 	}
 
 	@Override

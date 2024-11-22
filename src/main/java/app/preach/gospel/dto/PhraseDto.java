@@ -10,27 +10,27 @@ import java.io.Serializable;
  */
 public record PhraseDto(
 
-		/**
+		/*
 		 * ID
 		 */
 		String id,
 
-		/**
+		/*
 		 * 名称
 		 */
 		String name,
 
-		/**
+		/*
 		 * 内容
 		 */
 		String textEn,
 
-		/**
+		/*
 		 * 日本語内容
 		 */
 		String textJp,
 
-		/**
+		/*
 		 * 章節ID
 		 */
 		Integer chapterId) implements Serializable {

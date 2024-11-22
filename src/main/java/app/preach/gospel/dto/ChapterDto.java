@@ -10,22 +10,22 @@ import java.io.Serializable;
  */
 public record ChapterDto(
 
-		/**
+		/*
 		 * ID
 		 */
 		Integer id,
 
-		/**
+		/*
 		 * 名称
 		 */
 		String name,
 
-		/**
+		/*
 		 * 日本語名称
 		 */
 		String nameJp,
 
-		/**
+		/*
 		 * 書別ID
 		 */
 		Short bookId) implements Serializable {

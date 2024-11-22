@@ -26,8 +26,8 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.service.IHymnService;
-import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.CoProjectUtils;
+import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.Pagination;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -155,7 +155,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	private HymnDto getHymnDto() {
 		return new HymnDto(this.getId(), this.getNameJp(), this.getNameKr(), this.getSerif(), this.getLink(), null,
-				this.getUpdatedUser(), this.getUpdatedTime());
+				this.getUpdatedUser(), this.getUpdatedTime(), null);
 	}
 
 	/**

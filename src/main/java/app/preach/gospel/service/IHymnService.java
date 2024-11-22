@@ -26,6 +26,15 @@ public interface IHymnService {
 	CoResult<Integer, JdbiException> checkDuplicated(String id, String nameJp);
 
 	/**
+	 * 歌の名称の重複性をチェックする
+	 *
+	 * @param id     ID
+	 * @param nameJp 韓国語名称
+	 * @return CoResult<Integer, DataAccessException>
+	 */
+	CoResult<Integer, JdbiException> checkDuplicated2(String id, String nameKr);
+
+	/**
 	 * IDによって歌の情報を取得する
 	 *
 	 * @param id ID

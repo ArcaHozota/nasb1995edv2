@@ -2,6 +2,8 @@ package app.preach.gospel.dto;
 
 import java.io.Serializable;
 
+import app.preach.gospel.utils.LineNumber;
+
 /**
  * 賛美情報転送クラス
  *
@@ -10,43 +12,48 @@ import java.io.Serializable;
  */
 public record HymnDto(
 
-		/**
+		/*
 		 * ID
 		 */
 		String id,
 
-		/**
+		/*
 		 * 日本語名称
 		 */
 		String nameJp,
 
-		/**
+		/*
 		 * 韓国語名称
 		 */
 		String nameKr,
 
-		/**
+		/*
 		 * セリフ
 		 */
 		String serif,
 
-		/**
+		/*
 		 * ビデオリンク
 		 */
 		String link,
 
-		/**
+		/*
 		 * 楽譜
 		 */
 		byte[] score,
 
-		/**
+		/*
 		 * 更新者
 		 */
 		String updatedUser,
 
-		/**
+		/*
 		 * 更新時間
 		 */
-		String updatedTime) implements Serializable {
+		String updatedTime,
+
+		/*
+		 * LINENUMBER
+		 */
+		LineNumber linenumber) implements Serializable {
 }

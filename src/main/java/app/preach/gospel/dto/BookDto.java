@@ -10,17 +10,17 @@ import java.io.Serializable;
  */
 public record BookDto(
 
-		/**
+		/*
 		 * ID
 		 */
 		Short id,
 
-		/**
+		/*
 		 * 名称
 		 */
 		String name,
 
-		/**
+		/*
 		 * 日本語名称
 		 */
 		String nameJp) implements Serializable {
