@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.jdbi.v3.core.Jdbi;
 import org.jdbi.v3.core.JdbiException;
 import org.jdbi.v3.core.collector.NoSuchCollectorException;
 import org.jetbrains.annotations.NotNull;
@@ -18,8 +19,8 @@ import app.preach.gospel.entity.Student;
 import app.preach.gospel.repository.StudentDao;
 import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoBeanUtils;
-import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.CoProjectUtils;
+import app.preach.gospel.utils.CoResult;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -44,18 +45,19 @@ public final class StudentServiceImpl implements IStudentService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
 
 	/**
-	 * 奉仕者管理リポジトリ
+	 * 共通リポジトリ
 	 */
-	private final StudentDao studentDao;
+	private final Jdbi jdbi;
 
 	@Override
 	public CoResult<Integer, JdbiException> checkDuplicated(final String id, final String loginAccount) {
 		try {
 			if (CoProjectUtils.isDigital(id)) {
-				final Integer countDuplicated = this.studentDao.countDuplicated(Long.parseLong(id), loginAccount);
+				final Integer countDuplicated = this.jdbi.onDemand(StudentDao.class).countDuplicated(Long.parseLong(id),
+						loginAccount);
 				return CoResult.ok(countDuplicated);
 			}
-			final Integer countDuplicated = this.studentDao.countDuplicated(null, loginAccount);
+			final Integer countDuplicated = this.jdbi.onDemand(StudentDao.class).countDuplicated(null, loginAccount);
 			return CoResult.ok(countDuplicated);
 		} catch (final JdbiException e) {
 			return CoResult.err(e);
@@ -65,7 +67,7 @@ public final class StudentServiceImpl implements IStudentService {
 	@Override
 	public CoResult<StudentDto, JdbiException> getStudentInfoById(final Long id) {
 		try {
-			final Student student = this.studentDao.selectById(id);
+			final Student student = this.jdbi.onDemand(StudentDao.class).selectById(id);
 			final StudentDto studentDto = new StudentDto(student.getId().toString(), student.getLoginAccount(),
 					student.getUsername(), student.getPassword(), student.getEmail(),
 					FORMATTER.format(student.getDateOfBirth()), null);
@@ -79,7 +81,7 @@ public final class StudentServiceImpl implements IStudentService {
 	public CoResult<String, JdbiException> infoUpdation(final @NotNull StudentDto studentDto) {
 		final Student originalEntity = new Student();
 		try {
-			final Student student = this.studentDao.selectById(Long.parseLong(studentDto.id()));
+			final Student student = this.jdbi.onDemand(StudentDao.class).selectById(Long.parseLong(studentDto.id()));
 			CoBeanUtils.copyNullableProperties(student, originalEntity);
 			CoBeanUtils.copyNullableProperties(studentDto, student);
 			student.setDateOfBirth(LocalDate.parse(studentDto.dateOfBirth(), FORMATTER));
@@ -101,7 +103,7 @@ public final class StudentServiceImpl implements IStudentService {
 			} else {
 				student.setPassword(ENCODER.encode(rawPassword));
 			}
-			this.studentDao.updateOne(student);
+			this.jdbi.onDemand(StudentDao.class).updateOne(student);
 			return CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS);
 		} catch (final JdbiException e) {
 			return CoResult.err(e);
@@ -114,7 +116,7 @@ public final class StudentServiceImpl implements IStudentService {
 		studentEntity.setLoginAccount(loginAccount);
 		studentEntity.setEmail(loginAccount);
 		try {
-			final Student student = this.studentDao.selectOne(studentEntity);
+			final Student student = this.jdbi.onDemand(StudentDao.class).selectOne(studentEntity);
 			if (student == null) {
 				return CoResult.err(new NoSuchCollectorException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1));
 			}
@@ -123,7 +125,7 @@ public final class StudentServiceImpl implements IStudentService {
 				return CoResult.err(new NoSuchCollectorException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4));
 			}
 			student.setUpdatedTime(OffsetDateTime.now());
-			this.studentDao.updateOne(student);
+			this.jdbi.onDemand(StudentDao.class).updateOne(student);
 			return CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS);
 		} catch (final JdbiException e) {
 			return CoResult.err(e);
