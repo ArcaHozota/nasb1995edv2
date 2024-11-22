@@ -24,7 +24,7 @@
 				<#if loginMsg?exists>
 					<input type="hidden" value="${loginMsg}" id="loginMsgContainer">
 				<#else>
-					<input type="hidden" value="''" id="loginMsgContainer">
+					<input type="hidden" id="loginMsgContainer">
 				</#if>
 				<h1 class="page-header" style="color: #7F0020; margin: 10px 0 0 0;">メインメニュー</h1>
 				<div class="row">
