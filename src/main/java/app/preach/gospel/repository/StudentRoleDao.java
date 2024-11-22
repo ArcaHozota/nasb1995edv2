@@ -3,7 +3,6 @@ package app.preach.gospel.repository;
 import org.jdbi.v3.core.result.NoResultsException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.StudentRole;
 
@@ -13,7 +12,6 @@ import app.preach.gospel.entity.StudentRole;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Repository
 @RegisterBeanMapper(StudentRole.class)
 public interface StudentRoleDao {
 

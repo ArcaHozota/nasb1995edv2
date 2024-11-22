@@ -1,7 +1,6 @@
 package app.preach.gospel.repository;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
-import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.HymnsWork;
 
@@ -11,7 +10,6 @@ import app.preach.gospel.entity.HymnsWork;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Repository
 @RegisterBeanMapper(HymnsWork.class)
 public interface HymnsWorkDao {
 }

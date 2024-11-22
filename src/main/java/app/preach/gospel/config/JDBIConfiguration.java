@@ -36,16 +36,16 @@ public class JDBIConfiguration {
 	protected Jdbi jdbi(final DataSource dataSource) {
 		final Jdbi jdbi = Jdbi.create(dataSource); // 使用 Spring 提供的 DataSource
 		jdbi.installPlugin(new SqlObjectPlugin()); // 安装插件，支持 DAO 接口
-		jdbi.registerRowMapper(BeanMapper.of(Authority.class)); // 注册驼峰映射策略
-		jdbi.registerRowMapper(BeanMapper.of(Book.class));
-		jdbi.registerRowMapper(BeanMapper.of(Chapter.class));
-		jdbi.registerRowMapper(BeanMapper.of(Hymn.class));
-		jdbi.registerRowMapper(BeanMapper.of(HymnsWork.class));
-		jdbi.registerRowMapper(BeanMapper.of(Phrase.class));
-		jdbi.registerRowMapper(BeanMapper.of(Role.class));
-		jdbi.registerRowMapper(BeanMapper.of(RoleAuthority.class));
-		jdbi.registerRowMapper(BeanMapper.of(Student.class));
-		jdbi.registerRowMapper(BeanMapper.of(StudentRole.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Authority.class)); // 注册驼峰映射策略
+		jdbi.registerRowMapper(BeanMapper.factory(Book.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Chapter.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Hymn.class));
+		jdbi.registerRowMapper(BeanMapper.factory(HymnsWork.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Phrase.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Role.class));
+		jdbi.registerRowMapper(BeanMapper.factory(RoleAuthority.class));
+		jdbi.registerRowMapper(BeanMapper.factory(Student.class));
+		jdbi.registerRowMapper(BeanMapper.factory(StudentRole.class));
 		log.info("JDBIフレームワーク配置成功！");
 		return jdbi;
 	}

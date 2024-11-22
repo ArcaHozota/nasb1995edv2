@@ -5,7 +5,6 @@ import java.util.List;
 import org.jdbi.v3.core.result.NoResultsException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.Chapter;
 
@@ -15,7 +14,6 @@ import app.preach.gospel.entity.Chapter;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Repository
 @RegisterBeanMapper(Chapter.class)
 public interface ChapterDao {
 

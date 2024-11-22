@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
-import org.springframework.stereotype.Repository;
 
 import app.preach.gospel.entity.Book;
 
@@ -14,7 +13,6 @@ import app.preach.gospel.entity.Book;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Repository
 @RegisterBeanMapper(Book.class)
 public interface BookDao {
 
