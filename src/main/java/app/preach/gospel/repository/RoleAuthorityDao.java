@@ -3,6 +3,7 @@ package app.preach.gospel.repository;
 import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import app.preach.gospel.entity.RoleAuthority;
@@ -23,5 +24,5 @@ public interface RoleAuthorityDao {
 	 * @return List<RoleAuthority>
 	 */
 	@SqlQuery("select * from role_auth as ra where ra.role_id =:roleId")
-	List<RoleAuthority> findByRoleId(Long roleId);
+	List<RoleAuthority> findByRoleId(@Bind("roleId") Long roleId);
 }

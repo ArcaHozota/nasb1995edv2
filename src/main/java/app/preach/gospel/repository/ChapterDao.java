@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jdbi.v3.core.result.NoResultsException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import app.preach.gospel.entity.Chapter;
@@ -24,7 +25,7 @@ public interface ChapterDao {
 	 * @return List<Chapter>
 	 */
 	@SqlQuery("select * from chapters as cp where cp.book_id =:bookId")
-	List<Chapter> findByBookId(Short bookId);
+	List<Chapter> findByBookId(@Bind("bookId") Short bookId);
 
 	/**
 	 * IDによって1件検索する
@@ -33,5 +34,5 @@ public interface ChapterDao {
 	 * @return Chapter
 	 */
 	@SqlQuery("select * from chapters as cp where cp.id =:id")
-	Chapter selectById(Integer id) throws NoResultsException;
+	Chapter selectById(@Bind("id") Integer id) throws NoResultsException;
 }

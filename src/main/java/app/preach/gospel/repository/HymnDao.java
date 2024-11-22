@@ -3,6 +3,7 @@ package app.preach.gospel.repository;
 import java.util.List;
 
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import app.preach.gospel.entity.Hymn;
@@ -25,5 +26,5 @@ public interface HymnDao {
 	@SqlQuery(value = "select hm.* from hymns as hm inner join hymns_work as hmk on hmk.id = hm.id where hm.visible_flg = true "
 			+ "and (hm.name_jp like :keyword or hm.name_kr like :keyword or hm.serif like :keyword or hmk.serif like :keyword2 "
 			+ "or cast(hm.id as varchar) like :keyword)")
-	List<Hymn> retrieveRandomFive(String keyword, String keyword2);
+	List<Hymn> retrieveRandomFive(@Bind("keyword") String keyword, @Bind("keyword2") String keyword2);
 }

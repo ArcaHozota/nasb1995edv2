@@ -2,6 +2,7 @@ package app.preach.gospel.repository;
 
 import org.jdbi.v3.core.result.NoResultsException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 
 import app.preach.gospel.entity.StudentRole;
@@ -22,5 +23,5 @@ public interface StudentRoleDao {
 	 * @return StudentRole
 	 */
 	@SqlQuery("select * from student_role as str where str.student_id =:id")
-	StudentRole selectById(Long id) throws NoResultsException;
+	StudentRole selectById(@Bind("id") Long id) throws NoResultsException;
 }

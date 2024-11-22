@@ -3,6 +3,7 @@ package app.preach.gospel.repository;
 import org.jdbi.v3.core.result.NoResultsException;
 import org.jdbi.v3.core.transaction.TransactionException;
 import org.jdbi.v3.sqlobject.config.RegisterBeanMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.customizer.BindBean;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
@@ -27,7 +28,7 @@ public interface StudentDao {
 	 */
 	@SqlQuery("select count(*) from students as st where st.visible_flg = true "
 			+ "and st.id <>:id and st.login_account =:loginAccount")
-	Integer countDuplicated(Long id, String loginAccount);
+	Integer countDuplicated(@Bind("id") Long id, @Bind("loginAccount") String loginAccount);
 
 	/**
 	 * IDによって1件検索する
@@ -36,7 +37,7 @@ public interface StudentDao {
 	 * @return Student
 	 */
 	@SqlQuery("select * from students as st where st.visible_flg = true and st.id =:id")
-	Student selectById(Long id) throws NoResultsException;
+	Student selectById(@Bind("id") Long id) throws NoResultsException;
 
 	/**
 	 * エンティティによって1件検索する
