@@ -11,7 +11,6 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
 
-<<<<<<<HEAD
 import org.hibernate.HibernateException;
 import org.hibernate.bytecode.enhance.VersionMismatchException;
 import org.jetbrains.annotations.NotNull;
@@ -19,10 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;=======
-import app.preach.gospel.common.ProjectConstants;
-import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.JdbiException;>>>>>>>branch'master'of git @github.com:ArcaHozota/nasb1995edv2.git
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
