@@ -1,7 +1,6 @@
 package app.preach.gospel.listener;
 
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
-import org.jdbi.v3.core.JdbiException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,6 +10,7 @@ import com.alibaba.fastjson2.JSON;
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.utils.CoProjectUtils;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 				response.getWriter().print(JSON.toJSON(ProjectConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH));
 				response.getWriter().close();
-			} else if (exception instanceof JdbiException) {
+			} else if (exception instanceof PersistenceException) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().print(JSON.toJSON(exception.getMessage()));
 				response.getWriter().close();

@@ -11,7 +11,6 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -24,6 +23,7 @@ import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -105,8 +105,8 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
-		final CoResult<Integer, JdbiException> checkDuplicated = this.iStudentService.checkDuplicated(this.getId(),
-				this.getLoginAccount());
+		final CoResult<Integer, PersistenceException> checkDuplicated = this.iStudentService
+				.checkDuplicated(this.getId(), this.getLoginAccount());
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
@@ -135,7 +135,8 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdation() {
-		final CoResult<String, JdbiException> infoUpdation = this.iStudentService.infoUpdation(this.getStudentDto());
+		final CoResult<String, PersistenceException> infoUpdation = this.iStudentService
+				.infoUpdation(this.getStudentDto());
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
@@ -150,7 +151,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_PRE_LOGIN)
 	public String preLogin() {
-		final CoResult<String, JdbiException> preLoginUpdation = this.iStudentService.preLoginUpdation(
+		final CoResult<String, PersistenceException> preLoginUpdation = this.iStudentService.preLoginUpdation(
 				this.getServletRequest().getParameter("loginAccount"),
 				this.getServletRequest().getParameter("password"));
 		if (!preLoginUpdation.isOk()) {
@@ -169,7 +170,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	@Action(ProjectURLConstants.URL_TO_EDITION)
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
-		final CoResult<StudentDto, JdbiException> studentInfoById = this.iStudentService
+		final CoResult<StudentDto, PersistenceException> studentInfoById = this.iStudentService
 				.getStudentInfoById(Long.parseLong(editId));
 		if (!studentInfoById.isOk()) {
 			throw studentInfoById.getErr();

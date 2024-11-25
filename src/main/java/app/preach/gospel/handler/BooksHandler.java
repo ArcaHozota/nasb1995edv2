@@ -14,7 +14,6 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson2.JSON;
@@ -28,6 +27,7 @@ import app.preach.gospel.dto.PhraseDto;
 import app.preach.gospel.service.IBookService;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -105,7 +105,7 @@ public class BooksHandler extends ActionSupport implements ServletRequestAware {
 	@Action(ProjectURLConstants.URL_GET_CHAPTERS)
 	public String getChapters() {
 		final String bookId = this.getServletRequest().getParameter("bookId");
-		final CoResult<List<ChapterDto>, JdbiException> chaptersByBookId = this.iBookService
+		final CoResult<List<ChapterDto>, PersistenceException> chaptersByBookId = this.iBookService
 				.getChaptersByBookId(bookId);
 		if (!chaptersByBookId.isOk()) {
 			throw chaptersByBookId.getErr();
@@ -129,7 +129,7 @@ public class BooksHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(value = ProjectURLConstants.URL_INFO_STORAGE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoStorage() {
-		final CoResult<String, JdbiException> infoStorage = this.iBookService.infoStorage(this.getPhraseDto());
+		final CoResult<String, PersistenceException> infoStorage = this.iBookService.infoStorage(this.getPhraseDto());
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
@@ -144,8 +144,9 @@ public class BooksHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(ProjectURLConstants.URL_TO_ADDITION)
 	public String toAddition() {
-		final CoResult<List<BookDto>, JdbiException> books = this.iBookService.getBooks();
-		final CoResult<List<ChapterDto>, JdbiException> chaptersByBookId = this.iBookService.getChaptersByBookId(null);
+		final CoResult<List<BookDto>, PersistenceException> books = this.iBookService.getBooks();
+		final CoResult<List<ChapterDto>, PersistenceException> chaptersByBookId = this.iBookService
+				.getChaptersByBookId(null);
 		if (!books.isOk()) {
 			throw books.getErr();
 		}

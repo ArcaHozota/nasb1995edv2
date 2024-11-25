@@ -15,7 +15,6 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson2.JSON;
@@ -30,6 +29,7 @@ import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.Pagination;
 import jakarta.annotation.Resource;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -117,7 +117,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(ProjectURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
-		final CoResult<Integer, JdbiException> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
+		final CoResult<Integer, PersistenceException> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
 				this.getNameJp());
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
@@ -141,7 +141,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 			@Action(ProjectURLConstants.URL_RANDOM_FIVE_RETRIEVE) })
 	public String commonRetrieve() {
 		final String keyword = this.getServletRequest().getParameter("keyword");
-		final CoResult<List<HymnDto>, JdbiException> hymnsRandomFive = this.iHymnService.getHymnsRandomFive(keyword);
+		final CoResult<List<HymnDto>, PersistenceException> hymnsRandomFive = this.iHymnService
+				.getHymnsRandomFive(keyword);
 		if (!hymnsRandomFive.isOk()) {
 			throw hymnsRandomFive.getErr();
 		}
@@ -166,7 +167,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	@Action(ProjectURLConstants.URL_INFO_DELETION)
 	public String infoDeletion() {
 		final String deleteId = this.getServletRequest().getParameter("deleteId");
-		final CoResult<String, JdbiException> infoDeletion = this.iHymnService.infoDeletion(Long.parseLong(deleteId));
+		final CoResult<String, PersistenceException> infoDeletion = this.iHymnService
+				.infoDeletion(Long.parseLong(deleteId));
 		if (!infoDeletion.isOk()) {
 			throw infoDeletion.getErr();
 		}
@@ -181,7 +183,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(value = ProjectURLConstants.URL_INFO_STORAGE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoStorage() {
-		final CoResult<Integer, JdbiException> infoStorage = this.iHymnService.infoStorage(this.getHymnDto());
+		final CoResult<Integer, PersistenceException> infoStorage = this.iHymnService.infoStorage(this.getHymnDto());
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
@@ -197,7 +199,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdation() {
-		final CoResult<String, JdbiException> infoUpdation = this.iHymnService.infoUpdation(this.getHymnDto());
+		final CoResult<String, PersistenceException> infoUpdation = this.iHymnService.infoUpdation(this.getHymnDto());
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
@@ -214,7 +216,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	public String pagination() {
 		final String pageNum = this.getServletRequest().getParameter("pageNum");
 		final String keyword = this.getServletRequest().getParameter("keyword");
-		final CoResult<Pagination<HymnDto>, JdbiException> hymnsByKeyword = this.iHymnService
+		final CoResult<Pagination<HymnDto>, PersistenceException> hymnsByKeyword = this.iHymnService
 				.getHymnsByKeyword(Integer.parseInt(pageNum), keyword);
 		if (!hymnsByKeyword.isOk()) {
 			throw hymnsByKeyword.getErr();
@@ -248,7 +250,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 		final String editId = this.getServletRequest().getParameter("editId");
 		final String pageNum = this.getServletRequest().getParameter("pageNum");
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		final CoResult<HymnDto, JdbiException> hymnInfoById = this.iHymnService.getHymnInfoById(Long.parseLong(editId));
+		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
+				.getHymnInfoById(Long.parseLong(editId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}

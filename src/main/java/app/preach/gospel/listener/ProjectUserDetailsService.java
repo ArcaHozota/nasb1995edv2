@@ -2,10 +2,10 @@ package app.preach.gospel.listener;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.result.NoResultsException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -22,10 +22,10 @@ import app.preach.gospel.entity.Authority;
 import app.preach.gospel.entity.RoleAuthority;
 import app.preach.gospel.entity.Student;
 import app.preach.gospel.entity.StudentRole;
-import app.preach.gospel.repository.AuthorityDao;
-import app.preach.gospel.repository.RoleAuthorityDao;
-import app.preach.gospel.repository.StudentDao;
-import app.preach.gospel.repository.StudentRoleDao;
+import app.preach.gospel.repository.AuthorityRepository;
+import app.preach.gospel.repository.RoleAuthorityRepository;
+import app.preach.gospel.repository.StudentRepository;
+import app.preach.gospel.repository.StudentRoleRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -40,35 +40,53 @@ import lombok.RequiredArgsConstructor;
 public class ProjectUserDetailsService implements UserDetailsService {
 
 	/**
-	 * 共通リポジトリ
+	 * 権限管理リポジトリ
 	 */
-	private final Jdbi jdbi;
+	private final AuthorityRepository authorityRepository;
+
+	/**
+	 * 役割権限連携リポジトリ
+	 */
+	private final RoleAuthorityRepository roleAuthorityRepository;
+
+	/**
+	 * 奉仕者管理リポジトリ
+	 */
+	private final StudentRepository studentRepository;
+
+	/**
+	 * 奉仕者役割連携リポジトリ
+	 */
+	private final StudentRoleRepository studentRoleRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		final Student studentEntity = new Student();
-		studentEntity.setLoginAccount(username);
-		studentEntity.setEmail(username);
-		final Student student = this.jdbi.onDemand(StudentDao.class).selectOne(studentEntity);
-		if (student == null) {
+		final Specification<Student> specification1 = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+			return criteriaBuilder.or(criteriaBuilder.equal(root.get("loginAccount"), username),
+					criteriaBuilder.equal(root.get("email"), username));
+		};
+		final Optional<Student> studentOptional = this.studentRepository.findOne(specification1);
+		if (studentOptional.isEmpty()) {
 			throw new DisabledException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1);
 		}
-		StudentRole studentRole;
-		try {
-			studentRole = this.jdbi.onDemand(StudentRoleDao.class).selectById(student.getId());
-		} catch (final NoResultsException e) {
+		final Student student = studentOptional.get();
+		final Optional<StudentRole> studentRoleOptional = this.studentRoleRepository.findById(student.getId());
+		if (studentRoleOptional.isEmpty()) {
 			throw new InsufficientAuthenticationException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR2);
 		}
-		final List<Long> authIds = this.jdbi.onDemand(RoleAuthorityDao.class).findByRoleId(studentRole.getRoleId())
-				.stream().map(RoleAuthority::getAuthId).toList();
+		final Long roleId = studentRoleOptional.get().getRoleId();
+		final Specification<RoleAuthority> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("roleId"), roleId);
+		final List<Long> authIds = this.roleAuthorityRepository.findAll(specification2).stream()
+				.map(RoleAuthority::getAuthId).toList();
 		if (CollectionUtils.isEmpty(authIds)) {
 			throw new AuthenticationCredentialsNotFoundException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR3);
 		}
-		final List<Authority> authoritiesRecords = this.jdbi.onDemand(AuthorityDao.class).findByIds(authIds);
+		final List<Authority> authoritiesRecords = this.authorityRepository.findAllById(authIds);
 		final StudentDto studentDto = new StudentDto(student.getId().toString(), student.getLoginAccount(),
 				student.getUsername(), student.getPassword(), student.getEmail(),
-				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(student.getDateOfBirth()),
-				studentRole.getRoleId().toString());
+				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(student.getDateOfBirth()), roleId.toString());
 		final List<SimpleGrantedAuthority> authorities = authoritiesRecords.stream()
 				.map(item -> new SimpleGrantedAuthority(item.getName())).collect(Collectors.toList());
 		return new SecurityAdmin(studentDto, authorities);

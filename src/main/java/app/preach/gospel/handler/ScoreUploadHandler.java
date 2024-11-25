@@ -14,7 +14,6 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,7 @@ import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -92,7 +92,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 			final String fileData = data.get("score");
 			// 将 base64 文件数据解码并保存
 			final byte[] fileBytes = Base64.getDecoder().decode(fileData);
-			final CoResult<String, JdbiException> scoreStorage = this.iHymnService.scoreStorage(fileBytes,
+			final CoResult<String, PersistenceException> scoreStorage = this.iHymnService.scoreStorage(fileBytes,
 					Long.parseLong(editId));
 			if (!scoreStorage.isOk()) {
 				throw scoreStorage.getErr();
@@ -115,7 +115,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	@Action(value = ProjectURLConstants.URL_SCORE_DOWNLOAD, results = { @Result(type = "stream") })
 	public String scoreDownload() {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
-		final CoResult<HymnDto, JdbiException> hymnInfoById = this.iHymnService
+		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(scoreId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
@@ -147,7 +147,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final String pageNum = this.getServletRequest().getParameter("pageNum");
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		final CoResult<HymnDto, JdbiException> hymnInfoById = this.iHymnService
+		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(scoreId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();

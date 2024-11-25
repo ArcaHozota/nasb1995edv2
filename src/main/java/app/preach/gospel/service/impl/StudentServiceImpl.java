@@ -4,10 +4,8 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.core.JdbiException;
-import org.jdbi.v3.core.collector.NoSuchCollectorException;
-import org.jetbrains.annotations.NotNull;
+import org.hibernate.HibernateException;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,11 +14,12 @@ import org.springframework.stereotype.Service;
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.dto.StudentDto;
 import app.preach.gospel.entity.Student;
-import app.preach.gospel.repository.StudentDao;
+import app.preach.gospel.repository.StudentRepository;
 import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoBeanUtils;
 import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
+import jakarta.persistence.PersistenceException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -45,91 +44,119 @@ public final class StudentServiceImpl implements IStudentService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
 
 	/**
-	 * 共通リポジトリ
+	 * 奉仕者管理リポジトリ
 	 */
-	private final Jdbi jdbi;
+	private final StudentRepository studentRepository;
 
 	@Override
-	public CoResult<Integer, JdbiException> checkDuplicated(final String id, final String loginAccount) {
+	public CoResult<Integer, PersistenceException> checkDuplicated(final String id, final String loginAccount) {
+		Specification<Student> specification;
+		if (CoProjectUtils.isDigital(id)) {
+			specification = (root, query, criteriaBuilder) -> {
+				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+				return criteriaBuilder.and(criteriaBuilder.notEqual(root.get("id"), Long.parseLong(id)),
+						criteriaBuilder.equal(root.get("loginAccount"), loginAccount));
+			};
+		} else {
+			specification = (root, query, criteriaBuilder) -> {
+				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+				return criteriaBuilder.and(criteriaBuilder.equal(root.get("loginAccount"), loginAccount));
+			};
+		}
 		try {
-			if (CoProjectUtils.isDigital(id)) {
-				final Integer countDuplicated = this.jdbi.onDemand(StudentDao.class).countDuplicated(Long.parseLong(id),
-						loginAccount);
-				return CoResult.ok(countDuplicated);
-			}
-			final Integer countDuplicated = this.jdbi.onDemand(StudentDao.class).countDuplicated(null, loginAccount);
-			return CoResult.ok(countDuplicated);
-		} catch (final JdbiException e) {
+			final long duplicated = this.studentRepository.count(specification);
+			return CoResult.ok((int) duplicated);
+		} catch (final PersistenceException e) {
 			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public CoResult<StudentDto, JdbiException> getStudentInfoById(final Long id) {
-		try {
-			final Student student = this.jdbi.onDemand(StudentDao.class).selectById(id);
-			final StudentDto studentDto = new StudentDto(student.getId().toString(), student.getLoginAccount(),
-					student.getUsername(), student.getPassword(), student.getEmail(),
-					FORMATTER.format(student.getDateOfBirth()), null);
-			return CoResult.ok(studentDto);
-		} catch (final JdbiException e) {
-			return CoResult.err(e);
-		}
+	public CoResult<StudentDto, PersistenceException> getStudentInfoById(final Long id) {
+		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), id));
+		};
+		final CoResult<StudentDto, PersistenceException> result = CoResult.getInstance();
+		this.studentRepository.findOne(specification).ifPresentOrElse(val -> {
+			final StudentDto studentDto = new StudentDto(val.getId().toString(), val.getLoginAccount(),
+					val.getUsername(), val.getPassword(), val.getEmail(), FORMATTER.format(val.getDateOfBirth()), null);
+			result.setSelf(CoResult.ok(studentDto));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		return result;
 	}
 
 	@Override
-	public CoResult<String, JdbiException> infoUpdation(final @NotNull StudentDto studentDto) {
-		final Student originalEntity = new Student();
-		try {
-			final Student student = this.jdbi.onDemand(StudentDao.class).selectById(Long.parseLong(studentDto.id()));
-			CoBeanUtils.copyNullableProperties(student, originalEntity);
-			CoBeanUtils.copyNullableProperties(studentDto, student);
-			student.setDateOfBirth(LocalDate.parse(studentDto.dateOfBirth(), FORMATTER));
+	public CoResult<String, PersistenceException> infoUpdation(final StudentDto studentDto) {
+		final Student student = new Student();
+		CoBeanUtils.copyNullableProperties(studentDto, student);
+		student.setId(Long.parseLong(studentDto.id()));
+		student.setDateOfBirth(LocalDate.parse(studentDto.dateOfBirth(), FORMATTER));
+		student.setVisibleFlg(Boolean.TRUE);
+		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), student.getId()));
+		};
+		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		this.studentRepository.findOne(specification).ifPresentOrElse(val -> {
 			final String rawPassword = student.getPassword();
-			final String password = originalEntity.getPassword();
+			final String password = val.getPassword();
+			final OffsetDateTime updatedTime = val.getUpdatedTime();
 			student.setPassword(null);
-			originalEntity.setPassword(null);
+			val.setPassword(null);
+			val.setUpdatedTime(null);
 			boolean passwordDiscernment = false;
 			if (CoProjectUtils.isEqual(rawPassword, password)) {
 				passwordDiscernment = true;
 			} else {
 				passwordDiscernment = ENCODER.matches(rawPassword, password);
 			}
-			if (CoProjectUtils.isEqual(student, originalEntity) && passwordDiscernment) {
-				return CoResult.err(new NoSuchCollectorException(ProjectConstants.MESSAGE_STRING_NO_CHANGE));
-			}
-			if (passwordDiscernment) {
-				student.setPassword(password);
+			if (CoProjectUtils.isEqual(student, val) && passwordDiscernment) {
+				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
-				student.setPassword(ENCODER.encode(rawPassword));
+				CoBeanUtils.copyNullableProperties(student, val);
+				if (passwordDiscernment) {
+					val.setPassword(password);
+				} else {
+					val.setPassword(ENCODER.encode(rawPassword));
+				}
+				val.setUpdatedTime(updatedTime);
+				try {
+					this.studentRepository.saveAndFlush(val);
+					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
+				} catch (final PersistenceException e) {
+					result.setSelf(CoResult.err(e));
+				}
 			}
-			this.jdbi.onDemand(StudentDao.class).updateOne(student);
-			return CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS);
-		} catch (final JdbiException e) {
-			return CoResult.err(e);
-		}
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		return result;
 	}
 
 	@Override
-	public CoResult<String, JdbiException> preLoginUpdation(final String loginAccount, final String password) {
-		final Student studentEntity = new Student();
-		studentEntity.setLoginAccount(loginAccount);
-		studentEntity.setEmail(loginAccount);
-		try {
-			final Student student = this.jdbi.onDemand(StudentDao.class).selectOne(studentEntity);
-			if (student == null) {
-				return CoResult.err(new NoSuchCollectorException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1));
-			}
-			final boolean passwordMatches = ENCODER.matches(password, student.getPassword());
+	public CoResult<String, PersistenceException> preLoginUpdation(final String loginAccount, final String password) {
+		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
+			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+			return criteriaBuilder.or(criteriaBuilder.equal(root.get("loginAccount"), loginAccount),
+					criteriaBuilder.equal(root.get("email"), loginAccount));
+		};
+		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		this.studentRepository.findOne(specification).ifPresentOrElse(val -> {
+			final boolean passwordMatches = ENCODER.matches(password, val.getPassword());
 			if (!passwordMatches) {
-				return CoResult.err(new NoSuchCollectorException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4));
+				result.setSelf(
+						CoResult.err(new HibernateException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR4)));
+			} else {
+				val.setUpdatedTime(OffsetDateTime.now());
+				try {
+					this.studentRepository.saveAndFlush(val);
+					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS));
+				} catch (final PersistenceException e) {
+					result.setSelf(CoResult.err(e));
+				}
 			}
-			student.setUpdatedTime(OffsetDateTime.now());
-			this.jdbi.onDemand(StudentDao.class).updateOne(student);
-			return CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS);
-		} catch (final JdbiException e) {
-			return CoResult.err(e);
-		}
+		}, () -> result
+				.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_SPRINGSECURITY_LOGINERROR1))));
+		return result;
 	}
 
 }

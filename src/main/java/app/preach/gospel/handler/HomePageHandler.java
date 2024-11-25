@@ -13,7 +13,6 @@ import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.jdbi.v3.core.JdbiException;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -22,9 +21,10 @@ import com.opensymphony.xwork2.ActionSupport;
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.service.IHymnService;
-import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.CoProjectUtils;
+import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,7 +73,7 @@ public class HomePageHandler extends ActionSupport implements ServletRequestAwar
 			@Action(ProjectURLConstants.URL_HOMEPAGE3), @Action(ProjectURLConstants.URL_HOMEPAGE5),
 			@Action(CoProjectUtils.EMPTY_STRING) })
 	public String toHomePage() {
-		final CoResult<Long, JdbiException> totalRecords = this.iHymnService.getTotalRecords();
+		final CoResult<Long, PersistenceException> totalRecords = this.iHymnService.getTotalRecords();
 		if (!totalRecords.isOk()) {
 			throw totalRecords.getErr();
 		}
