@@ -37,6 +37,12 @@ public final class HymnsWork implements Serializable {
 	private Long id;
 
 	/**
+	 * 歌の名称
+	 */
+	@Column
+	private String title;
+
+	/**
 	 * セリフ
 	 */
 	@Column(columnDefinition = "text")

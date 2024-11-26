@@ -64,11 +64,6 @@ public final class HymnServiceImpl implements IHymnService {
 	private static final Random RANDOM = new Random();
 
 	/**
-	 * ドルマーク
-	 */
-	private static final String DOLLAR_MARK = "\u0024";
-
-	/**
 	 * 賛美歌情報管理リポジトリ
 	 */
 	private final HymnRepository hymnRepository;
@@ -186,9 +181,12 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnsWork> hymnsWorks = totalRecords.stream().map(item -> {
 				final HymnsWork hymnsWork = this.hymnsWorkRepository.findById(item.getId()).orElseGet(HymnsWork::new);
 				if ((hymnsWork.getUpdatedTime() == null) || item.getUpdatedTime().isAfter(hymnsWork.getUpdatedTime())) {
+					final String title = item.getNameJp();
 					final String serif = item.getSerif();
+					final String toKatakanaTitle = this.kanjiToKatakana(title);
 					final String toKatakanaSerif = this.kanjiToKatakana(serif);
 					hymnsWork.setId(item.getId());
+					hymnsWork.setTitle(toKatakanaTitle);
 					hymnsWork.setSerif(toKatakanaSerif);
 					hymnsWork.setUpdatedTime(OffsetDateTime.now());
 					return hymnsWork;
@@ -196,18 +194,12 @@ public final class HymnServiceImpl implements IHymnService {
 				return null;
 			}).filter(Objects::nonNull).toList();
 			this.hymnsWorkRepository.saveAllAndFlush(hymnsWorks);
-			String searchStr;
-			String searchKatakana;
 			final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
-			if (CoProjectUtils.isNotEmpty(keyword) && keyword.endsWith(DOLLAR_MARK)) {
-				searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
-						.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-				searchKatakana = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(kanjiToKatakanaKeyword)
-						.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-			} else {
-				searchStr = CoProjectUtils.getDetailKeyword(keyword);
-				searchKatakana = CoProjectUtils.getDetailKeyword(kanjiToKatakanaKeyword);
-			}
+			final String searchStr1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
+					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
+			final String searchKatakana1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(kanjiToKatakanaKeyword)
+					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
+			final List<Hymn> hymns2 = this.hymnRepository.retrieveRandomFive1(searchStr1, searchKatakana1);
 			final List<Hymn> hymns = this.hymnRepository.retrieveRandomFive(searchStr, searchKatakana);
 			if (CollectionUtils.isEmpty(hymns) || (hymns.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
 				final List<Hymn> randomFiveLoop = this.randomFiveLoop(hymns, totalRecords);

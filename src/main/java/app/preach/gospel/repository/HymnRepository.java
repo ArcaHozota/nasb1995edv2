@@ -27,4 +27,13 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 			+ "and (hm.name_jp like :keyword or hm.name_kr like :keyword or hm.serif like :keyword or hmk.serif like :keyword2 "
 			+ "or cast(hm.id as varchar) like :keyword)", nativeQuery = true)
 	List<Hymn> retrieveRandomFive(@Param("keyword") String keyword, @Param("keyword2") String keyword2);
+
+	/**
+	 * ランドム選択検索
+	 *
+	 * @param keyword キーワード
+	 * @return List<Hymn>
+	 */
+	@Query(value = "")
+	List<Hymn> retrieveRandomFive1(@Param("keyword") String keyword, @Param("keyword2") String keyword2);
 }
