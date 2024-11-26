@@ -1,12 +1,12 @@
 package app.preach.gospel.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,9 +24,9 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @Table(name = "books")
-@EqualsAndHashCode(callSuper = false)
 public final class Book implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = 4061917364160208602L;
 
 	/**

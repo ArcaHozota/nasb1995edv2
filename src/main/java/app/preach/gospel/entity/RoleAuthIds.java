@@ -1,5 +1,6 @@
 package app.preach.gospel.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import lombok.Data;
@@ -13,6 +14,7 @@ import lombok.Data;
 @Data
 public final class RoleAuthIds implements Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -297785511370318383L;
 
 	/**

@@ -199,8 +199,8 @@ public final class HymnServiceImpl implements IHymnService {
 					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
 			final String searchKatakana1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(kanjiToKatakanaKeyword)
 					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-			final List<Hymn> hymns2 = this.hymnRepository.retrieveRandomFive1(searchStr1, searchKatakana1);
-			final List<Hymn> hymns = this.hymnRepository.retrieveRandomFive(searchStr, searchKatakana);
+			final List<Hymn> hymns1 = this.hymnRepository.retrieveRandomFive1(searchStr1, searchKatakana1);
+			final List<Hymn> hymns2 = this.hymnRepository.retrieveRandomFive2(searchStr, searchKatakana);
 			if (CollectionUtils.isEmpty(hymns) || (hymns.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
 				final List<Hymn> randomFiveLoop = this.randomFiveLoop(hymns, totalRecords);
 				final List<HymnDto> hymnDtos = randomFiveLoop.stream()
