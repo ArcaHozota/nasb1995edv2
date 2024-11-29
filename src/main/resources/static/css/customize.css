@@ -1,11 +1,11 @@
+@import url("title.css");
+
 /* General Font */
 @font-face {
 	font-family: 'SourceHanSans';
 	src: local('../fonts/SourceHanSans-Regular.otf'),
 		local('../fonts/SourceHanSans-Medium.otf');
 }
-
-@import url("title.css");
 
 /* General CSS */
 body {
