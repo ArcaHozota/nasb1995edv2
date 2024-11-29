@@ -3,6 +3,7 @@ package app.preach.gospel.service.impl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
@@ -82,7 +83,7 @@ public final class BookServiceImpl implements IBookService {
 	}
 
 	@Override
-	public CoResult<String, PersistenceException> infoStorage(final PhraseDto phraseDto) {
+	public @NotNull CoResult<String, PersistenceException> infoStorage(final @NotNull PhraseDto phraseDto) {
 		final Long id = Long.parseLong(phraseDto.id());
 		final Integer chapterId = phraseDto.chapterId();
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();

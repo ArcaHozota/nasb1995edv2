@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.hibernate.HibernateException;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder.BCryptVersion;
@@ -44,6 +45,16 @@ public final class StudentServiceImpl implements IStudentService {
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
 
 	/**
+	 * 論理削除フラグ
+	 */
+	private static final String VISIBLE_FLG = "visibleFlg";
+
+	/**
+	 * アカウント
+	 */
+	private static final String LOGIN_ACCOUNT = "loginAccount";
+
+	/**
 	 * 奉仕者管理リポジトリ
 	 */
 	private final StudentRepository studentRepository;
@@ -53,14 +64,14 @@ public final class StudentServiceImpl implements IStudentService {
 		Specification<Student> specification;
 		if (CoProjectUtils.isDigital(id)) {
 			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
 				return criteriaBuilder.and(criteriaBuilder.notEqual(root.get("id"), Long.parseLong(id)),
-						criteriaBuilder.equal(root.get("loginAccount"), loginAccount));
+						criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount));
 			};
 		} else {
 			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.equal(root.get("loginAccount"), loginAccount));
+				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
+				return criteriaBuilder.and(criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount));
 			};
 		}
 		try {
@@ -72,9 +83,9 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public CoResult<StudentDto, PersistenceException> getStudentInfoById(final Long id) {
+	public @NotNull CoResult<StudentDto, PersistenceException> getStudentInfoById(final Long id) {
 		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
 			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), id));
 		};
 		final CoResult<StudentDto, PersistenceException> result = CoResult.getInstance();
@@ -87,14 +98,14 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public CoResult<String, PersistenceException> infoUpdation(final StudentDto studentDto) {
+	public @NotNull CoResult<String, PersistenceException> infoUpdation(final StudentDto studentDto) {
 		final Student student = new Student();
 		CoBeanUtils.copyNullableProperties(studentDto, student);
 		student.setId(Long.parseLong(studentDto.id()));
 		student.setDateOfBirth(LocalDate.parse(studentDto.dateOfBirth(), FORMATTER));
 		student.setVisibleFlg(Boolean.TRUE);
 		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
 			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), student.getId()));
 		};
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
@@ -133,10 +144,11 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public CoResult<String, PersistenceException> preLoginUpdation(final String loginAccount, final String password) {
+	public @NotNull CoResult<String, PersistenceException> preLoginUpdation(final String loginAccount,
+			final String password) {
 		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
-			return criteriaBuilder.or(criteriaBuilder.equal(root.get("loginAccount"), loginAccount),
+			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
+			return criteriaBuilder.or(criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount),
 					criteriaBuilder.equal(root.get("email"), loginAccount));
 		};
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
