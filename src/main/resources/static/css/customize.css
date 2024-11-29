@@ -5,6 +5,8 @@
 		local('../fonts/SourceHanSans-Medium.otf');
 }
 
+@import url("title.css");
+
 /* General CSS */
 body {
 	font-style: normal;
