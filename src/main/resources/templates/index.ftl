@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja-JP">
+<html lang = "ja-JP">
 <head>
 	<title>NASB1995</title>
 	<meta charset="UTF-8">
@@ -13,47 +13,6 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/customize.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
-	<style type="text/css">
-		a {
-			text-decoration: none;
-		}
-
-		caption {
-			font-size: 10px;
-			display: grid;
-			justify-content: end;
-		}
-
-		.bg-dark {
-			background-color: #000000 !important;
-		}
-
-		.effect-shine {
-			transition: 500ms;
-		}
-
-		.effect-shine:hover {
-			animation: shine 1500ms infinite alternate;
-		}
-
-		@keyframes shine {
-			from {
-				color: #fff;
-				text-shadow: 0 0 5px #03e9f4,
-					0 0 25px #03e9f4,
-					0 0 50px #03e9f4,
-					0 0 100px #03e9f4;
-			}
-
-			to {
-				color: #fff;
-				text-shadow: 0 0 2px #03e9f4,
-					0 0 5px #03e9f4,
-					0 0 7px #03e9f4,
-					0 0 10px #03e9f4;
-			}
-		}
-	</style>
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="/static/layer/layer.js"></script>
@@ -106,8 +65,8 @@
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead>
 						<tr class="table-primary">
-							<th scope="col" class="text-center" style="width: 160px;">名称</th>
-							<th scope="col" class="text-center" style="width: 20px;">楽譜</th>
+							<th scope="col" class="text-center" style="width: 80%;">名称</th>
+							<th scope="col" class="text-center" style="width: 20%;">楽譜</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody" class="table-group-divider">
