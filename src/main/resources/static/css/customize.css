@@ -1,11 +1,11 @@
 @import url("title.css");
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
 
 /* General CSS */
 body {
 	font-style: normal;
 	font-weight: normal;
-	font-family: 'Poppins', sans-serif;
+	font-family: "Noto Sans JP", sans-serif;
 	padding-top: 50px;
 	margin: 0;
 	box-sizing: border-box;
