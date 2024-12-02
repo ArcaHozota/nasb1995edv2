@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<meta name="_csrf_token" content="${_csrf.token}">
-	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/login.css">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 	<style type="text/css">
 		input[type=password]::-ms-reveal {

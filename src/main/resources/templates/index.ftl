@@ -8,7 +8,6 @@
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<meta name="_csrf_token" content="${_csrf.token}">
 	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/index.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/customize.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -21,21 +20,21 @@
 <body>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 900;" href="/index">
+			<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 700;" href="/index">
 				<img src="/category/initial?icons=cross.svg" alt="img01" width="42px" height="42px">
 				NASB1995
 			</a>
 			<div class="d-flex justify-content-end">
-				<button id="toLoginBtn" type="button" class="btn btn-primary me-2">
+				<a type="button" class="btn btn-primary me-2" style="font-weight: 600;" href="/category/login">
 					<i class="fa-solid fa-right-to-bracket"></i> ログイン
-				</button>
+				</a>
 			</div>
 		</div>
 	</nav>
 	<div class="col-sm-6 offset-sm-3 col-md-8 offset-md-2 main">
 		<div class="card border-klein" style="margin: 45px 0px 3px 0px;">
 			<div class="card-header text-bg-klein mb-3">
-				<h5 class="card-title" style="padding-top: 8px;">
+				<h5 class="card-title" style="padding-top: 8px;font-weight: 500;">
 					<i class="fa-solid fa-cross"></i> 賛美歌選択
 				</h5>
 			</div>
@@ -87,8 +86,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<p class="d-flex justify-content-end" style="font-size: 10px;color: #353542;"
-					th:text="'賛美歌' + ${totalRecords} + '曲レコード済み'" />
+				<p class="d-flex justify-content-end" style="font-size: 10px;color: #353542;">賛美歌${totalRecords}曲レコード済み</p>
 			</div>
 		</div>
 		<div class="row">
