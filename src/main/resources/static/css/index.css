@@ -13,13 +13,13 @@ body {
 }
 
 .card {
-	background: rgba(255, 250, 240, 0.7);
+	background: rgba(248, 249, 250, 0.5);
 }
 
 .background {
 	position: absolute;
 	height: 60%;
-	background: #fffaf0;
+	background: #f8f9fa;
 }
 
 .circle {
