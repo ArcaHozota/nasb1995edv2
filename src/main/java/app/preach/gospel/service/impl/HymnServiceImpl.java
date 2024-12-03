@@ -260,7 +260,7 @@ public final class HymnServiceImpl implements IHymnService {
 					hymnDtos.addAll(hymnDtos3);
 					return CoResult.ok(hymnDtos.subList(0, 5));
 				}
-				final List<Hymn> randomFiveLoop = this.randomFiveLoop(hymns, totalRecords);
+				final List<Hymn> randomFiveLoop = this.randomFiveLoop2(hymns);
 				final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
 						.filter(a -> !titleIds.contains(a.getId()) && ids1.contains(a.getId()))
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -427,7 +427,7 @@ public final class HymnServiceImpl implements IHymnService {
 	private @NotNull List<Hymn> randomFiveLoop(final @NotNull List<Hymn> hymnsRecords,
 			final @NotNull List<Hymn> totalRecords) {
 		final List<Hymn> concernList1 = new ArrayList<>();
-		final List<Long> ids = hymnsRecords.stream().map(Hymn::getId).toList();
+		final List<Long> ids = hymnsRecords.stream().map(Hymn::getId).distinct().toList();
 		final List<Hymn> filteredRecords = totalRecords.stream().filter(item -> !ids.contains(item.getId())).toList();
 		concernList1.addAll(hymnsRecords);
 		if (hymnsRecords.size() < ProjectConstants.DEFAULT_PAGE_SIZE) {
