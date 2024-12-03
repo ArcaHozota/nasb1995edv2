@@ -12,6 +12,11 @@
 	<link rel="stylesheet" type="text/css" href="/static/css/customize.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+	<style>
+		#indexTablehead, #randomSearchBtn, #hintDiv {
+			font-family: "Noto Serif JP", serif;
+		}
+	</style>
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="/static/layer/layer.js"></script>
@@ -32,8 +37,8 @@
 		</div>
 	</nav>
 	<div class="col-sm-6 offset-sm-3 col-md-8 offset-md-2 main">
-		<div class="card border-klein" style="margin: 45px 0px 3px 0px;">
-			<div class="card-header text-bg-klein mb-3">
+		<div class="card border-darkgreen" style="margin: 45px 0px 3px 0px;">
+			<div class="card-header text-bg-darkgreen mb-3">
 				<h5 class="card-title" style="padding-top: 8px;font-weight: 500;">
 					<i class="fa-solid fa-cross"></i> 賛美歌選択
 				</h5>
@@ -62,8 +67,8 @@
 					</div>
 				</div>
 				<table class="table table-sm table-hover" id="indexTable">
-					<thead>
-						<tr class="table-primary">
+					<thead id="indexTablehead">
+						<tr class="table-success">
 							<th scope="col" class="text-center" style="width: 80%;">名称</th>
 							<th scope="col" class="text-center" style="width: 20%;">楽譜</th>
 						</tr>
@@ -89,7 +94,7 @@
 				<p class="d-flex justify-content-end" style="font-size: 10px;color: #353542;">賛美歌${totalRecords}曲レコード済み</p>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="hintDiv">
 			<p style="font-size: 11px;color: #006B3C;">※赤色：アキュレイトクエリの結果、黄色：ファジークエリの結果。五つに満たされなかった場合にシステムが補充されます。</p>
 		</div>
 	</div>

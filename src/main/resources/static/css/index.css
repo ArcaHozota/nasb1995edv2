@@ -1,3 +1,17 @@
+body {
+	background: url('../image/bg2.jpg') no-repeat;
+	background-size: cover;
+	/* 使背景图片覆盖整个页面 */
+	background-position: center;
+	/* 居中显示背景图片 */
+	background-attachment: fixed;
+	/* 背景固定，不随页面滚动 */
+	/*background-color: rgba(0, 0, 0, 0.5);*/
+	/* 使用背景色实现半透明效果 */
+	background-blend-mode: overlay;
+	/* 混合模式，使背景图半透明 */
+}
+
 .background {
 	position: absolute;
 	height: 60%;
