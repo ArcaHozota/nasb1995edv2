@@ -52,7 +52,7 @@ function buildTableBody(response) {
 		} else if (item.linenumber === 'CADIMIUM') {
 			$("<tr class='table-success'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else {
-			$("<tr></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+			$("<tr class='table-light'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		}
 	});
 }

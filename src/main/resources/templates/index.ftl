@@ -18,6 +18,10 @@
 		#hintDiv {
 			font-family: "Noto Serif JP", serif;
 		}
+		
+		.table-light {
+			background: #fffaf0;
+		}
 	</style>
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
