@@ -12,6 +12,10 @@ body {
 	/* 混合模式，使背景图半透明 */
 }
 
+.card {
+	background: rgba(255, 250, 240, 0.7);
+}
+
 .background {
 	position: absolute;
 	height: 60%;

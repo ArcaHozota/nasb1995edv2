@@ -27,7 +27,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 900;" href="/index">
+			<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 900;" href="/home">
 				<img src="/category/initial?icons=cross.svg" alt="img01" width="42px" height="42px">
 				NASB1995
 			</a>
