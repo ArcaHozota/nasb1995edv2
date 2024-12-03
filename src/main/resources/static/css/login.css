@@ -1,5 +1,24 @@
 /* General Font */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+@font-face {
+	font-family: "Noto Sans JP", "Noto Serif JP", sans-serif, serif;
+	src: local('../fonts/Noto_Sans_JP/static/NotoSansJP-Black.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-Bold.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-ExtraBold.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-ExtraLight.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-Light.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-Medium.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-Regular.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-SemiBold.ttf'),
+		local('../fonts/Noto_Sans_JP/static/NotoSansJP-Thin.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-Bold.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-ExtraBold.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-ExtraLight.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-Light.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-Medium.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-Regular.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-SemiBold.ttf'),
+		local('../fonts/Noto_Serif_JP/static/NotoSerifJP-Black.ttf');
+}
 
 * {
 	margin: 0;
