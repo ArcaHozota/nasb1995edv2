@@ -232,8 +232,9 @@ public final class HymnServiceImpl implements IHymnService {
 				final String searchKatakana2 = CoProjectUtils.getDetailKeyword(kanjiToKatakanaKeyword);
 				final List<Hymn> hymns2 = this.hymnRepository.retrieveRandomFive2(searchStr2, searchKatakana2);
 				hymns.addAll(hymns2);
+				final List<Hymn> hymns3 = hymns.stream().distinct().toList();
 				final List<Long> ids1 = hymns1.stream().map(Hymn::getId).toList();
-				if (CollectionUtils.isEmpty(hymns) || (hymns.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
+				if (CollectionUtils.isEmpty(hymns3) || (hymns3.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
 					final List<Long> ids2 = hymns2.stream().map(Hymn::getId).toList();
 					final List<Hymn> randomFiveLoop = this.randomFiveLoop(hymns, totalRecords);
 					final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
@@ -260,7 +261,7 @@ public final class HymnServiceImpl implements IHymnService {
 					hymnDtos.addAll(hymnDtos3);
 					return CoResult.ok(hymnDtos.subList(0, 5));
 				}
-				final List<Hymn> randomFiveLoop = this.randomFiveLoop2(hymns);
+				final List<Hymn> randomFiveLoop = this.randomFiveLoop2(hymns3);
 				final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
 						.filter(a -> !titleIds.contains(a.getId()) && ids1.contains(a.getId()))
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
