@@ -3,6 +3,11 @@
 <#include "include-header.ftl">
 
 <body>
+	<style>
+		#tableBody {
+			font-family: "NotoSerifJP", serif;
+		}
+	</style>
 	<#include "include-navbar.ftl">
 	<div class="container-fluid">
 		<div class="row">

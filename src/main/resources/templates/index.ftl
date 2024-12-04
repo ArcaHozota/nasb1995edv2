@@ -16,7 +16,7 @@
 		#indexTablehead,
 		#randomSearchBtn,
 		#hintDiv {
-			font-family: "Noto Serif JP", serif;
+			font-family: "NotoSerifJP", serif;
 			font-weight: 500;
 		}
 	</style>
