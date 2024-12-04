@@ -35,6 +35,12 @@ import lombok.RequiredArgsConstructor;
 public final class StudentServiceImpl implements IStudentService {
 
 	/**
+	 * 共通検索条件
+	 */
+	private static final Specification<Student> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
+			.equal(root.get("visibleFlg"), Boolean.TRUE);
+
+	/**
 	 * 日時フォマーター
 	 */
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -43,11 +49,6 @@ public final class StudentServiceImpl implements IStudentService {
 	 * 共通検索条件
 	 */
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
-
-	/**
-	 * 論理削除フラグ
-	 */
-	private static final String VISIBLE_FLG = "visibleFlg";
 
 	/**
 	 * アカウント
@@ -61,21 +62,17 @@ public final class StudentServiceImpl implements IStudentService {
 
 	@Override
 	public CoResult<Integer, PersistenceException> checkDuplicated(final String id, final String loginAccount) {
-		Specification<Student> specification;
-		if (CoProjectUtils.isDigital(id)) {
-			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.notEqual(root.get("id"), Long.parseLong(id)),
-						criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount));
-			};
-		} else {
-			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount));
-			};
-		}
 		try {
-			final long duplicated = this.studentRepository.count(specification);
+			final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get(LOGIN_ACCOUNT), loginAccount);
+			if (CoProjectUtils.isDigital(id)) {
+				final Specification<Student> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
+						.notEqual(root.get("id"), Long.parseLong(id));
+				final long duplicated = this.studentRepository
+						.count(COMMON_CONDITION.and(specification).and(specification1));
+				return CoResult.ok((int) duplicated);
+			}
+			final long duplicated = this.studentRepository.count(COMMON_CONDITION.and(specification));
 			return CoResult.ok((int) duplicated);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
@@ -84,12 +81,10 @@ public final class StudentServiceImpl implements IStudentService {
 
 	@Override
 	public @NotNull CoResult<StudentDto, PersistenceException> getStudentInfoById(final Long id) {
-		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), id));
-		};
+		final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("id"), id);
 		final CoResult<StudentDto, PersistenceException> result = CoResult.getInstance();
-		this.studentRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.studentRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final StudentDto studentDto = new StudentDto(val.getId().toString(), val.getLoginAccount(),
 					val.getUsername(), val.getPassword(), val.getEmail(), FORMATTER.format(val.getDateOfBirth()), null);
 			result.setSelf(CoResult.ok(studentDto));
@@ -104,12 +99,10 @@ public final class StudentServiceImpl implements IStudentService {
 		student.setId(Long.parseLong(studentDto.id()));
 		student.setDateOfBirth(LocalDate.parse(studentDto.dateOfBirth(), FORMATTER));
 		student.setVisibleFlg(Boolean.TRUE);
-		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), student.getId()));
-		};
+		final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("id"), student.getId());
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
-		this.studentRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.studentRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final String rawPassword = student.getPassword();
 			final String password = val.getPassword();
 			final OffsetDateTime updatedTime = val.getUpdatedTime();
@@ -146,13 +139,11 @@ public final class StudentServiceImpl implements IStudentService {
 	@Override
 	public @NotNull CoResult<String, PersistenceException> preLoginUpdation(final String loginAccount,
 			final String password) {
-		final Specification<Student> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.or(criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount),
-					criteriaBuilder.equal(root.get("email"), loginAccount));
-		};
+		final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder.or(
+				criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount),
+				criteriaBuilder.equal(root.get("email"), loginAccount));
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
-		this.studentRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.studentRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final boolean passwordMatches = ENCODER.matches(password, val.getPassword());
 			if (!passwordMatches) {
 				result.setSelf(

@@ -110,12 +110,11 @@ public final class HymnServiceImpl implements IHymnService {
 			if (CoProjectUtils.isDigital(id)) {
 				final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
 						.notEqual(root.get("id"), Long.parseLong(id));
-				final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification).and(specification1);
-				final long duplicated = this.hymnRepository.count(specification2);
+				final long duplicated = this.hymnRepository
+						.count(COMMON_CONDITION.and(specification).and(specification1));
 				return CoResult.ok((int) duplicated);
 			}
-			final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification);
-			final long duplicated = this.hymnRepository.count(specification2);
+			final long duplicated = this.hymnRepository.count(COMMON_CONDITION.and(specification));
 			return CoResult.ok((int) duplicated);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
@@ -130,12 +129,11 @@ public final class HymnServiceImpl implements IHymnService {
 			if (CoProjectUtils.isDigital(id)) {
 				final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
 						.notEqual(root.get("id"), Long.parseLong(id));
-				final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification).and(specification1);
-				final long duplicated = this.hymnRepository.count(specification2);
+				final long duplicated = this.hymnRepository
+						.count(COMMON_CONDITION.and(specification).and(specification1));
 				return CoResult.ok((int) duplicated);
 			}
-			final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification);
-			final long duplicated = this.hymnRepository.count(specification2);
+			final long duplicated = this.hymnRepository.count(COMMON_CONDITION.and(specification));
 			return CoResult.ok((int) duplicated);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
