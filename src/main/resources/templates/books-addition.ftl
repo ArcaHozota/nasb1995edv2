@@ -8,7 +8,7 @@
 		<div class="row">
 			<#include "include-sidebar.ftl">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-				<div class="card border-tunagray mb-3" style="margin: 10px 0 0 0;">
+				<div class="card border-tunagray mb-3" style="margin-top: 1rem;">
 					<div class="card-header text-bg-tunagray mb-3">
 						<h5 class="card-title" style="padding-top: 8px;">
 							<i class="fa-solid fa-bars-staggered"></i> 聖書章節入力
