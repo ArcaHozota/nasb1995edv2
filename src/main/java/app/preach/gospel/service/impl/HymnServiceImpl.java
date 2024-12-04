@@ -187,6 +187,15 @@ public final class HymnServiceImpl implements IHymnService {
 	@Override
 	public CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(final String keyword) {
 		try {
+			if (CoProjectUtils.isEmpty(keyword)) {
+				final List<Hymn> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION);
+				final List<HymnDto> hymnDtos = this.randomFiveLoop2(totalRecords).stream()
+						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
+								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
+								hymnsRecord.getScore(), null, null, LineNumber.SNOWY))
+						.toList();
+				return CoResult.ok(hymnDtos);
+			}
 			for (final String starngement : STRANGE_ARRAY) {
 				if (keyword.toLowerCase().contains(starngement) || (keyword.length() >= 100)) {
 					final List<HymnDto> hymnDtos = this.hymnRepository.findForStrangement().stream()
@@ -281,14 +290,6 @@ public final class HymnServiceImpl implements IHymnService {
 				return CoResult.ok(hymnDtos.subList(0, 5));
 			}
 			final List<Hymn> randomFiveLoop2 = this.randomFiveLoop2(hymns1);
-			if (CoProjectUtils.isEmpty(keyword)) {
-				final List<HymnDto> hymnDtos2 = randomFiveLoop2.stream()
-						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-								hymnsRecord.getScore(), null, null, LineNumber.SNOWY))
-						.toList();
-				return CoResult.ok(hymnDtos2);
-			}
 			final List<HymnDto> hymnDtos1 = randomFiveLoop2.stream().filter(a -> !titleIds.contains(a.getId()))
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
