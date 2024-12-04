@@ -10,6 +10,9 @@
 	<meta name="_csrf_token" content="${_csrf.token}">
 	<link rel="stylesheet" type="text/css" href="/static/css/login.css">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap">
 	<style type="text/css">
 		input[type=password]::-ms-reveal {
 			display: none;
