@@ -35,7 +35,7 @@ dependencyManagement {
     }
 }
 
-ext.strutsVersion = '7.0.0-M9'
+ext.strutsVersion = '7.0.0-M10'
 ext.commonsLangVersion = '3.16.0'
 
 dependencies {

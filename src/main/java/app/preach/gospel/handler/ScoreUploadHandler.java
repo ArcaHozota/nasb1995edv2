@@ -1,14 +1,16 @@
 package app.preach.gospel.handler;
 
-import static com.opensymphony.xwork2.Action.ERROR;
-import static com.opensymphony.xwork2.Action.LOGIN;
-import static com.opensymphony.xwork2.Action.NONE;
-import static com.opensymphony.xwork2.Action.SUCCESS;
+import static org.apache.struts2.action.Action.ERROR;
+import static org.apache.struts2.action.Action.LOGIN;
+import static org.apache.struts2.action.Action.NONE;
+import static org.apache.struts2.action.Action.SUCCESS;
 
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
 
+import org.apache.struts2.ActionContext;
+import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -19,8 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
