@@ -24,7 +24,7 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	 * @return List<Hymn>
 	 */
 	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
-			+ "where hm.visibleFlg = true and (hmk.updatedTime is null or hm.updatedTime gt hmk.updatedTime)")
+			+ "where hm.visibleFlg = true and (hmk.updatedTime is null or hm.updatedTime > hmk.updatedTime)")
 	List<Hymn> findForUpdatedTime();
 
 	/**
