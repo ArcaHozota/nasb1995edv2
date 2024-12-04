@@ -20,6 +20,10 @@
 			font-family: "Noto Serif JP", serif;
 			font-weight: 600;
 		}
+		
+		a.effect-shine {
+			font-family: "Niconne", serif;
+		}
 	</style>
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
