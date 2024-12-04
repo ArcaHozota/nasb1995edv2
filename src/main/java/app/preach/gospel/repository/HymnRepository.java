@@ -18,6 +18,16 @@ import app.preach.gospel.entity.Hymn;
 public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificationExecutor<Hymn> {
 
 	/**
+	 * 更新すべき情報検索
+	 *
+	 * @param keyword キーワード
+	 * @return List<Hymn>
+	 */
+	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
+			+ "where hm.visibleFlg = true and (hmk.updatedTime is null or hm.updatedTime gt hmk.updatedTime)")
+	List<Hymn> findForUpdatedTime();
+
+	/**
 	 * ランドム選択検索1
 	 *
 	 * @param keyword キーワード
@@ -33,8 +43,8 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	 * @param keyword キーワード
 	 * @return List<Hymn>
 	 */
-	@Query(value = "select hm.* from hymns as hm inner join hymns_work as hmk on hmk.id = hm.id where hm.visible_flg = true "
-			+ "and (hm.name_jp like :keyword or hm.name_kr like :keyword or hm.serif like :keyword or hmk.serif like :keyword2 "
-			+ "or cast(hm.id as varchar) like :keyword)", nativeQuery = true)
+	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
+			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword or hm.serif like :keyword "
+			+ "or hmk.serif like :keyword2 or cast(hm.id as string) like :keyword)")
 	List<Hymn> retrieveRandomFive2(@Param("keyword") String keyword, @Param("keyword2") String keyword2);
 }

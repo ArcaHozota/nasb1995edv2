@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -190,25 +189,19 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(final String keyword) {
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
 		try {
-			final List<Hymn> totalRecords = this.hymnRepository.findAll(specification);
-			final List<HymnsWork> hymnsWorks = totalRecords.stream().map(item -> {
-				final HymnsWork hymnsWork = this.hymnsWorkRepository.findById(item.getId()).orElseGet(HymnsWork::new);
-				if ((hymnsWork.getUpdatedTime() == null) || item.getUpdatedTime().isAfter(hymnsWork.getUpdatedTime())) {
-					final String title = item.getNameJp();
-					final String serif = item.getSerif();
-					final String toKatakanaTitle = this.kanjiToKatakana(title);
-					final String toKatakanaSerif = this.kanjiToKatakana(serif);
-					hymnsWork.setId(item.getId());
-					hymnsWork.setTitle(toKatakanaTitle);
-					hymnsWork.setSerif(toKatakanaSerif);
-					hymnsWork.setUpdatedTime(OffsetDateTime.now());
-					return hymnsWork;
-				}
-				return null;
-			}).filter(Objects::nonNull).toList();
+			final List<HymnsWork> hymnsWorks = this.hymnRepository.findForUpdatedTime().stream().map(item -> {
+				final HymnsWork hymnsWork = new HymnsWork();
+				final String title = item.getNameJp();
+				final String serif = item.getSerif();
+				final String toKatakanaTitle = this.kanjiToKatakana(title);
+				final String toKatakanaSerif = this.kanjiToKatakana(serif);
+				hymnsWork.setId(item.getId());
+				hymnsWork.setTitle(toKatakanaTitle);
+				hymnsWork.setSerif(toKatakanaSerif);
+				hymnsWork.setUpdatedTime(OffsetDateTime.now());
+				return hymnsWork;
+			}).toList();
 			this.hymnsWorkRepository.saveAllAndFlush(hymnsWorks);
 			final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
 			final String searchStr1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
@@ -236,6 +229,9 @@ public final class HymnServiceImpl implements IHymnService {
 				final List<Long> ids1 = hymns1.stream().map(Hymn::getId).toList();
 				if (CollectionUtils.isEmpty(hymns3) || (hymns3.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
 					final List<Long> ids2 = hymns2.stream().map(Hymn::getId).toList();
+					final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+							.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
+					final List<Hymn> totalRecords = this.hymnRepository.findAll(specification);
 					final List<Hymn> randomFiveLoop = this.randomFiveLoop(hymns, totalRecords);
 					final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
 							.filter(a -> !titleIds.contains(a.getId()) && ids1.contains(a.getId()))
@@ -276,7 +272,7 @@ public final class HymnServiceImpl implements IHymnService {
 								hymnsRecord.getScore(), null, null, LineNumber.NAPLES))
 						.toList();
 				hymnDtos.addAll(hymnDtos2);
-				return CoResult.ok(hymnDtos);
+				return CoResult.ok(hymnDtos.subList(0, 5));
 			}
 			final List<Hymn> randomFiveLoop2 = this.randomFiveLoop2(hymns1);
 			if (CoProjectUtils.isEmpty(keyword)) {
@@ -427,10 +423,9 @@ public final class HymnServiceImpl implements IHymnService {
 	 */
 	private @NotNull List<Hymn> randomFiveLoop(final @NotNull List<Hymn> hymnsRecords,
 			final @NotNull List<Hymn> totalRecords) {
-		final List<Hymn> concernList1 = new ArrayList<>();
 		final List<Long> ids = hymnsRecords.stream().map(Hymn::getId).distinct().toList();
 		final List<Hymn> filteredRecords = totalRecords.stream().filter(item -> !ids.contains(item.getId())).toList();
-		concernList1.addAll(hymnsRecords);
+		final List<Hymn> concernList1 = new ArrayList<>(hymnsRecords);
 		if (hymnsRecords.size() < ProjectConstants.DEFAULT_PAGE_SIZE) {
 			final int sagaku = ProjectConstants.DEFAULT_PAGE_SIZE - hymnsRecords.size();
 			for (int i = 1; i <= sagaku; i++) {
