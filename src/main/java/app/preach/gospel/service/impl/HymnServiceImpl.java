@@ -42,6 +42,7 @@ import app.preach.gospel.utils.SnowflakeUtils;
 import jakarta.persistence.PersistenceException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 賛美歌サービス実装クラス
@@ -49,6 +50,7 @@ import lombok.RequiredArgsConstructor;
  * @author ArkamaHozota
  * @since 1.00beta
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HymnServiceImpl implements IHymnService {
@@ -77,6 +79,12 @@ public final class HymnServiceImpl implements IHymnService {
 	 * 韓国語名称
 	 */
 	private static final String NAME_KR = "nameKr";
+
+	/**
+	 * 怪しいキーワードリスト
+	 */
+	private static final String[] STRANGE_ARRAY = { "insert", "delete", "update", "create", "drop", "#", "$", "%", "&",
+			"(", ")", "\"", "\'", "@", ":", "select" };
 
 	/**
 	 * 賛美歌情報管理リポジトリ
@@ -190,6 +198,17 @@ public final class HymnServiceImpl implements IHymnService {
 	@Override
 	public CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(final String keyword) {
 		try {
+			for (final String starngement : STRANGE_ARRAY) {
+				if (keyword.toLowerCase().contains(starngement) || (keyword.length() >= 100)) {
+					final List<HymnDto> hymnDtos = this.hymnRepository.findForStrangement().stream()
+							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
+									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
+									hymnsRecord.getScore(), null, null, LineNumber.SNOWY))
+							.toList();
+					log.error("怪しいキーワード： " + keyword);
+					return CoResult.ok(hymnDtos);
+				}
+			}
 			final List<HymnsWork> hymnsWorks = this.hymnRepository.findForUpdatedTime().stream().map(item -> {
 				final HymnsWork hymnsWork = new HymnsWork();
 				final String title = item.getNameJp();

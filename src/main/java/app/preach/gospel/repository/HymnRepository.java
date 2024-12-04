@@ -18,9 +18,16 @@ import app.preach.gospel.entity.Hymn;
 public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificationExecutor<Hymn> {
 
 	/**
+	 * 怪しいキーワードに対して情報検索
+	 *
+	 * @return List<Hymn>
+	 */
+	@Query(value = "select hm from Hymn as hm where hm.visibleFlg = true order by hm.id asc limit 5")
+	List<Hymn> findForStrangement();
+
+	/**
 	 * 更新すべき情報検索
 	 *
-	 * @param keyword キーワード
 	 * @return List<Hymn>
 	 */
 	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
