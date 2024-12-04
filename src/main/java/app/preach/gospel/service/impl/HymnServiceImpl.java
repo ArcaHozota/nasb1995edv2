@@ -56,6 +56,12 @@ import lombok.extern.slf4j.Slf4j;
 public final class HymnServiceImpl implements IHymnService {
 
 	/**
+	 * 共通検索条件
+	 */
+	private static final Specification<Hymn> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
+			.equal(root.get("visibleFlg"), Boolean.TRUE);
+
+	/**
 	 * 日時フォマーター
 	 */
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
@@ -64,11 +70,6 @@ public final class HymnServiceImpl implements IHymnService {
 	 * ランドム選択
 	 */
 	private static final Random RANDOM = new Random();
-
-	/**
-	 * 論理削除フラグ
-	 */
-	private static final String VISIBLE_FLG = "visibleFlg";
 
 	/**
 	 * 日本語名称
@@ -103,21 +104,18 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public CoResult<Integer, PersistenceException> checkDuplicated(final String id, final String nameJp) {
-		Specification<Hymn> specification;
-		if (CoProjectUtils.isDigital(id)) {
-			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.notEqual(root.get("id"), Long.parseLong(id)),
-						criteriaBuilder.equal(root.get(NAME_JP), nameJp));
-			};
-		} else {
-			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.equal(root.get(NAME_JP), nameJp));
-			};
-		}
 		try {
-			final long duplicated = this.hymnRepository.count(specification);
+			final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get(NAME_JP), nameJp);
+			if (CoProjectUtils.isDigital(id)) {
+				final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
+						.notEqual(root.get("id"), Long.parseLong(id));
+				final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification).and(specification1);
+				final long duplicated = this.hymnRepository.count(specification2);
+				return CoResult.ok((int) duplicated);
+			}
+			final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification);
+			final long duplicated = this.hymnRepository.count(specification2);
 			return CoResult.ok((int) duplicated);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
@@ -126,21 +124,18 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public CoResult<Integer, PersistenceException> checkDuplicated2(final String id, final String nameKr) {
-		Specification<Hymn> specification;
-		if (CoProjectUtils.isDigital(id)) {
-			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.notEqual(root.get("id"), Long.parseLong(id)),
-						criteriaBuilder.equal(root.get(NAME_KR), nameKr));
-			};
-		} else {
-			specification = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.equal(root.get(NAME_KR), nameKr));
-			};
-		}
 		try {
-			final long duplicated = this.hymnRepository.count(specification);
+			final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get(NAME_KR), nameKr);
+			if (CoProjectUtils.isDigital(id)) {
+				final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
+						.notEqual(root.get("id"), Long.parseLong(id));
+				final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification).and(specification1);
+				final long duplicated = this.hymnRepository.count(specification2);
+				return CoResult.ok((int) duplicated);
+			}
+			final Specification<Hymn> specification2 = COMMON_CONDITION.and(specification);
+			final long duplicated = this.hymnRepository.count(specification2);
 			return CoResult.ok((int) duplicated);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
@@ -149,14 +144,12 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public @NotNull CoResult<HymnDto, PersistenceException> getHymnInfoById(final Long id) {
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), id));
-		};
+		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("id"), id);
 		final CoResult<HymnDto, PersistenceException> result = CoResult.getInstance();
-		this.hymnRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final Specification<Student> specification2 = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
+				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
 				return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), val.getUpdatedUser()));
 			};
 			this.studentRepository.findOne(specification2).ifPresentOrElse(subVal -> {
@@ -174,16 +167,14 @@ public final class HymnServiceImpl implements IHymnService {
 	public CoResult<Pagination<HymnDto>, PersistenceException> getHymnsByKeyword(final Integer pageNum,
 			final String keyword) {
 		final String searchStr = CoProjectUtils.getDetailKeyword(keyword);
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
-					criteriaBuilder.like(root.get(NAME_KR), searchStr));
-		};
+		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder.or(
+				criteriaBuilder.like(root.get(NAME_JP), searchStr), criteriaBuilder.like(root.get(NAME_KR), searchStr));
 		try {
-			final long totalRecords = this.hymnRepository.count(specification);
+			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION.and(specification));
 			final PageRequest pageRequest = PageRequest.of(pageNum - 1, ProjectConstants.DEFAULT_PAGE_SIZE,
 					Sort.by(Direction.ASC, "id"));
-			final Page<Hymn> hymnsRecords = this.hymnRepository.findAll(specification, pageRequest);
+			final Page<Hymn> hymnsRecords = this.hymnRepository.findAll(COMMON_CONDITION.and(specification),
+					pageRequest);
 			final List<HymnDto> hymnDtos = hymnsRecords.getContent().stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
@@ -248,9 +239,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final List<Long> ids1 = hymns1.stream().map(Hymn::getId).toList();
 				if (CollectionUtils.isEmpty(hymns3) || (hymns3.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
 					final List<Long> ids2 = hymns2.stream().map(Hymn::getId).toList();
-					final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-							.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-					final List<Hymn> totalRecords = this.hymnRepository.findAll(specification);
+					final List<Hymn> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION);
 					final List<Hymn> randomFiveLoop = this.randomFiveLoop(hymns, totalRecords);
 					final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
 							.filter(a -> !titleIds.contains(a.getId()) && ids1.contains(a.getId()))
@@ -316,10 +305,8 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public CoResult<Long, PersistenceException> getTotalRecords() {
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
 		try {
-			final long totalRecords = this.hymnRepository.count(specification);
+			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION);
 			return CoResult.ok(totalRecords);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
@@ -328,12 +315,10 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public @NotNull CoResult<String, PersistenceException> infoDeletion(final Long id) {
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), id));
-		};
+		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("id"), id);
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
-		this.hymnRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			val.setVisibleFlg(Boolean.FALSE);
 			try {
 				this.hymnRepository.saveAndFlush(val);
@@ -359,9 +344,7 @@ public final class HymnServiceImpl implements IHymnService {
 		try {
 			this.hymnsWorkRepository.saveAndFlush(hymnsWork);
 			this.hymnRepository.saveAndFlush(hymnsRecord);
-			final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-					.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			final long totalRecords = this.hymnRepository.count(specification);
+			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION);
 			final int discernedLargestPage = CoProjectUtils.discernLargestPage(totalRecords);
 			return CoResult.ok(discernedLargestPage);
 		} catch (final PersistenceException e) {
@@ -375,12 +358,10 @@ public final class HymnServiceImpl implements IHymnService {
 		CoBeanUtils.copyNullableProperties(hymnDto, hymnsRecord);
 		hymnsRecord.setId(Long.parseLong(hymnDto.id()));
 		hymnsRecord.setVisibleFlg(Boolean.TRUE);
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), hymnsRecord.getId()));
-		};
+		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("id"), hymnsRecord.getId());
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
-		this.hymnRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final OffsetDateTime updatedTime = val.getUpdatedTime();
 			val.setScore(null);
 			val.setUpdatedUser(null);
@@ -482,12 +463,10 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public @NotNull CoResult<String, PersistenceException> scoreStorage(final byte[] file, final Long id) {
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			criteriaBuilder.equal(root.get(VISIBLE_FLG), Boolean.TRUE);
-			return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), id));
-		};
+		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
+				.equal(root.get("id"), id);
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
-		this.hymnRepository.findOne(specification).ifPresentOrElse(val -> {
+		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			if (Arrays.equals(val.getScore(), file)) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
