@@ -14,6 +14,9 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Corinthia:wght@700&display=swap" rel="stylesheet">
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/ztree/jquery.ztree.all.js" nonce="${nonce}"></script>
