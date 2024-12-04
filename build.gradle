@@ -49,12 +49,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jetty'
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
     implementation 'org.jetbrains:annotations:26.0.1'
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
-    implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-core
-    implementation("org.apache.struts:struts2-core:${strutsVersion}") {
-        exclude group: 'org.apache.commons', module: 'commons-lang3'
-    }
+    implementation "org.apache.struts:struts2-core:${strutsVersion}"
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-convention-plugin
     implementation "org.apache.struts:struts2-convention-plugin:${strutsVersion}"
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-spring-plugin
