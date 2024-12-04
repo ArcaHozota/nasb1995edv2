@@ -46,7 +46,7 @@ public final class StudentServiceImpl implements IStudentService {
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	/**
-	 * 共通検索条件
+	 * エンコーダ
 	 */
 	private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder(BCryptVersion.$2A, 7);
 
