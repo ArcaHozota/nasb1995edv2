@@ -15,9 +15,10 @@
 	<style>
 		#indexTablehead,
 		#randomSearchBtn,
+		#tableBody, 
 		#hintDiv {
 			font-family: "NotoSerifJP", serif;
-			font-weight: 500;
+			font-weight: 600;
 		}
 	</style>
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
