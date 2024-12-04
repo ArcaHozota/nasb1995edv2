@@ -13,6 +13,8 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -27,6 +29,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serial;
 
 /**
  * 奉仕者管理ハンドラ
@@ -44,6 +48,7 @@ import lombok.Setter;
 @Controller
 public class StudentsHandler extends ActionSupport implements ServletRequestAware {
 
+	@Serial
 	private static final long serialVersionUID = 1592265866534993918L;
 
 	/**
@@ -122,7 +127,8 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	/**
 	 * 奉仕者情報転送クラス
 	 */
-	private StudentDto getStudentDto() {
+	@Contract(" -> new")
+	private @NotNull StudentDto getStudentDto() {
 		return new StudentDto(this.getId(), this.getLoginAccount(), this.getUsername(), this.getPassword(),
 				this.getEmail(), this.getDateOfBirth(), null);
 	}
@@ -163,7 +169,6 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	/**
 	 * 情報更新画面へ移動する
 	 *
-	 * @param editId 編集ID
 	 * @return String
 	 */
 	@Action(ProjectURLConstants.URL_TO_EDITION)

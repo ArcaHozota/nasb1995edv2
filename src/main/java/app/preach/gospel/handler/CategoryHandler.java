@@ -62,7 +62,7 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	/**
 	 * ResourceLoader
 	 */
-	private final ResourceLoader resourceLoader = new DefaultResourceLoader();
+	private transient ResourceLoader resourceLoader = new DefaultResourceLoader();
 
 	/**
 	 * クロスアイコン取得する

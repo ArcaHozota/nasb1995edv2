@@ -6,6 +6,7 @@ import static org.apache.struts2.action.Action.NONE;
 import static org.apache.struts2.action.Action.SUCCESS;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Base64;
 import java.util.Map;
 
@@ -45,12 +46,13 @@ import lombok.Setter;
 @Setter
 @Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
 @Results({ @Result(name = SUCCESS, location = "/templates/hymns-score-upload.ftl"),
-		@Result(name = ERROR, type = "json", params = { "root", "errorResponse" }),
-		@Result(name = NONE, type = "json", params = { "root", "responsedJsonData" }),
+		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
+		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
 		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 public class ScoreUploadHandler extends ActionSupport implements ServletRequestAware {
 
+	@Serial
 	private static final long serialVersionUID = 4949258675703419344L;
 
 	/**
@@ -61,12 +63,12 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	/**
 	 * JSONリスポンス
 	 */
-	private transient Object responsedJsonData;
+	private transient Object responseJsonData;
 
 	/**
 	 * エラーリスポンス
 	 */
-	private transient String errorResponse;
+	private transient String responseError;
 
 	/**
 	 * 賛美歌サービスインターフェス
@@ -97,10 +99,10 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 			if (!scoreStorage.isOk()) {
 				throw scoreStorage.getErr();
 			}
-			this.setResponsedJsonData(scoreStorage.getOk());
+			this.setResponseJsonData(scoreStorage.getOk());
 			return NONE;
 		} catch (final IOException e) {
-			this.setErrorResponse(e.getMessage());
+			this.setResponseError(e.getMessage());
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return ERROR;
 		}
@@ -131,7 +133,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 			outputStream.close();
 		} catch (final IOException e) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			this.setErrorResponse(e.getMessage());
+			this.setResponseError(e.getMessage());
 			return ERROR;
 		}
 		return null;

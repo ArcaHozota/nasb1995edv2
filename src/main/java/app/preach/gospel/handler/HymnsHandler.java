@@ -17,6 +17,8 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson2.JSON;
@@ -53,6 +55,11 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = -6535194800678567557L;
+
+	/**
+	 * ページナンバー
+	 */
+	private static final String PAGENUM = "pageNum";
 
 	/**
 	 * リクエスト
@@ -154,7 +161,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	/**
 	 * 賛美歌情報転送クラス
 	 */
-	private HymnDto getHymnDto() {
+	@Contract(" -> new")
+	private @NotNull HymnDto getHymnDto() {
 		return new HymnDto(this.getId(), this.getNameJp(), this.getNameKr(), this.getSerif(), this.getLink(), null,
 				this.getUpdatedUser(), this.getUpdatedTime(), null);
 	}
@@ -214,7 +222,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(ProjectURLConstants.URL_PAGINATION)
 	public String pagination() {
-		final String pageNum = this.getServletRequest().getParameter("pageNum");
+		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		final String keyword = this.getServletRequest().getParameter("keyword");
 		final CoResult<Pagination<HymnDto>, PersistenceException> hymnsByKeyword = this.iHymnService
 				.getHymnsByKeyword(Integer.parseInt(pageNum), keyword);
@@ -234,7 +242,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	@Action(value = ProjectURLConstants.URL_TO_ADDITION, results = {
 			@Result(name = SUCCESS, location = "/templates/hymns-addition.ftl") })
 	public String toAddition() {
-		final String pageNum = this.getServletRequest().getParameter("pageNum");
+		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
@@ -248,7 +256,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 			@Result(name = SUCCESS, location = "/templates/hymns-edition.ftl") })
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
-		final String pageNum = this.getServletRequest().getParameter("pageNum");
+		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(editId));
@@ -267,7 +275,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 */
 	@Action(ProjectURLConstants.URL_TO_PAGES)
 	public String toPages() {
-		final String pageNum = this.getServletRequest().getParameter("pageNum");
+		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		if (CoProjectUtils.isDigital(pageNum)) {
 			ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 			return SUCCESS;

@@ -109,13 +109,13 @@ public final class StudentServiceImpl implements IStudentService {
 			student.setPassword(null);
 			val.setPassword(null);
 			val.setUpdatedTime(null);
-			boolean passwordDiscernment = false;
+			boolean passwordDiscernment;
 			if (CoProjectUtils.isEqual(rawPassword, password)) {
 				passwordDiscernment = true;
 			} else {
 				passwordDiscernment = ENCODER.matches(rawPassword, password);
 			}
-			if (CoProjectUtils.isEqual(student, val) && passwordDiscernment) {
+			if (CoProjectUtils.isEqual(student,   v) && passwordDiscernment) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
 				CoBeanUtils.copyNullableProperties(student, val);
