@@ -11,10 +11,6 @@ body {
 	box-sizing: border-box;
 }
 
-a.effect-shine {
-	font-family: "Niconne", serif;
-}
-
 .text-bg-klein {
 	color: #fff !important;
 	background-color: #002fa7 !important;
@@ -186,6 +182,10 @@ a.effect-shine {
  */
 .main {
 	padding: 20px;
+}
+
+a.effect-shine {
+	font-family: "Niconne", serif;
 }
 
 @media (min-width: 768px) {
