@@ -5,7 +5,7 @@
 <body>
 	<style>
 		label {
-			font-family: "NotoSerifJP", serif;
+			font-family: "Noto Serif JP", serif;
 			font-weight: 600;
 		}
 	</style>

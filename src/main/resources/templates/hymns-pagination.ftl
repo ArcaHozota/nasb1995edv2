@@ -5,7 +5,7 @@
 <body>
 	<style>
 		#tableBody {
-			font-family: "NotoSerifJP", serif;
+			font-family: "Noto Serif JP", serif;
 		}
 	</style>
 	<#include "include-navbar.ftl">

@@ -1,80 +1,10 @@
 /* General Font */
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-Black.woff2") format("woff2");
-	font-weight: 900; /* Black */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-ExtraBold.woff2") format("woff2");
-	font-weight: 800; /* ExtraBold */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-Bold.woff2") format("woff2");
-	font-weight: 700; /* Bold */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-SemiBold.woff2") format("woff2");
-	font-weight: 600; /* SemiBold */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-Medium.woff2") format("woff2");
-	font-weight: 500; /* Medium */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-Regular.woff2") format("woff2");
-	font-weight: 400; /* Regular */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-Light.woff2") format("woff2");
-	font-weight: 300; /* Light */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-ExtraLight.woff2") format("woff2");
-	font-weight: 200; /* ExtraLight */
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-	font-family: "NotoSansJP";
-	src: url("../fonts/Noto_Sans_JP/static/NotoSansJP-Thin.woff2") format("woff2");
-	font-weight: 100; /* Thin */
-    font-style: normal;
-    font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
 
 * {
 	margin: 0;
 	padding: 0;
-	font-family: "NotoSansJP", sans-serif;
+	font-family: "Noto Sans JP", sans-serif;
 }
 
 body {
