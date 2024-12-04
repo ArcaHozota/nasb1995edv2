@@ -29,10 +29,12 @@
 <body>
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 900;" href="/home">
-				<img src="/category/initial?icons=cross.svg" alt="img01" width="42px" height="42px">
-				NASB1995
-			</a>
+			<div class="d-flex justify-content-start">
+				<img src="/category/initial?icons=cross.svg" alt="img01" width="60" height="60">
+				<a class="navbar-brand effect-shine" style="font-size: 33px;font-weight: 900;" href="/home">
+					NASB1995
+				</a>
+			</div>
 			<div class="d-flex justify-content-end">
 				<a href="/category/login" type="button" class="btn btn-primary me-2" style="font-weight: 600;">
 					<i class="fa-solid fa-right-to-bracket"></i> ログイン
