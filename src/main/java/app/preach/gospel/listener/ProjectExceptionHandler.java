@@ -46,7 +46,7 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.setContentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE);
 				response.sendRedirect(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
-						.concat(ProjectURLConstants.URL_TO_ERROR));
+						.concat(ProjectURLConstants.URL_TO_ERROR).concat("?exception=").concat(exception.getMessage()));
 			}
 			log.error("Exception occurred during processing request: {}", exception.getMessage());
 		} catch (final Exception e) {

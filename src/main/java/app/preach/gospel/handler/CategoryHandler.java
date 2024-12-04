@@ -158,8 +158,8 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 */
 	@Action(ProjectURLConstants.URL_TO_ERROR)
 	public String toSystemError() {
-		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION,
-				ProjectConstants.MESSAGE_STRING_FATAL_ERROR);
+		final String errorMsg = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_EXCEPTION);
+		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION, errorMsg);
 		ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		return ERROR;
 	}
