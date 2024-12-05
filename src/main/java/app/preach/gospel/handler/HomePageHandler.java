@@ -98,8 +98,7 @@ public class HomePageHandler extends ActionSupport implements ServletRequestAwar
 		final List<HymnDto> hymnDtos = new ArrayList<>();
 		hymnDtos.add(new HymnDto(String.valueOf(0), ProjectConstants.DEFAULT_LEDGER_NAME, null, null, null, null, null,
 				null, null));
-		final List<HymnDto> list = totalRecords.getOk();
-		hymnDtos.addAll(list);
+		hymnDtos.addAll(totalRecords.getOk());
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalRecords.getOk().size());
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_HYMNDTOS, hymnDtos);
 		return SUCCESS;

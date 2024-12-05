@@ -18,8 +18,7 @@
 	<style>
 		#indexTablehead,
 		#saraniSearchBtn,
-		#tableBody, 
-		#hintDiv {
+		#tableBody {
 			font-family: "Noto Serif JP", serif;
 			font-weight: 600;
 		}
