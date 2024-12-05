@@ -58,7 +58,7 @@ public final class HymnServiceImpl implements IHymnService {
 	/**
 	 * 共通検索条件
 	 */
-	private static final Specification<Hymn> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
+	protected static final Specification<Hymn> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
 			.equal(root.get("visibleFlg"), Boolean.TRUE);
 
 	/**
@@ -146,17 +146,18 @@ public final class HymnServiceImpl implements IHymnService {
 				.equal(root.get("id"), id);
 		final CoResult<HymnDto, PersistenceException> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
-			final Specification<Student> specification2 = (root, query, criteriaBuilder) -> {
-				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
-				return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), val.getUpdatedUser()));
-			};
-			this.studentRepository.findOne(specification2).ifPresentOrElse(subVal -> {
-				final ZonedDateTime zonedDateTime = val.getUpdatedTime().atZoneSameInstant(ZoneOffset.ofHours(9));
-				final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
-						val.getSerif(), val.getLink(), val.getScore(), subVal.getUsername(),
-						FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
-				result.setSelf(CoResult.ok(hymnDto));
-			}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+			final Specification<Student> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get("id"), val.getUpdatedUser());
+			this.studentRepository.findOne(StudentServiceImpl.COMMON_CONDITION.and(specification2))
+					.ifPresentOrElse(subVal -> {
+						final ZonedDateTime zonedDateTime = val.getUpdatedTime()
+								.atZoneSameInstant(ZoneOffset.ofHours(9));
+						final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
+								val.getSerif(), val.getLink(), val.getScore(), subVal.getUsername(),
+								FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
+						result.setSelf(CoResult.ok(hymnDto));
+					}, () -> result.setSelf(
+							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;
 	}

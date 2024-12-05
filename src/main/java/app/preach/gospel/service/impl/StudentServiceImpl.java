@@ -37,7 +37,7 @@ public final class StudentServiceImpl implements IStudentService {
 	/**
 	 * 共通検索条件
 	 */
-	private static final Specification<Student> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
+	protected static final Specification<Student> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
 			.equal(root.get("visibleFlg"), Boolean.TRUE);
 
 	/**
@@ -115,7 +115,7 @@ public final class StudentServiceImpl implements IStudentService {
 			} else {
 				passwordDiscernment = ENCODER.matches(rawPassword, password);
 			}
-			if (CoProjectUtils.isEqual(student,   v) && passwordDiscernment) {
+			if (CoProjectUtils.isEqual(student, val) && passwordDiscernment) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
 				CoBeanUtils.copyNullableProperties(student, val);
