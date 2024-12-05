@@ -1,12 +1,12 @@
 let pageNum = $("#pageNumContainer").val();
-$("#toStudentsPages").on('click', function(e) {
+$("#toStudentsPages").on("click", function(e) {
 	e.preventDefault();
 	layer.msg(delayApology);
 });
 $("#accountEdit").on("change", function() {
 	checkStudentName(this, $("#idContainer").val());
 });
-$("#infoUpdationBtn").on('click', function() {
+$("#infoUpdationBtn").on("click", function() {
 	let inputArrays = ["#accountEdit", "#nameEdit", "#passwordEdit", "#birthdayEdit", "#emailEdit"];
 	for (const array of inputArrays) {
 		$(array).removeClass("is-valid is-invalid");
@@ -41,7 +41,7 @@ function studentsPutSuccessFunction(response) {
 	localStorage.setItem('redirectMessage', message);
 	window.location.replace('/category/toMainmenu');
 }
-$("#restoreBtn").on('click', function() {
+$("#restoreBtn").on("click", function() {
 	formReset("#editForm");
 });
 function checkStudentName(studentName, idVal) {

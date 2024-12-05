@@ -35,20 +35,20 @@ $(document).ready(function() {
 $("#emailIpt").on("change", function() {
 	let inputEmail = this.value;
 	let regularEmail = /^^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
-	if (inputEmail.includes('@')) {
+	if (inputEmail.includes("@")) {
 		if (!regularEmail.test(inputEmail)) {
-			layer.msg("入力したメールアドレスが正しくありません。");
+			layer.msg('入力したメールアドレスが正しくありません。');
 		}
 	}
 });
 $("#loginBtn").on('click', function() {
 	let account = $("#accountIpt").val().trim();
 	let password = $("#passwordIpt").val().trim();
-	if (account === "" && password === "") {
+	if (account === '' && password === '') {
 		layer.msg('アカウントとパスワードを入力してください。');
-	} else if (account === "") {
+	} else if (account === '') {
 		layer.msg('アカウントを入力してください。');
-	} else if (password === "") {
+	} else if (password === '') {
 		layer.msg('パスワードを入力してください。');
 	} else {
 		$.ajax({
@@ -68,7 +68,7 @@ $("#loginBtn").on('click', function() {
 $("#torokuBtn").on('click', function() {
 	let inputArrays = ["#emailIpt", "#passwordIpt1", "#passwordIpt2"];
 	for (const element of inputArrays) {
-		if ($(element).val().trim() === "") {
+		if ($(element).val().trim() === '') {
 			layer.msg('入力しなかった情報があります。');
 			return;
 		}

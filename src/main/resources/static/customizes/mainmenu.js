@@ -9,16 +9,16 @@ $(document).ready(function() {
 		localStorage.removeItem('redirectMessage');
 	}
 });
-$("#booksKanriMainmenu").on('click', function() {
+$("#booksKanriMainmenu").on("click", function() {
 	layer.msg(delayApology);
 	// let url = '/books/initial';
 	// checkPermissionAndTransfer(url);
 });
-$("#hymnsKanriMainmenu").on('click', function() {
+$("#hymnsKanriMainmenu").on("click", function() {
 	let url = '/hymns/toPages?pageNum=1';
 	checkPermissionAndTransfer(url);
 });
-$("#randomKanriMainmenu").on('click', function() {
+$("#randomKanriMainmenu").on("click", function() {
 	let url = '/hymns/toRandomFive';
 	checkPermissionAndTransfer(url);
 });

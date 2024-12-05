@@ -2,7 +2,7 @@ $(document).ready(function() {
 	$("#toRandomFive").css('color', '#006b3c');
 	$("#toRandomFive").addClass('animate__animated animate__flipInY');
 });
-$("#randomSearchBtn").on('click', function() {
+$("#randomSearchBtn").on("click", function() {
 	keyword = $("#keywordInput").val();
 	retrieveRandomFive(keyword);
 });
@@ -25,7 +25,7 @@ function buildTableBody(response) {
 		$("<tr></tr>").append(nameMixTd).appendTo("#tableBody");
 	});
 }
-$("#tableBody").on('click', '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', function(e) {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);

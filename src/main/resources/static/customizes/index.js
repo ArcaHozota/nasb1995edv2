@@ -2,7 +2,7 @@ $(document).ready(function() {
 	adjustWidth();
 	$("#tableBody").hide();
 });
-$("#randomSearchBtn").on('click', function() {
+$("#randomSearchBtn").on("click", function() {
 	adjustWidth();
 	$("#loadingBackground").show();
 	$("#loadingContainer").show();
@@ -16,12 +16,12 @@ $("#randomSearchBtn").on('click', function() {
 		$("#randomSearchBtn").prop("disabled", false);
 	}, 3300);
 });
-$("#tableBody").on('click', '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', function(e) {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
 });
-$("#tableBody").on('click', '.score-download-btn', function(e) {
+$("#tableBody").on("click", '.score-download-btn', function(e) {
 	e.preventDefault();
 	let scoreId = $(this).attr('scoreId');
 	window.location.href = '/hymns/scoreDownload?scoreId=' + scoreId;

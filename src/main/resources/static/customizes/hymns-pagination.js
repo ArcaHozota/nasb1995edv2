@@ -13,7 +13,7 @@ $(document).ready(function() {
 	}
 	toSelectedPg(pageNum, keyword);
 });
-$("#searchBtn2").on('click', function() {
+$("#searchBtn2").on("click", function() {
 	keyword = $("#keywordInput").val();
 	toSelectedPg(1, keyword);
 });
@@ -59,32 +59,32 @@ function buildTableBody(response) {
 		$("<tr></tr>").append(nameJpTd).append(nameKrTd).append(linkTd).append(scoreTd).append(btnTd).appendTo("#tableBody");
 	});
 }
-$("#tableBody").on('click', '.delete-btn', function() {
+$("#tableBody").on("click", '.delete-btn', function() {
 	let deleteId = $(this).attr("deleteId");
 	let nameJp = $(this).parents("tr").find("th").text().trim();
 	normalDeletebtnFunction('/hymns/', 'この「' + nameJp + '」という歌の情報を削除するとよろしいでしょうか。', deleteId);
 });
-$("#infoAdditionBtn").on('click', function(e) {
+$("#infoAdditionBtn").on("click", function(e) {
 	e.preventDefault();
 	let url = '/hymns/toAddition?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#tableBody").on('click', '.edit-btn', function() {
+$("#tableBody").on("click", '.edit-btn', function() {
 	let editId = $(this).attr("editId");
 	let url = '/hymns/toEdition?editId=' + editId + '&pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#tableBody").on('click', '.score-btn', function() {
+$("#tableBody").on("click", '.score-btn', function() {
 	let scoreId = $(this).attr('scoreId');
 	let url = '/hymns/toScoreUpload?scoreId=' + scoreId + '&pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#tableBody").on('click', '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', function(e) {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
 });
-$("#tableBody").on('click', '.score-download-btn', function(e) {
+$("#tableBody").on("click", '.score-download-btn', function(e) {
 	e.preventDefault();
 	let scoreId = $(this).attr('scoreId');
 	window.location.href = '/hymns/scoreDownload?scoreId=' + scoreId;

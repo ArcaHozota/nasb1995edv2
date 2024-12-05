@@ -5,6 +5,7 @@ const inputWarning = '入力情報不正';
 const inputedString = '追加済み';
 const delimiter = '　/　';
 const delayApology = 'すみませんが、当機能はまだ実装されていません';
+const showVadMsgError = '名称を空になってはいけません。';
 $(document).ready(function() {
 	let treeData = [
 		{
@@ -50,7 +51,7 @@ $(document).ready(function() {
 		parentsMarginLeft: '1.25rem',
 		openNodeLinkOnNewTab: true
 	});
-	$("#logoutBtn").on('click', function() {
+	$("#logoutBtn").on("click", function() {
 		swal.fire({
 			title: '警告',
 			text: 'ログアウトしてよろしいでしょうか。',
@@ -68,41 +69,41 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$("#toMainmenu").on('click', function(e) {
+	$("#toMainmenu").on("click", function(e) {
 		e.preventDefault();
 		window.location.replace('/category/toMainmenu');
 	});
-	$("#toMainmenu2").on('click', function(e) {
+	$("#toMainmenu2").on("click", function(e) {
 		e.preventDefault();
 		window.location.replace('/category/toMainmenu');
 	});
-	$("#toPersonal").on('click', function(e) {
+	$("#toPersonal").on("click", function(e) {
 		e.preventDefault();
 		let userId = $(this).find("input").val().replace(/,/g, emptyString);
 		// let authChkFlag = $("#authChkFlgContainer").val();
 		let url = '/students/toEdition?editId=' + userId;
 		checkPermissionAndTransfer(url);
 	});
-	$("#toMessage").on('click', function(e) {
+	$("#toMessage").on("click", function(e) {
 		e.preventDefault();
 		layer.msg(delayApology);
 	});
-	$("#toBookSearch").on('click', function(e) {
+	$("#toBookSearch").on("click", function(e) {
 		e.preventDefault();
 		layer.msg(delayApology);
 		// let url = '/books/toPages?pageNum=1';
 		// checkPermissionAndTransfer(url);
 	});
-	$("#toTemporary").on('click', function(e) {
+	$("#toTemporary").on("click", function(e) {
 		let url = '/books/toAddition';
 		checkPermissionAndTransfer(url);
 	});
-	$("#toCollection").on('click', function(e) {
+	$("#toCollection").on("click", function(e) {
 		e.preventDefault();
 		let url = '/hymns/toPages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
-	$("#toRandomFive").on('click', function(e) {
+	$("#toRandomFive").on("click", function(e) {
 		e.preventDefault();
 		let url = '/hymns/toRandomFive';
 		checkPermissionAndTransfer(url);
@@ -130,14 +131,14 @@ function buildPageInfos(response) {
 }
 function buildPageNavi(result) {
 	$("#pageNavi").empty();
-	let ul = $("<ul></ul>").addClass("pagination");
+	let ul = $("<ul></ul>").addClass('pagination');
 	let firstPageLi = $("<li class='page-item'></li>").append(
 		$("<a class='page-link'></a>").append("最初へ").attr("href", "#"));
 	let previousPageLi = $("<li class='page-item'></li>").append(
 		$("<a class='page-link'></a>").append("&laquo;").attr("href", "#"));
 	if (!result.hasPreviousPage) {
-		firstPageLi.addClass("disabled");
-		previousPageLi.addClass("disabled");
+		firstPageLi.addClass('disabled');
+		previousPageLi.addClass('disabled');
 	} else {
 		firstPageLi.click(function() {
 			toSelectedPg(1, keyword);
@@ -151,10 +152,10 @@ function buildPageNavi(result) {
 	let lastPageLi = $("<li class='page-item'></li>").append(
 		$("<a class='page-link'></a>").append("最後へ").attr("href", "#"));
 	if (!result.hasNextPage) {
-		nextPageLi.addClass("disabled");
-		lastPageLi.addClass("disabled");
+		nextPageLi.addClass('disabled');
+		lastPageLi.addClass('disabled');
 	} else {
-		lastPageLi.addClass("success");
+		lastPageLi.addClass('success');
 		nextPageLi.click(function() {
 			toSelectedPg(pageNum + 1, keyword);
 		});
@@ -179,26 +180,26 @@ function buildPageNavi(result) {
 }
 function formReset(element) {
 	$(element)[0].reset();
-	$(element).find(".form-control").removeClass("is-valid is-invalid");
-	$(element).find(".form-select").removeClass("is-valid is-invalid");
-	$(element).find(".form-text").removeClass("valid-feedback invalid-feedback");
+	$(element).find(".form-control").removeClass('is-valid is-invalid');
+	$(element).find(".form-select").removeClass('is-valid is-invalid');
+	$(element).find(".form-text").removeClass('valid-feedback invalid-feedback');
 	$(element).find(".form-text").text(emptyString);
 }
 function showValidationMsg(element, status, msg) {
-	$(element).removeClass("is-valid is-invalid");
-	$(element).next("span").removeClass("valid-feedback invalid-feedback");
+	$(element).removeClass('is-valid is-invalid');
+	$(element).next("span").removeClass('valid-feedback invalid-feedback');
 	$(element).next("span").text(emptyString);
 	if (status === responseSuccess) {
-		$(element).addClass("is-valid");
-		$(element).next("span").addClass("valid-feedback");
+		$(element).addClass('is-valid');
+		$(element).next("span").addClass('valid-feedback');
 	} else {
-		$(element).addClass("is-invalid");
-		$(element).next("span").addClass("invalid-feedback").text(msg);
+		$(element).addClass('is-invalid');
+		$(element).next("span").addClass('invalid-feedback').text(msg);
 	}
 }
 function projectAjaxModify(url, type, data, successFunction) {
-	let header = $('meta[name=_csrf_header]').attr('content');
-	let token = $('meta[name=_csrf_token]').attr('content');
+	let header = $("meta[name=_csrf_header]").attr("content");
+	let token = $("meta[name=_csrf_token]").attr("content");
 	$.ajax({
 		url: url,
 		type: type,
@@ -218,7 +219,7 @@ function projectAjaxModify(url, type, data, successFunction) {
 function projectNullInputboxDiscern(inputArrays) {
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === emptyString) {
-			showValidationMsg(element, responseFailure, "上記の入力ボックスを空になってはいけません。");
+			showValidationMsg(element, responseFailure, '上記の入力ボックスを空になってはいけません。');
 		}
 	}
 }
@@ -234,7 +235,7 @@ function projectInputContextGet(inputArrays) {
 	return listArray;
 }
 function normalDeleteSuccessFunction(result) {
-	if (result.status === 'SUCCESS') {
+	if (result.status === responseSuccess) {
 		layer.msg(result.message);
 		toSelectedPg(pageNum, keyword);
 	} else {
@@ -251,7 +252,7 @@ function normalAddbtnFunction(checkUrl, modalName) {
 		layer.msg(ajaxResult.responseJSON.message);
 		return;
 	}
-	let modalForm = $(modalName).find('form');
+	let modalForm = $(modalName).find("form");
 	formReset(modalForm);
 	$(modalName).modal({
 		backdrop: 'static'

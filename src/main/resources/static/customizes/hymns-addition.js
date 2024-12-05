@@ -17,14 +17,14 @@ $("#nameKrInput").on("change", function() {
 $("#infoStorageBtn").on("click", function() {
 	let inputArrays = ["#nameJpInput", "#nameKrInput", "#linkInput", "#serifInput"];
 	for (const array of inputArrays) {
-		$(array).removeClass("is-valid is-invalid");
-		$(array).next("span").removeClass("valid-feedback invalid-feedback");
+		$(array).removeClass('is-valid is-invalid');
+		$(array).next("span").removeClass('valid-feedback invalid-feedback');
 		$(array).next("span").text(emptyString);
 	}
 	let listArray = projectInputContextGet(inputArrays);
 	if (listArray.includes(emptyString)) {
 		projectNullInputboxDiscern(inputArrays);
-	} else if ($("#inputForm").find('*').hasClass('is-invalid')) {
+	} else if ($("#inputForm").find("*").hasClass('is-invalid')) {
 		layer.msg(inputWarning);
 	} else {
 		let postData = JSON.stringify({
@@ -46,14 +46,14 @@ $("#nameKrEdit").on("change", function() {
 $("#infoUpdationBtn").on("click", function() {
 	let inputArrays = ["#nameJpEdit", "#nameKrEdit", "#linkEdit", "#serifEdit"];
 	for (const array of inputArrays) {
-		$(array).removeClass("is-valid is-invalid");
-		$(array).next("span").removeClass("valid-feedback invalid-feedback");
+		$(array).removeClass('is-valid is-invalid');
+		$(array).next("span").removeClass('valid-feedback invalid-feedback');
 		$(array).next("span").text(emptyString);
 	}
 	let listArray = projectInputContextGet(inputArrays);
 	if (listArray.includes(emptyString)) {
 		projectNullInputboxDiscern(inputArrays);
-	} else if ($("#editForm").find('*').hasClass('is-invalid')) {
+	} else if ($("#editForm").find("*").hasClass('is-invalid')) {
 		layer.msg(inputWarning);
 	} else {
 		let putData = JSON.stringify({
@@ -86,7 +86,7 @@ $("#restoreBtn").on("click", function() {
 function checkHymnName(hymnName, idVal) {
 	let nameVal = $(hymnName).val().trim();
 	if (nameVal === emptyString) {
-		showValidationMsg(hymnName, responseFailure, '名称を空になってはいけません。');
+		showValidationMsg(hymnName, responseFailure, showVadMsgError);
 	} else {
 		$.ajax({
 			url: '/hymns/checkDuplicated',
@@ -106,7 +106,7 @@ function checkHymnName(hymnName, idVal) {
 function checkHymnName2(hymnName, idVal) {
 	let nameVal = $(hymnName).val().trim();
 	if (nameVal === emptyString) {
-		showValidationMsg(hymnName, responseFailure, '名称を空になってはいけません。');
+		showValidationMsg(hymnName, responseFailure, showVadMsgError);
 	} else {
 		$.ajax({
 			url: '/hymns/checkDuplicated2',
