@@ -71,8 +71,10 @@ public class SpringSecurityConfiguration {
 				ProjectURLConstants.URL_HOMEPAGE4, SLASH.concat(ProjectURLConstants.URL_HOMEPAGE5),
 				ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_COMMON_RETRIEVE),
 				ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_SCORE_DOWNLOAD),
-				ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
-						.concat(ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR),
+				ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_GET_INFO),
+				ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH).concat(
+						ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR),
+				SLASH.concat(ProjectURLConstants.URL_LEDGER),
 				ProjectURLConstants.URL_STUDENTS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_PRE_LOGIN))
 				.permitAll()
 				.requestMatchers(ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH)

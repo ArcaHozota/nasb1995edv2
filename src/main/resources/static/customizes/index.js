@@ -26,6 +26,22 @@ $("#tableBody").on("click", '.score-download-btn', function(e) {
 	let scoreId = $(this).attr('scoreId');
 	window.location.href = '/hymns/scoreDownload?scoreId=' + scoreId;
 });
+$("#toIchiranHyoBtn").on("click", function() {
+	swal.fire({
+		title: 'メッセージ',
+		text: '賛美歌一覧表画面へ移動してよろしいでしょうか。',
+		icon: 'question',
+		showCloseButton: true,
+		confirmButtonText: 'はい',
+		confirmButtonColor: '#7F0020'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			window.location.href = '/toIchiranhyo';
+		} else if (result.isDenied) {
+			$(this).close();
+		}
+	});
+});
 function commonRetrieve(keyword) {
 	$.ajax({
 		url: '/hymns/commonRetrieve',

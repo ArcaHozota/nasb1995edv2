@@ -31,7 +31,6 @@
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="/static/layer/layer.js"></script>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -51,27 +50,30 @@
 		</div>
 	</nav>
 	<div class="col-sm-6 offset-sm-3 col-md-8 offset-md-2 main">
-		<div class="card border-darkgreen" style="margin-top: 2rem;">
-			<div class="card-header text-bg-darkgreen mb-3">
+		<div class="card border-reflexblue" style="margin-top: 2rem;">
+			<div class="card-header text-bg-reflexblue mb-3">
 				<h5 class="card-title" style="padding-top: 8px;font-weight: 500;">
-					<i class="fa-solid fa-cross"></i> 賛美歌選択
+					<i class="fa-solid fa-cross"></i> 賛美歌一覧表
 				</h5>
 			</div>
 			<div class="card-body">
 				<div class="row">
-					<form class="form-inline col-md-6 offset-md-3" role="form" style="padding-right: 0px;">
-						<div class="input-group col-md-6">
-							<input id="keywordInput" class="form-control" type="text" placeholder="キーワードを入力してください">
-							<button id="randomSearchBtn" class="btn btn-danger my-2 my-sm-0" type="button">
-								<i class="fa-solid fa-magnifying-glass"></i> ランドム選択
-							</button>
-						</div>
-					</form>
-					<div class="col-md-3" style="padding-left: 0px;">
-						<button type="button" class="btn btn-primary me-2" id="toIchiranHyoBtn">
-							<i class="fa-solid fa-circle-info"></i>
-						</button>
-					</div>
+					<div class="col-md-7 offset-md-2" style="padding-right: 0px;">
+						<select id="hymnRecordEdit" class="form-select" style="width: 100%;">
+			                <#list hymnDtos as hymnDto>
+			                	<#if hymnDto.nameKr?exists>
+									<option value="${hymnDto.id}">${hymnDto.nameJp}/${hymnDto.nameKr}</option>
+			                	<#else>
+			                		<option value="${hymnDto.id}">賛美歌${totalRecords}曲レコード済み</option>
+								</#if>
+							</#list>
+				        </select>
+			        </div>
+			        <div class="col-md-3" style="padding-left: 0px;">
+						<a id="saraniSearchBtn" class="btn btn-success my-2 my-sm-0" type="button" href="#">
+							&#x1D11E;
+						</a>
+			        </div>
 				</div>
 				<div class="background" id="loadingBackground" style="display: none;">
 					<div class="circle" id="loadingContainer" style="display: none;">
@@ -87,37 +89,20 @@
 				</div>
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead id="indexTablehead">
-						<tr class="table-success">
-							<th scope="col" class="text-center" style="width: 80%;">名称</th>
-							<th scope="col" class="text-center" style="width: 20%;">楽譜</th>
+						<tr class="table-primary">
+							<th scope="col" class="text-center" style="width: 100%;">名称</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody" class="table-group-divider">
 						<tr>
 							<td>1</td>
 						</tr>
-						<tr>
-							<td>2</td>
-						</tr>
-						<tr>
-							<td>3</td>
-						</tr>
-						<tr>
-							<td>4</td>
-						</tr>
-						<tr>
-							<td>5</td>
-						</tr>
 					</tbody>
 				</table>
-				<p class="d-flex justify-content-end" style="font-size: 10px;color: #353542;">賛美歌${totalRecords}曲レコード済み</p>
 			</div>
 		</div>
-		<div class="row" id="hintDiv">
-			<p style="font-size: 11px;color: #006B3C;">※赤色：アキュレイトクエリの結果、黄色：ファジークエリの結果。五つに満たされなかった場合にシステムが補充されます。</p>
-		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/index.js"></script>
+	<script type="text/javascript" src="/static/customizes/index2.js"></script>
 </body>
 
 </html>

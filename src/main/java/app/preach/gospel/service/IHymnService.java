@@ -59,11 +59,11 @@ public interface IHymnService {
 	CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(String keyword);
 
 	/**
-	 * 賛美歌のレコード数を取得する
+	 * 賛美歌のレコードを取得する
 	 *
-	 * @return CoResult<Long, PersistenceException>
+	 * @return CoResult<List<HymnDto>, PersistenceException>
 	 */
-	CoResult<Long, PersistenceException> getTotalRecords();
+	CoResult<List<HymnDto>, PersistenceException> getTotalRecords();
 
 	/**
 	 * 賛美情報を削除する

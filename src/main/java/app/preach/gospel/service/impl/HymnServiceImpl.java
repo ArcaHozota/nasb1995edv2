@@ -304,10 +304,15 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public CoResult<Long, PersistenceException> getTotalRecords() {
+	public CoResult<List<HymnDto>, PersistenceException> getTotalRecords() {
 		try {
-			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION);
-			return CoResult.ok(totalRecords);
+			final List<HymnDto> hymnDtos = this.hymnRepository.findAll(COMMON_CONDITION, Sort.by(Direction.ASC, "id"))
+					.stream()
+					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
+							hymnsRecord.getScore(), null, null, null))
+					.toList();
+			return CoResult.ok(hymnDtos);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
 		}

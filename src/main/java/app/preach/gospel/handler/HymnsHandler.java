@@ -6,6 +6,7 @@ import static org.apache.struts2.action.Action.NONE;
 import static org.apache.struts2.action.Action.SUCCESS;
 
 import java.io.Serial;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
@@ -165,6 +166,25 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	private @NotNull HymnDto getHymnDto() {
 		return new HymnDto(this.getId(), this.getNameJp(), this.getNameKr(), this.getSerif(), this.getLink(), null,
 				this.getUpdatedUser(), this.getUpdatedTime(), null);
+	}
+
+	/**
+	 * 賛美歌情報を取得する
+	 *
+	 * @return String
+	 */
+	@Action(ProjectURLConstants.URL_GET_INFO)
+	public String getInfoById() {
+		final String hymnId = this.getServletRequest().getParameter("hymnId");
+		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
+				.getHymnInfoById(Long.parseLong(hymnId));
+		if (!hymnInfoById.isOk()) {
+			throw hymnInfoById.getErr();
+		}
+		final List<HymnDto> hymnDtos = new ArrayList<>();
+		hymnDtos.add(hymnInfoById.getOk());
+		this.setResponseJsonData(JSON.toJSON(hymnDtos));
+		return NONE;
 	}
 
 	/**

@@ -52,6 +52,8 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_EDITION = "toEdition";
 
+	public static final String URL_GET_INFO = "getInfoById";
+
 	public static final String URL_TO_PAGES = "toPages";
 
 	public static final String URL_PAGINATION = "pagination";
