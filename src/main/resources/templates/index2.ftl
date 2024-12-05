@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Niconne&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap">
 	<style>
 		#indexTablehead,
-		#randomSearchBtn,
+		#saraniSearchBtn,
 		#tableBody, 
 		#hintDiv {
 			font-family: "Noto Serif JP", serif;
@@ -31,6 +31,7 @@
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="/static/layer/layer.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
