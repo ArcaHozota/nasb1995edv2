@@ -34,6 +34,8 @@ public final class ProjectConstants {
 
 	public static final String ATTRNAME_RECORDS = "totalRecords";
 
+	public static final String ATTRNAME_HYMNDTOS = "hymnDtos";
+
 	public static final String MESSAGE_STRING_INVALIDATE = "入力した文字列は不規則。";
 
 	public static final String MESSAGE_STRING_NOT_LOGIN = "ログインしてください";

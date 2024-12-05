@@ -89,4 +89,6 @@ public final class ProjectURLConstants {
 	public static final String URL_HOMEPAGE4 = "/";
 
 	public static final String URL_HOMEPAGE5 = "index";
+
+	public static final String URL_LEDGER = "toIchiranhyo";
 }
