@@ -3,43 +3,43 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: Arial, sans-serif;
-	color: white;
+	color: #fffaf1;
 	overflow: hidden;
-	background: url('../image/bg2.jpg') no-repeat center center;
+	background: url('../image/bg1.webp') no-repeat center center;
 	background-size: cover;
 	position: relative;
 }
 
-/* 添加光波效果的伪元素 */
+/* 添加对角线光波效果的伪元素 */
 body::before {
 	content: '';
 	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(-75deg, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0.2) 75%);
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: linear-gradient(45deg, rgba(255, 250, 240, 0.2) 25%, rgba(255, 250, 240, 0.5) 50%, rgba(255, 250, 240, 0.2) 75%);
 	background-size: 200% 200%;
 	mix-blend-mode: screen;
 	/* 光波的混合模式 */
-	animation: shine-wave 12s infinite linear;
+	animation: shine-wave 11s infinite linear;
 	pointer-events: none;
 	/* 不干扰用户操作 */
+	transform: rotate(-45deg);
+	/* 对角线光波的方向 */
+	clip-path: polygon(0 30%, 100% 35%, 100% 65%, 0 70%);
+	/* 定义长条形状 */
 	z-index: 1;
 }
 
 /* 光波动画 */
 @keyframes shine-wave {
 	from {
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%) rotate(-45deg);
 	}
 
 	to {
-		transform: translate(100%, 100%);
+		transform: translate(50%, 50%) rotate(-45deg);
 	}
 }
 
@@ -48,6 +48,5 @@ nav,
 .main {
 	position: relative;
 	z-index: 2;
-	/* 确保文字在光波上方 */
 	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }

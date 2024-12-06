@@ -59,7 +59,7 @@
 			</div>
 			<div class="card-body">
 				<div class="row">
-					<form class="form-inline col-md-6 offset-md-3" role="form" style="padding-right: 0px;">
+					<form class="form-inline col-md-6 offset-md-3" role="form">
 						<div class="input-group col-md-6">
 							<input id="keywordInput" class="form-control" type="text" placeholder="キーワードを入力してください">
 							<button id="randomSearchBtn" class="btn btn-danger my-2 my-sm-0" type="button">
