@@ -72,7 +72,7 @@
 			        </div>
 			        <div class="col-md-4" style="padding-left: 0px;">
 						<a id="saraniSearchBtn" class="btn-kanami" style="--clr: #006B3C;" type="button" href="#">
-							<span>&#x1D11E;詳しい検索</span>
+							<span>&#x1D11E;金海氏検索</span>
 						</a>
 			        </div>
 				</div>
