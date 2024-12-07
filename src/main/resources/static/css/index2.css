@@ -70,6 +70,8 @@ a.btn-kanami::after {
 
 .background2 h2 {
 	display: flex;
+	position: absolute;
+	font-weight: 900;
 	background: #353542;
 }
 

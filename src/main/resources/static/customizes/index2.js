@@ -10,19 +10,16 @@ $(document).ready(function() {
 });
 $("#saraniSearchBtn").on("click", function(e) {
     e.preventDefault();
-    layer.msg('すみませんが、当機能はまだ実装されていません');
-    /*adjustWidth();
-    $("#loadingBackground").show();
-    $("#loadingContainer").show();
+    adjustWidth();
+    $("#loadingBackground2").show();
     $("#tableBody").show();
-    $("#saraniSearchBtn").prop("disabled", true);
+    $("#saraniSearchBtn").css("pointer-events", "none");
     let hymnId = $("#hymnRecordEdit").val();
     saraniRetrieve(hymnId);
     setTimeout(function() {
-        $("#loadingContainer").hide();
-        $("#loadingBackground").hide();
-        $("#saraniSearchBtn").prop("disabled", false);
-    }, 22000);*/
+        $("#loadingBackground2").hide();
+        $("#saraniSearchBtn").css("pointer-events", "auto");
+    }, 330000);
 });
 $("#hymnRecordEdit").on("change", function() {
     let hymnId = $(this).val();
@@ -48,6 +45,7 @@ $("#tableBody").on("click", '.link-btn', function(e) {
     window.open(transferVal);
 });
 function saraniRetrieve(hymnId) {
+    return;
     $.ajax({
         url: '/hymns/saraniRetrieve',
         data: 'hymnId=' + hymnId,
@@ -78,6 +76,6 @@ function buildTableBody(response) {
 function adjustWidth() {
     const $indexTable = $("#indexTable");
     if ($indexTable.length) {
-        $('.background').css('width', $indexTable.outerWidth() + 'px');
+        $('.background2').css('width', $indexTable.outerWidth() + 'px');
     }
 }
