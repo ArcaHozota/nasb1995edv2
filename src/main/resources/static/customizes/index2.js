@@ -10,16 +10,35 @@ $(document).ready(function() {
 });
 $("#saraniSearchBtn").on("click", function(e) {
     e.preventDefault();
-    adjustWidth();
-    $("#loadingBackground2").show();
-    $("#tableBody").show();
-    $("#saraniSearchBtn").css("pointer-events", "none");
     let hymnId = $("#hymnRecordEdit").val();
-    saraniRetrieve(hymnId);
-    setTimeout(function() {
-        $("#loadingBackground2").hide();
-        $("#saraniSearchBtn").css("pointer-events", "auto");
-    }, 330000);
+    if (hymnId === "0" || hymnId === 0) {
+        layer.msg('賛美歌を選択してください');
+    }else{
+        swal.fire({
+            title: '警告',
+            text: '長い時間をかかる金海嶺氏の検索を行なっててよろしいでしょうか。',
+            icon: 'warning',
+            showDenyButton: true,
+            denyButtonText: 'いいえ',
+            confirmButtonText: 'はい',
+            confirmButtonColor: '#7F0020',
+            denyButtonColor: '#002FA7'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                adjustWidth();
+                $("#loadingBackground2").show();
+                $("#tableBody").show();
+                $("#saraniSearchBtn").css("pointer-events", "none");
+                saraniRetrieve(hymnId);
+                setTimeout(function() {
+                    $("#loadingBackground2").hide();
+                    $("#saraniSearchBtn").css("pointer-events", "auto");
+                }, 330000);
+            } else if (result.isDenied) {
+                $(this).close();
+            }
+        });
+    }
 });
 $("#hymnRecordEdit").on("change", function() {
     let hymnId = $(this).val();

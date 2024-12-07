@@ -70,7 +70,6 @@ a.btn-kanami::after {
 
 .background2 h2 {
 	display: flex;
-	position: absolute;
 	font-weight: 900;
 	background: #353542;
 }
@@ -80,30 +79,51 @@ h2 span {
 }
 
 h2 span:nth-child(1) {
+	position: absolute;
+	left: 40%;
+	top: 50%;
     animation-delay: 0s;
 }
 
 h2 span:nth-child(2) {
+	position: absolute;
+	left: 42%;
+	top: 50%;
     animation-delay: 100ms;
 }
 
 h2 span:nth-child(3) {
+	position: absolute;
+	left: 45%;
+	top: 50%;
     animation-delay: 200ms;
 }
 
 h2 span:nth-child(4) {
+	position: absolute;
+	left: 48%;
+	top: 50%;
     animation-delay: 300ms;
 }
 
 h2 span:nth-child(5) {
+	position: absolute;
+	left: 51%;
+	top: 50%;
     animation-delay: 400ms;
 }
 
 h2 span:nth-child(6) {
+	position: absolute;
+	left: 52%;
+	top: 50%;
     animation-delay: 500ms;
 }
 
 h2 span:nth-child(7) {
+	position: absolute;
+	left: 55%;
+	top: 50%;
     animation-delay: 600ms;
 }
 
