@@ -1,7 +1,6 @@
 $(document).ready(function() {
     adjustWidth();
     $("#tableBody").hide();
-    $("#saraniSearchBtn").prop("disabled", true);
     $("#saraniSearchBtn").on("mousemove", function(e) {
         let x = e.pageX - $(this).offset().left;
         let y = e.pageY - $(this).offset().top;

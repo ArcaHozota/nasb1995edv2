@@ -1,45 +1,17 @@
 /* 设置 body 的基础样式 */
 body {
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	color: floralwhite;
-	overflow: hidden;
 	background: url('../image/bg1.webp') no-repeat center center;
 	background-size: cover;
-	position: relative;
-}
-
-body::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: -100%;
-	width: 200%;
-	height: 100%;
-	background: linear-gradient(45deg, rgba(255, 250, 240, 0.2),
-			rgba(255, 250, 240, 0.6),
-			rgba(255, 250, 240, 0.2));
-	animation: flow-blend 5s infinite linear;
-	mix-blend-mode: screen;
-	z-index: 1;
-}
-
-@keyframes flow-blend {
-	0% {
-		left: -100%;
-	}
-
-	100% {
-		left: 100%;
-	}
+	background-position: center;
+	background-attachment: fixed;
+	background-blend-mode: overlay;
 }
 
 /* 保持文字在光波之上 */
 nav,
 .main {
 	position: relative;
-	z-index: 2;
+	z-index: 1;
 	text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
@@ -55,7 +27,7 @@ a.btn-kanami {
 
 a.btn-kanami span {
 	position: relative;
-	z-index: 3;
+	z-index: 2;
 }
 
 a.btn-kanami:hover {
