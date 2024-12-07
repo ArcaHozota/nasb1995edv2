@@ -59,7 +59,7 @@
 			</div>
 			<div class="card-body">
 				<div class="row">
-					<div class="col-md-7 offset-md-2" style="padding-right: 0px;">
+					<div class="col-md-6 offset-md-2" style="padding-right: 0px;">
 						<select id="hymnRecordEdit" class="form-select" style="width: 100%;">
 			                <#list hymnDtos as hymnDto>
 			                	<#if hymnDto.nameKr?exists>
@@ -70,9 +70,9 @@
 							</#list>
 				        </select>
 			        </div>
-			        <div class="col-md-3" style="padding-left: 0px;">
-						<a id="saraniSearchBtn" class="btn btn-success my-2 my-sm-0" type="button" href="#">
-							&#x1D11E;
+			        <div class="col-md-4" style="padding-left: 0px;">
+						<a id="saraniSearchBtn" class="btn btn-kanami" style="--clr: #006B3C;" type="button" href="#">
+							<span>&#x1D11E;詳しい検索</span>
 						</a>
 			        </div>
 				</div>
