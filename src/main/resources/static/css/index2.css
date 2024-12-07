@@ -59,3 +59,19 @@ a.btn-kanami::after {
 	inset: 2px;
 	border-radius: 30px;
 }
+
+.background2 {
+	display: flex;
+	background: #353542;
+	justify-content: center;
+	align-items: center;
+}
+
+.background2 h2 {
+	display: flex;
+	background: #353542;
+}
+
+h2 span {
+	animation: animate 3300ms linear infinite;
+}

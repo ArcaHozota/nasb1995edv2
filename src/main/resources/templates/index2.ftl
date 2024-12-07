@@ -76,17 +76,16 @@
 						</a>
 			        </div>
 				</div>
-				<div class="background" id="loadingBackground" style="display: none;">
-					<div class="circle" id="loadingContainer" style="display: none;">
-						<div class="large">
-							<div class="medium">
-								<div class="small">
-									<div class="core"></div>
-								</div>
-							</div>
-						</div>
-						<h1>LOADING</h1>
-					</div>
+				<div class="background2" id="loadingBackground2" style="display: none;">
+					<h2>
+						<span>L</span>
+						<span>O</span>
+						<span>A</span>
+						<span>D</span>
+						<span>I</span>
+						<span>N</span>
+						<span>G</span>
+					</h2>
 				</div>
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead id="indexTablehead">
