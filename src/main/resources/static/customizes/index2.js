@@ -16,7 +16,7 @@ $("#saraniSearchBtn").on("click", function(e) {
     }else{
         swal.fire({
             title: '警告',
-            text: '長い時間をかかる金海嶺氏の検索を行なっててよろしいでしょうか。',
+            text: '長い時間をかかる金海嶺氏の検索を行なってよろしいでしょうか。',
             icon: 'warning',
             showDenyButton: true,
             denyButtonText: 'いいえ',

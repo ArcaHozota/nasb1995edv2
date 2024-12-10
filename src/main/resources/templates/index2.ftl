@@ -77,15 +77,10 @@
 			        </div>
 				</div>
 				<div class="background2" id="loadingBackground2" style="display: none;">
-					<h2>
-						<span>L</span>
-						<span>O</span>
-						<span>A</span>
-						<span>D</span>
-						<span>I</span>
-						<span>N</span>
-						<span>G</span>
-					</h2>
+					<div class="ring">
+                        Loading
+                        <span></span>
+                    </div>
 				</div>
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead id="indexTablehead">
