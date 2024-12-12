@@ -77,9 +77,10 @@
 			        </div>
 				</div>
 				<div class="background2" id="loadingBackground2" style="display: none;">
-					<div class="ring">
-                        Loading
-                        <span></span>
+					<div class="wrapper">
+                        <span class="content">LOADING</span>
+                        <span class="effect-1"></span>
+                        <span class="effect-2"></span>
                     </div>
 				</div>
 				<table class="table table-sm table-hover" id="indexTable">
