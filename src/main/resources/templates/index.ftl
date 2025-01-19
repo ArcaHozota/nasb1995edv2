@@ -88,8 +88,7 @@
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead id="indexTablehead">
 						<tr class="table-success">
-							<th scope="col" class="text-center" style="width: 80%;">名称</th>
-							<th scope="col" class="text-center" style="width: 20%;">楽譜</th>
+							<th scope="col" class="text-center">名称</th>
 						</tr>
 					</thead>
 					<tbody id="tableBody" class="table-group-divider">

@@ -21,11 +21,6 @@ $("#tableBody").on("click", '.link-btn', function(e) {
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
 });
-$("#tableBody").on("click", '.score-download-btn', function(e) {
-	e.preventDefault();
-	let scoreId = $(this).attr('scoreId');
-	window.location.href = '/hymns/scoreDownload?scoreId=' + scoreId;
-});
 $("#toIchiranHyoBtn").on("click", function() {
 	swal.fire({
 		title: 'メッセージ',
@@ -57,18 +52,16 @@ function commonRetrieve(keyword) {
 function buildTableBody(response) {
 	$("#tableBody").empty();
 	$.each(response, (response, item) => {
-		let nameMixTd = $("<td class='text-left' style='width: 80%;vertical-align: middle;'></td>")
+		let nameMixTd = $("<td class='text-center' style='vertical-align: middle;'></td>")
 			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
-		let scoreTd = $("<td class='text-center' style='width: 20%;vertical-align: middle;'></td>")
-			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
 		if (item.linenumber === 'BUNRGUNDY') {
-			$("<tr class='table-danger'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+			$("<tr class='table-danger'></tr>").append(nameMixTd).appendTo("#tableBody");
 		} else if (item.linenumber === 'NAPLES') {
-			$("<tr class='table-warning'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+			$("<tr class='table-warning'></tr>").append(nameMixTd).appendTo("#tableBody");
 		} else if (item.linenumber === 'CADIMIUM') {
-			$("<tr class='table-success'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+			$("<tr class='table-success'></tr>").append(nameMixTd).appendTo("#tableBody");
 		} else {
-			$("<tr class='table-light'></tr>").append(nameMixTd).append(scoreTd).appendTo("#tableBody");
+			$("<tr class='table-light'></tr>").append(nameMixTd).appendTo("#tableBody");
 		}
 	});
 }
