@@ -408,8 +408,7 @@ public final class HymnServiceImpl implements IHymnService {
 					.notEqual(root.get("id"), id);
 			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2));
 			final Map<Hymn, Double> computeTfIdfOfSerivies = this.computeTfIdfOfSerivies(val.getSerif(), hymns);
-			final Set<Entry<Hymn, Double>> entrySet = computeTfIdfOfSerivies.entrySet();
-			final List<Entry<Hymn, Double>> arrayList = new ArrayList<>(entrySet);
+			final List<Entry<Hymn, Double>> arrayList = new ArrayList<>(computeTfIdfOfSerivies.entrySet());
 			arrayList.sort(Entry.comparingByValue(Comparator.reverseOrder()));
 			final Hymn hymn1 = arrayList.get(0).getKey();
 			final Hymn hymn2 = arrayList.get(1).getKey();
