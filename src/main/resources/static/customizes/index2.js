@@ -28,11 +28,11 @@ $("#saraniSearchBtn").on("click", function(e) {
 				adjustWidth();
 				$("#loadingBackground2").show();
 				$("#saraniSearchBtn").css("pointer-events", "none");
+				kanumiRetrieve(hymnId);
 				setTimeout(function() {
-					kanumiRetrieve(hymnId);
 					$("#loadingBackground2").hide();
 					$("#saraniSearchBtn").css("pointer-events", "auto");
-				}, 330000);
+				}, 55000);
 			} else if (result.isDenied) {
 				$(this).close();
 			}
@@ -85,7 +85,7 @@ function initialPagination(pageNum, keyword) {
 		url: '/hymns/pagination',
 		data: 'pageNum=' + pageNum,
 		success: function(response) {
-			buildTableBody1(response);
+			buildTableBody2(response);
 			buildPageInfos(response);
 			buildPageNavi(response);
 		},
@@ -93,19 +93,6 @@ function initialPagination(pageNum, keyword) {
 			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 			layer.msg(message);
 		}
-	});
-}
-function buildTableBody1(response) {
-	$("#tableBody").empty();
-	let index = response.records;
-	$.each(index, (index, item) => {
-		let checkBoxTd = $("<td class='text-center' style='width: 10%;vertical-align: middle;'></td>")
-			.append($("<input class='form-check-input mt-0' style='vertical-align: middle;' type='checkbox' value='" + item.id + "'>"));
-		let nameMixTd = $("<td class='text-left' style='width: 70%;vertical-align: middle;'></td>")
-			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
-		let scoreTd = $("<td class='text-center' style='width: 20%;vertical-align: middle;'></td>")
-			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
-		$("<tr></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 	});
 }
 function buildPageInfos(response) {
@@ -180,17 +167,22 @@ function kanumiRetrieve(hymnId) {
 }
 function buildTableBody2(response) {
 	$("#tableBody").empty();
-	$.each(response, (response, item) => {
-		let nameMixTd = $("<td class='text-center' style='width: 80%;vertical-align: middle;'></td>")
+	let index = response.records;
+	$.each(index, (index, item) => {
+		let checkBoxTd = $("<td class='text-center' style='width: 10%;vertical-align: middle;'></td>")
+			.append($("<input class='form-check-input mt-0' style='vertical-align: middle;' type='checkbox' value='" + item.id + "'>"));
+		let nameMixTd = $("<td class='text-left' style='width: 70%;vertical-align: middle;'></td>")
 			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
+		let scoreTd = $("<td class='text-center' style='width: 20%;vertical-align: middle;'></td>")
+			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
 		if (item.linenumber === 'BUNRGUNDY') {
-			$("<tr class='table-danger'></tr>").append(nameMixTd).appendTo("#tableBody");
+			$("<tr class='table-danger'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else if (item.linenumber === 'NAPLES') {
-			$("<tr class='table-warning'></tr>").append(nameMixTd).appendTo("#tableBody");
+			$("<tr class='table-warning'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else if (item.linenumber === 'CADIMIUM') {
-			$("<tr class='table-success'></tr>").append(nameMixTd).appendTo("#tableBody");
+			$("<tr class='table-success'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else {
-			$("<tr class='table-light'></tr>").append(nameMixTd).appendTo("#tableBody");
+			$("<tr class='table-light'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		}
 	});
 }

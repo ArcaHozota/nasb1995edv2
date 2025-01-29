@@ -33,7 +33,8 @@ public class SpringSecurityConfiguration {
 
 	private static final String[] IGNORANCE_PATHS = { "/category/initial", "/static/**", "/home", "/index",
 			"/toHomePage", "/homePage", "/", "/toIchiranhyo", "/category/loginWithError", "/students/preLogin",
-			"/hymns/pagination", "/hymns/scoreDownload", "/hymns/kanumiRetrieve", "/hymns/commonRetrieve" };
+			"/hymns/pagination", "/hymns/scoreDownload", "/hymns/getInfoById", "/hymns/kanumiRetrieve",
+			"/hymns/commonRetrieve" };
 
 	/**
 	 * ログインサービス

@@ -119,6 +119,23 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	/**
+	 * jaccard類似度を計算する
+	 *
+	 * @param vectorA ベクターA
+	 * @param vectorB ベクターB
+	 * @return コサイン類似度
+	 */
+	private static double jaccardSimilarity(final Set<String> setA, final Set<String> setB) {
+		if (CollectionUtils.isEmpty(setA) && CollectionUtils.isEmpty(setB)) {
+			return 0.00;
+		}
+		final Set<String> intersection = new HashSet<>(setA);
+		intersection.retainAll(setB);
+		final int unionSize = (setA.size() + setB.size()) - intersection.size();
+		return unionSize == 0 ? 0.00 : intersection.size() / unionSize;
+	}
+
+	/**
 	 * 賛美歌情報管理リポジトリ
 	 */
 	private final HymnRepository hymnRepository;
@@ -404,11 +421,17 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> hymnDtos = new ArrayList<>();
 			hymnDtos.add(new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(), val.getSerif(),
 					val.getLink(), val.getScore(), null, null, LineNumber.BUNRGUNDY));
+			final Set<String> targetSerif = this.tokenizeKoreanText(val.getSerif());
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.notEqual(root.get("id"), id);
 			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2));
-			final Map<Hymn, Double> computeTfIdfOfSerivies = this.computeTfIdfOfSerivies(val.getSerif(), hymns);
-			final List<Entry<Hymn, Double>> arrayList = new ArrayList<>(computeTfIdfOfSerivies.entrySet());
+			final Map<Hymn, Double> paramMap = new HashMap<>();
+			for (final Hymn hymn : hymns) {
+				final Set<String> tokenizeKoreanText = this.tokenizeKoreanText(hymn.getSerif());
+				final double jaccardSimilarity = HymnServiceImpl.jaccardSimilarity(targetSerif, tokenizeKoreanText);
+				paramMap.put(hymn, jaccardSimilarity);
+			}
+			final List<Entry<Hymn, Double>> arrayList = new ArrayList<>(paramMap.entrySet());
 			arrayList.sort(Entry.comparingByValue(Comparator.reverseOrder()));
 			final Hymn hymn1 = arrayList.get(0).getKey();
 			final Hymn hymn2 = arrayList.get(1).getKey();
