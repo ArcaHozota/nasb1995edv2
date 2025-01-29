@@ -32,7 +32,9 @@ $("#saraniSearchBtn").on("click", function(e) {
 				setTimeout(function() {
 					$("#loadingBackground2").hide();
 					$("#saraniSearchBtn").css("pointer-events", "auto");
-				}, 33000);
+					$("#nameDisplay").text('検索完了');
+					$("#nameDisplay").attr('idVal', 0);
+				}, 15000);
 			} else if (result.isDenied) {
 				$(this).close();
 			}

@@ -93,7 +93,7 @@ a.btn-kanami::after {
 }
 
 .effect-1 {
-	background: linear-gradient(115deg, red 5%, green 97%);
+	background: linear-gradient(115deg, #7f0020 5%, darkgreen 97%);
 	position: absolute;
 	inset: 0;
 	width: 100%;
