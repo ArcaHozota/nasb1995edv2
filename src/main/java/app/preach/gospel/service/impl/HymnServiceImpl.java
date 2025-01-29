@@ -513,6 +513,7 @@ public final class HymnServiceImpl implements IHymnService {
 				CoBeanUtils.copyNullableProperties(hymnsRecord, val);
 				final String trimSerif = this.trimSerif(hymnsRecord.getSerif());
 				val.setSerif(trimSerif);
+				val.setUpdatedUser(Long.parseLong(hymnDto.updatedUser()));
 				val.setUpdatedTime(updatedTime);
 				try {
 					this.hymnRepository.saveAndFlush(val);

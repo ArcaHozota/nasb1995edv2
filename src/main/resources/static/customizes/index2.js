@@ -16,7 +16,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 	} else {
 		swal.fire({
 			title: '警告',
-			text: '長い時間をかかる金海嶺氏の検索を行なってよろしいでしょうか。',
+			text: '選択された曲に基づくセリフが似てる二つの曲を検索します。検索を行ってよろしいでしょうか。この画面及び検索は金海嶺氏のアイディアによって作成されたものです。',
 			icon: 'warning',
 			showDenyButton: true,
 			denyButtonText: 'いいえ',
