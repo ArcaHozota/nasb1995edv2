@@ -6,7 +6,6 @@ import static org.apache.struts2.action.Action.NONE;
 import static org.apache.struts2.action.Action.SUCCESS;
 
 import java.io.Serial;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
@@ -160,6 +159,16 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	}
 
 	/**
+	 * アカウント重複チェック
+	 *
+	 * @return String
+	 */
+	@Action(ProjectURLConstants.URL_CHECK_DELETE)
+	public String deletionCheck() {
+		return NONE;
+	}
+
+	/**
 	 * 賛美歌情報転送クラス
 	 */
 	@Contract(" -> new")
@@ -181,9 +190,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		final List<HymnDto> hymnDtos = new ArrayList<>();
-		hymnDtos.add(hymnInfoById.getOk());
-		this.setResponseJsonData(JSON.toJSON(hymnDtos));
+		this.setResponseJsonData(JSON.toJSON(hymnInfoById.getOk()));
 		return NONE;
 	}
 

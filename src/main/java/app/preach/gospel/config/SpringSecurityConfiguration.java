@@ -31,7 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
 
-	private static final String SLASH = "\u002f";
+	private static final String[] IGNORANCE_PATHS = { "/category/initial", "/static/**", "/home", "/index",
+			"/toHomePage", "/homePage", "/", "/toIchiranhyo", "/category/loginWithError", "/students/preLogin",
+			"/hymns/pagination", "/hymns/scoreDownload", "/hymns/kanumiRetrieve", "/hymns/commonRetrieve" };
 
 	/**
 	 * ログインサービス
@@ -63,33 +65,21 @@ public class SpringSecurityConfiguration {
 	@Bean
 	@Order(2)
 	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeHttpRequests(authorize -> authorize.requestMatchers(
-				ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
-						.concat(ProjectURLConstants.URL_INITIAL_TEMPLATE),
-				ProjectURLConstants.URL_STATIC_RESOURCE, SLASH.concat(ProjectURLConstants.URL_HOMEPAGE1),
-				SLASH.concat(ProjectURLConstants.URL_HOMEPAGE2), SLASH.concat(ProjectURLConstants.URL_HOMEPAGE3),
-				ProjectURLConstants.URL_HOMEPAGE4, SLASH.concat(ProjectURLConstants.URL_HOMEPAGE5),
-				ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_COMMON_RETRIEVE),
-				ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_SCORE_DOWNLOAD),
-				ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_GET_INFO),
-				ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH).concat(
-						ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR),
-				SLASH.concat(ProjectURLConstants.URL_LEDGER),
-				ProjectURLConstants.URL_STUDENTS_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_PRE_LOGIN))
-				.permitAll()
-				.requestMatchers(ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH)
-						.concat(ProjectURLConstants.URL_TO_EDITION))
-				.hasAuthority("hymns%edition")
-				.requestMatchers(ProjectURLConstants.URL_HYMNS_NAMESPACE.concat(SLASH)
-						.concat(ProjectURLConstants.URL_CHECK_DELETE))
-				.hasAuthority("hymns%deletion")
-				.requestMatchers(ProjectURLConstants.URL_STUDENTS_NAMESPACE.concat(SLASH)
-						.concat(ProjectURLConstants.URL_TO_EDITION))
-				.hasAuthority("students%retrievEdition").anyRequest().authenticated())
+		httpSecurity
+				.authorizeHttpRequests(
+						authorize -> authorize.requestMatchers(IGNORANCE_PATHS).permitAll()
+								.requestMatchers(ProjectURLConstants.URL_HYMNS_NAMESPACE
+										.concat("/").concat(ProjectURLConstants.URL_TO_EDITION))
+								.hasAuthority("hymns%edition")
+								.requestMatchers(ProjectURLConstants.URL_HYMNS_NAMESPACE
+										.concat("/").concat(ProjectURLConstants.URL_CHECK_DELETE))
+								.hasAuthority("hymns%deletion")
+								.requestMatchers(ProjectURLConstants.URL_STUDENTS_NAMESPACE.concat("/")
+										.concat(ProjectURLConstants.URL_TO_EDITION))
+								.hasAuthority("students%retrievEdition").anyRequest().authenticated())
 				.csrf(csrf -> csrf.ignoringRequestMatchers(ProjectURLConstants.URL_STATIC_RESOURCE,
-						ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH).concat(ProjectURLConstants.URL_LOGIN),
-						ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
-								.concat(ProjectURLConstants.URL_LOG_OUT))
+						ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/").concat(ProjectURLConstants.URL_LOGIN),
+						ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/").concat(ProjectURLConstants.URL_LOG_OUT))
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(handling -> {
 					handling.authenticationEntryPoint(this.projectAuthenticationEntryPoint);
@@ -100,17 +90,17 @@ public class SpringSecurityConfiguration {
 					});
 				})
 				.formLogin(formLogin -> formLogin
-						.loginPage(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
+						.loginPage(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
 								.concat(ProjectURLConstants.URL_TO_LOGIN))
-						.loginProcessingUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
+						.loginProcessingUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
 								.concat(ProjectURLConstants.URL_LOGIN))
-						.defaultSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
+						.defaultSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
 								.concat(ProjectURLConstants.URL_TO_MAINMENU_WITH_LOGIN))
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout
-						.logoutUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
+						.logoutUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
 								.concat(ProjectURLConstants.URL_LOG_OUT))
-						.logoutSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
+						.logoutSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
 								.concat(ProjectURLConstants.URL_TO_LOGIN)));
 		log.info(ProjectConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();

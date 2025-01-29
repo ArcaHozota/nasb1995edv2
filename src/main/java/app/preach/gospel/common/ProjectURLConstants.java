@@ -74,6 +74,8 @@ public final class ProjectURLConstants {
 
 	public static final String URL_COMMON_RETRIEVE = "commonRetrieve";
 
+	public static final String URL_KANUMI_RETRIEVE = "kanumiRetrieve";
+
 	public static final String URL_TO_SCORE_UPLOAD = "toScoreUpload";
 
 	public static final String URL_SCORE_UPLOAD = "scoreUpload";

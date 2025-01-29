@@ -7,7 +7,6 @@ body {
 	background-blend-mode: overlay;
 }
 
-/* 保持文字在光波之上 */
 nav,
 .main {
 	position: relative;
@@ -66,6 +65,7 @@ a.btn-kanami::after {
 	background: black;
 	height: 60%;
 	position: absolute;
+	z-index: 3;
 }
 
 .content {

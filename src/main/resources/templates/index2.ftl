@@ -60,19 +60,11 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-6 offset-md-2" style="padding-right: 0px;">
-						<select id="hymnRecordEdit" class="form-select" style="width: 100%;">
-			                <#list hymnDtos as hymnDto>
-			                	<#if hymnDto.nameKr?exists>
-									<option value="${hymnDto.id}">${hymnDto.nameJp}/${hymnDto.nameKr}</option>
-			                	<#else>
-			                		<option value="${hymnDto.id}">賛美歌${totalRecords}曲レコード済み</option>
-								</#if>
-							</#list>
-				        </select>
+						<p class="form-control" id="nameDisplay">賛美歌${totalRecords}曲レコード済み</p>
 			        </div>
 			        <div class="col-md-4" style="padding-left: 0px;">
 						<a id="saraniSearchBtn" class="btn btn-kanami" style="--clr: #006B3C;" type="button" href="#">
-							<span>&#x1D11E;金海氏検索</span>
+							<span>&#x1D11E;海老闆の検索</span>
 						</a>
 			        </div>
 				</div>
@@ -86,15 +78,17 @@
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead id="indexTablehead">
 						<tr class="table-primary">
-							<th scope="col" class="text-center" style="width: 100%;">名称</th>
+							<th scope="col" class="text-center" style="width: 10%;">#</th>
+							<th scope="col" class="text-center" style="width: 60%;">名称</th>
+							<th scope="col" class="text-center" style="width: 30%;">楽譜</th>
 						</tr>
 					</thead>
-					<tbody id="tableBody" class="table-group-divider">
-						<tr>
-							<td>1</td>
-						</tr>
-					</tbody>
+					<tbody id="tableBody" class="table-group-divider"></tbody>
 				</table>
+				<div class="row">
+					<div id="pageInfos" class="col-md-5" style="font-size: 12px;"></div>
+					<div id="pageNavi" class="col-md-7 d-flex justify-content-end"></div>
+				</div>
 			</div>
 		</div>
 	</div>
