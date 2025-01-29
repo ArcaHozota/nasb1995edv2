@@ -85,7 +85,7 @@ function initialPagination(pageNum, keyword) {
 		url: '/hymns/pagination',
 		data: 'pageNum=' + pageNum,
 		success: function(response) {
-			buildTableBody2(response);
+			buildTableBody1(response);
 			buildPageInfos(response);
 			buildPageNavi(response);
 		},
@@ -93,6 +93,19 @@ function initialPagination(pageNum, keyword) {
 			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 			layer.msg(message);
 		}
+	});
+}
+function buildTableBody1(response) {
+	$("#tableBody").empty();
+	let index = response.records;
+	$.each(index, (index, item) => {
+		let checkBoxTd = $("<td class='text-center' style='width: 10%;vertical-align: middle;'></td>")
+			.append($("<input class='form-check-input mt-0' style='vertical-align: middle;' type='checkbox' value='" + item.id + "'>"));
+		let nameMixTd = $("<td class='text-left' style='width: 70%;vertical-align: middle;'></td>")
+			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
+		let scoreTd = $("<td class='text-center' style='width: 20%;vertical-align: middle;'></td>")
+			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
+		$("<tr></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 	});
 }
 function buildPageInfos(response) {
@@ -167,8 +180,7 @@ function kanumiRetrieve(hymnId) {
 }
 function buildTableBody2(response) {
 	$("#tableBody").empty();
-	let index = response.records;
-	$.each(index, (index, item) => {
+	$.each(response, (index, item) => {
 		let checkBoxTd = $("<td class='text-center' style='width: 10%;vertical-align: middle;'></td>")
 			.append($("<input class='form-check-input mt-0' style='vertical-align: middle;' type='checkbox' value='" + item.id + "'>"));
 		let nameMixTd = $("<td class='text-left' style='width: 70%;vertical-align: middle;'></td>")
