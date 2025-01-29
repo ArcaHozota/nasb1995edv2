@@ -32,7 +32,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 				setTimeout(function() {
 					$("#loadingBackground2").hide();
 					$("#saraniSearchBtn").css("pointer-events", "auto");
-				}, 55000);
+				}, 33000);
 			} else if (result.isDenied) {
 				$(this).close();
 			}
