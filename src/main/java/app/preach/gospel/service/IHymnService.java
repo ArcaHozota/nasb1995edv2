@@ -59,6 +59,14 @@ public interface IHymnService {
 	CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(String keyword);
 
 	/**
+	 * 金海氏の検索によって賛美歌情報を取得する
+	 *
+	 * @param id ID
+	 * @return CoResult<List<HymnDto>, PersistenceException>
+	 */
+	CoResult<List<HymnDto>, PersistenceException> getKanumiList(Long id);
+
+	/**
 	 * 賛美歌のレコードを取得する
 	 *
 	 * @return CoResult<List<HymnDto>, PersistenceException>

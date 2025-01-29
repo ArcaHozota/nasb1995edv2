@@ -159,7 +159,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	}
 
 	/**
-	 * アカウント重複チェック
+	 * 削除権限チェック
 	 *
 	 * @return String
 	 */
@@ -239,6 +239,24 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 			throw infoUpdation.getErr();
 		}
 		this.setResponseJsonData(infoUpdation.getOk());
+		return NONE;
+	}
+
+	/**
+	 * 金海氏の検索を行う
+	 *
+	 * @return String
+	 */
+	@Action(ProjectURLConstants.URL_KANUMI_RETRIEVE)
+	public String kanumiRetrieve() {
+		final String hymnId = this.getServletRequest().getParameter("hymnId");
+		final CoResult<List<HymnDto>, PersistenceException> kanumiList = this.iHymnService
+				.getKanumiList(Long.parseLong(hymnId));
+		if (!kanumiList.isOk()) {
+			throw kanumiList.getErr();
+		}
+		final List<HymnDto> hymnDtos = kanumiList.getOk();
+		this.setResponseJsonData(JSON.toJSON(hymnDtos));
 		return NONE;
 	}
 
