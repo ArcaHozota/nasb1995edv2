@@ -104,9 +104,9 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @return コサイン類似度
 	 */
 	private static double cosineSimilarity(final double[] vectorA, final double[] vectorB) {
-		double dotProduct = 0.0;
-		double normA = 0.0;
-		double normB = 0.0;
+		double dotProduct = 0.00;
+		double normA = 0.00;
+		double normB = 0.00;
 		for (int i = 0; i < vectorA.length; i++) {
 			dotProduct += vectorA[i] * vectorB[i];
 			normA += Math.pow(vectorA[i], 2);
@@ -195,7 +195,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param hymns  他の賛美歌テキスト
 	 * @return
 	 */
-	public Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final List<Hymn> hymns) {
+	private Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final List<Hymn> hymns) {
 		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
 		final List<String> allTexts = new ArrayList<>(hymnTextList);
 		allTexts.add(target); // 将目标文本也加入计算
