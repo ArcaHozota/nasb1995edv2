@@ -15,14 +15,15 @@ $("#saraniSearchBtn").on("click", function(e) {
 		layer.msg('賛美歌を選択してください');
 	} else {
 		swal.fire({
-			title: '警告',
-			text: '選択された曲に基づくセリフが似てる二つの曲を検索します。検索を行ってよろしいでしょうか。この画面及び検索は金海嶺氏のアイディアによって作成されたものです。',
-			icon: 'warning',
+			title: "HINT",
+			text: "選択された曲に基づくセリフが似てる三つの曲を検索します。検索が約1分間ぐらいかかりますので行ってよろしいでしょうか。",
+			footer: '<p style="font-size: 13px;">この画面及び検索は金海嶺氏のアイディアによって作成されたものです。</p>',
+			icon: "info",
 			showDenyButton: true,
 			denyButtonText: 'いいえ',
 			confirmButtonText: 'はい',
 			confirmButtonColor: '#7F0020',
-			denyButtonColor: '#002FA7'
+			denyButtonColor: '#006400'
 		}).then((result) => {
 			if (result.isConfirmed) {
 				adjustWidth();
@@ -34,7 +35,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 					$("#saraniSearchBtn").css("pointer-events", "auto");
 					$("#nameDisplay").text('検索完了');
 					$("#nameDisplay").attr('idVal', 0);
-				}, 15000);
+				}, 33000);
 			} else if (result.isDenied) {
 				$(this).close();
 			}

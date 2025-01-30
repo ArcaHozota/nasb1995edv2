@@ -430,10 +430,13 @@ public final class HymnServiceImpl implements IHymnService {
 			arrayList.sort(Entry.comparingByValue(Comparator.reverseOrder()));
 			final Hymn hymn1 = arrayList.get(0).getKey();
 			final Hymn hymn2 = arrayList.get(1).getKey();
+			final Hymn hymn3 = arrayList.get(2).getKey();
 			hymnDtos.add(new HymnDto(hymn1.getId().toString(), hymn1.getNameJp(), hymn1.getNameKr(), hymn1.getSerif(),
 					hymn1.getLink(), hymn1.getScore(), null, null, LineNumber.NAPLES));
 			hymnDtos.add(new HymnDto(hymn2.getId().toString(), hymn2.getNameJp(), hymn2.getNameKr(), hymn2.getSerif(),
 					hymn2.getLink(), hymn2.getScore(), null, null, LineNumber.NAPLES));
+			hymnDtos.add(new HymnDto(hymn3.getId().toString(), hymn3.getNameJp(), hymn3.getNameKr(), hymn3.getSerif(),
+					hymn3.getLink(), hymn3.getScore(), null, null, LineNumber.NAPLES));
 			result.setSelf(CoResult.ok(hymnDtos));
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;
