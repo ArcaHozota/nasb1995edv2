@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang = "ja-JP">
+
 <head>
 	<title>NASB1995</title>
 	<meta charset="UTF-8">
