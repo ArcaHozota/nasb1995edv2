@@ -7,8 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -205,7 +205,7 @@ public final class HymnServiceImpl implements IHymnService {
 			tokenizedTexts.add(this.tokenizeKoreanText(text));
 		}
 		// 2. 构建词汇表 (Vocabulary)
-		final Set<String> vocabularySet = new HashSet<>();
+		final Set<String> vocabularySet = new LinkedHashSet<>();
 		for (final Set<String> tokens : tokenizedTexts) {
 			vocabularySet.addAll(tokens);
 		}
@@ -213,7 +213,7 @@ public final class HymnServiceImpl implements IHymnService {
 		// 3. 计算 TF 矩阵
 		final double[][] tfMatrix = new double[allTexts.size()][vocabulary.size()];
 		for (int i = 0; i < tokenizedTexts.size(); i++) {
-			final Map<String, Integer> termCount = new HashMap<>();
+			final Map<String, Integer> termCount = new LinkedHashMap<>();
 			for (final String word : tokenizedTexts.get(i)) {
 				termCount.put(word, termCount.getOrDefault(word, 0) + 1);
 			}
@@ -241,7 +241,7 @@ public final class HymnServiceImpl implements IHymnService {
 		}
 		// 6. 计算目标文本（最后一个）与其他文本的余弦相似度
 		final double[] targetVector = tfidfMatrix[allTexts.size() - 1]; // 目标文本向量
-		final Map<Hymn, Double> similarityMap = new HashMap<>();
+		final Map<Hymn, Double> similarityMap = new LinkedHashMap<>();
 		for (int i = 0; i < (allTexts.size() - 1); i++) {
 			final double similarity = HymnServiceImpl.cosineSimilarity(targetVector, tfidfMatrix[i]);
 			similarityMap.put(hymns.get(i), similarity);
@@ -643,7 +643,7 @@ public final class HymnServiceImpl implements IHymnService {
 		}
 		final Seq<KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(builder.toString());
 		final List<String> tokensToJavaStringList = OpenKoreanTextProcessorJava.tokensToJavaStringList(tokens);
-		return new HashSet<>(tokensToJavaStringList);
+		return new LinkedHashSet<>(tokensToJavaStringList);
 	}
 
 	/**
