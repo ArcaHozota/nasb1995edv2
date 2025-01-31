@@ -17,7 +17,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 		swal.fire({
 			title: "HINT",
 			text: "選択された曲に基づくセリフが似てる三つの曲を検索します。検索が約1分間ぐらいかかりますので行ってよろしいでしょうか。",
-			footer: '<p style="font-size: 13px;">この画面及び検索は金海嶺氏のアイディアによって作成されたものです。</p>',
+			footer: '<p style="font-size: 13px;">※この画面及び検索は金海嶺氏のアイディアによって作成されたものです。</p>',
 			icon: "info",
 			showDenyButton: true,
 			denyButtonText: 'いいえ',
@@ -33,7 +33,9 @@ $("#saraniSearchBtn").on("click", function(e) {
 				setTimeout(function() {
 					$("#loadingBackground2").hide();
 					$("#saraniSearchBtn").css("pointer-events", "auto");
-					$("#nameDisplay").text('検索完了');
+					let nameJp = $('.table-danger').find("td:eq(1)").children("a").text();
+					let slashIndex = nameJp.indexOf('/');
+					$("#nameDisplay").text('検索完了---' + nameJp.substring(0, slashIndex));
 					$("#nameDisplay").attr('idVal', 0);
 				}, 33000);
 			} else if (result.isDenied) {
