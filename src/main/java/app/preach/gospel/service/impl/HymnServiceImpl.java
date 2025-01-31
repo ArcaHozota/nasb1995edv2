@@ -103,7 +103,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param vectorB ベクターB
 	 * @return コサイン類似度
 	 */
-	private static double cosineSimilarity(final double[] vectorA, final double[] vectorB) {
+	private static double cosineSimilarity(final double @NotNull [] vectorA, final double[] vectorB) {
 		double dotProduct = 0.00;
 		double normA = 0.00;
 		double normB = 0.00;
@@ -195,26 +195,26 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param hymns  他の賛美歌テキスト
 	 * @return
 	 */
-	private Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final List<Hymn> hymns) {
+	private @NotNull Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final @NotNull List<Hymn> hymns) {
 		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
 		final List<String> allTexts = new ArrayList<>(hymnTextList);
 		allTexts.add(target); // 将目标文本也加入计算
 		// 1. 进行韩语分词处理
-		final List<Set<String>> tokenizedTexts = new ArrayList<>();
+		final List<List<String>> tokenizedTexts = new ArrayList<>();
 		for (final String text : allTexts) {
 			tokenizedTexts.add(this.tokenizeKoreanText(text));
 		}
 		// 2. 构建词汇表 (Vocabulary)
-		final Set<String> vocabularySet = new LinkedHashSet<>();
-		for (final Set<String> tokens : tokenizedTexts) {
-			vocabularySet.addAll(tokens);
+		final List<String> vocabulary = new ArrayList<>();
+		for (final List<String> tokens : tokenizedTexts) {
+			vocabulary.addAll(tokens);
 		}
-		final List<String> vocabulary = new ArrayList<>(vocabularySet);
 		// 3. 计算 TF 矩阵
 		final double[][] tfMatrix = new double[allTexts.size()][vocabulary.size()];
 		for (int i = 0; i < tokenizedTexts.size(); i++) {
+			final List<String> words = tokenizedTexts.get(i);
 			final Map<String, Integer> termCount = new LinkedHashMap<>();
-			for (final String word : tokenizedTexts.get(i)) {
+			for (final String word : words) { // 単語の頻度を計算
 				termCount.put(word, termCount.getOrDefault(word, 0) + 1);
 			}
 			for (int j = 0; j < vocabulary.size(); j++) {
@@ -225,7 +225,7 @@ public final class HymnServiceImpl implements IHymnService {
 		final double[] idfVector = new double[vocabulary.size()];
 		for (int j = 0; j < vocabulary.size(); j++) {
 			int docCount = 0;
-			for (final Set<String> tokens : tokenizedTexts) {
+			for (final List<String> tokens : tokenizedTexts) {
 				if (tokens.contains(vocabulary.get(j))) {
 					docCount++;
 				}
@@ -413,7 +413,7 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public CoResult<List<HymnDto>, PersistenceException> getKanumiList(final Long id) {
+	public @NotNull CoResult<List<HymnDto>, PersistenceException> getKanumiList(final Long id) {
 		final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);
 		final CoResult<List<HymnDto>, PersistenceException> result = CoResult.getInstance();
@@ -631,10 +631,10 @@ public final class HymnServiceImpl implements IHymnService {
 	 * テキストによって韓国語単語を取得する
 	 *
 	 * @param originalText テキスト
-	 * @return Set<String>
+	 * @return List<String>
 	 */
-	private Set<String> tokenizeKoreanText(final String originalText) {
-		final String regex = "[\\p{IsHangul}]";
+	private List<String> tokenizeKoreanText(final @NotNull String originalText) {
+		final String regex = "\\p{IsHangul}";
 		final StringBuilder builder = new StringBuilder();
 		for (final char ch : originalText.toCharArray()) {
 			if (Pattern.matches(regex, String.valueOf(ch))) {
@@ -642,8 +642,7 @@ public final class HymnServiceImpl implements IHymnService {
 			}
 		}
 		final Seq<KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(builder.toString());
-		final List<String> tokensToJavaStringList = OpenKoreanTextProcessorJava.tokensToJavaStringList(tokens);
-		return new LinkedHashSet<>(tokensToJavaStringList);
+		return OpenKoreanTextProcessorJava.tokensToJavaStringList(tokens);
 	}
 
 	/**
