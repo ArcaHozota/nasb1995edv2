@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 import java.util.regex.Pattern;
 
 import org.hibernate.HibernateException;
@@ -193,7 +191,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 *
 	 * @param target 目標テキスト
 	 * @param hymns  他の賛美歌テキスト
-	 * @return
+	 * @return Map<Hymn, Double>
 	 */
 	private @NotNull Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final @NotNull List<Hymn> hymns) {
 		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
