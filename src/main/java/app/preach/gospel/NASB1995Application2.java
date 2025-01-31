@@ -16,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SpringBootApplication
 @ServletComponentScan
-public class ProjectApplication {
+public class NASB1995Application2 {
 	public static void main(final String[] args) {
-		SpringApplication.run(ProjectApplication.class, args);
+		SpringApplication.run(NASB1995Application2.class, args);
 		log.info(ProjectConstants.MESSAGE_SPRING_APPLICATION);
 	}
 }
