@@ -14,10 +14,9 @@ description = 'nasb1995edv2'
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
-    mavenCentral()
+    mavenCentral();
     maven {
         url = uri('https://repo.maven.apache.org/maven2/');
-        url = uri('https://repository.apache.org/content/groups/staging/')
     }
 }
 
@@ -35,7 +34,7 @@ dependencyManagement {
     }
 }
 
-ext.strutsVersion = '7.0.0-M10'
+ext.strutsVersion = '7.0.0'
 
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
