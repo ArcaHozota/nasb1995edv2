@@ -496,26 +496,31 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public @NotNull CoResult<String, PersistenceException> infoUpdation(final HymnDto hymnDto) {
-		final Hymn hymnsRecord = new Hymn();
-		CoBeanUtils.copyNullableProperties(hymnDto, hymnsRecord);
-		hymnsRecord.setId(Long.parseLong(hymnDto.id()));
-		hymnsRecord.setVisibleFlg(Boolean.TRUE);
+		final Hymn hymn = new Hymn();
+		CoBeanUtils.copyNullableProperties(hymnDto, hymn);
+		hymn.setId(Long.parseLong(hymnDto.id()));
+		hymn.setVisibleFlg(Boolean.TRUE);
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("id"), hymnsRecord.getId());
+				.equal(root.get("id"), hymn.getId());
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
-			final OffsetDateTime updatedTime = val.getUpdatedTime();
+			final OffsetDateTime updatedTime1 = val.getUpdatedTime();
+			final byte[] score1 = val.getScore();
+			final String updatedUser2 = hymnDto.updatedUser();
 			val.setScore(null);
 			val.setUpdatedUser(null);
+			hymn.setUpdatedUser(null);
 			val.setUpdatedTime(null);
-			if (CoProjectUtils.isEqual(val, hymnsRecord)) {
+			hymn.setUpdatedTime(null);
+			if (CoProjectUtils.isEqual(val, hymn)) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
-				CoBeanUtils.copyNullableProperties(hymnsRecord, val);
-				final String trimSerif = this.trimSerif(hymnsRecord.getSerif());
+				CoBeanUtils.copyNullableProperties(hymn, val);
+				final String trimSerif = this.trimSerif(hymn.getSerif());
 				val.setSerif(trimSerif);
-				val.setUpdatedUser(Long.parseLong(hymnDto.updatedUser()));
-				val.setUpdatedTime(updatedTime);
+				val.setScore(score1);
+				val.setUpdatedUser(Long.parseLong(updatedUser2));
+				val.setUpdatedTime(updatedTime1);
 				try {
 					this.hymnRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
