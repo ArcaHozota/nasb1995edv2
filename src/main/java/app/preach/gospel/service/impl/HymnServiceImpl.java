@@ -509,9 +509,7 @@ public final class HymnServiceImpl implements IHymnService {
 			final String updatedUser2 = hymnDto.updatedUser();
 			val.setScore(null);
 			val.setUpdatedUser(null);
-			hymn.setUpdatedUser(null);
 			val.setUpdatedTime(null);
-			hymn.setUpdatedTime(null);
 			if (CoProjectUtils.isEqual(val, hymn)) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {

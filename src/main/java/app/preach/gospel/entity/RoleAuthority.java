@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "role_auth")
 @IdClass(RoleAuthIds.class)
+@EqualsAndHashCode(callSuper = false)
 public final class RoleAuthority implements Serializable {
 
 	@Serial

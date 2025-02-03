@@ -4,6 +4,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 役割権限情報ID
@@ -12,6 +13,7 @@ import lombok.Data;
  * @since 1.00beta
  */
 @Data
+@EqualsAndHashCode(callSuper = false)
 public final class RoleAuthIds implements Serializable {
 
 	@Serial
