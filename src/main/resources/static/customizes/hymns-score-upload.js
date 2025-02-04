@@ -20,10 +20,11 @@ $("#scoreUploadBtn").on("click", function() {
 		projectNullInputboxDiscern(inputArrays);
 		return;
 	}
-	let header = $("meta[name=_csrf_header]").attr("content");
-	let token = $("meta[name=_csrf_token]").attr("content");
+	let header = $("meta[name=_csrf_header]").attr('content');
+	let token = $("meta[name=_csrf_token]").attr('content');
 	let editId = $("#idContainer").val();
-	let file = $("#scoreEdit").files[0];
+	let fileInput = document.getElementById("scoreEdit");
+	let file = fileInput.files[0];
 	let reader = new FileReader();
 	reader.onload = function(e) {
 		// 将文件内容转换为 base64 字符串
