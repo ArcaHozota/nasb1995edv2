@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 import org.hibernate.HibernateException;
 import org.hibernate.bytecode.enhance.VersionMismatchException;
 import org.jetbrains.annotations.NotNull;
-import org.openkoreantext.processor.OpenKoreanTextProcessorJava;
-import org.openkoreantext.processor.tokenizer.KoreanTokenizer.KoreanToken;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,10 +45,11 @@ import app.preach.gospel.utils.LineNumber;
 import app.preach.gospel.utils.Pagination;
 import app.preach.gospel.utils.SnowflakeUtils;
 import jakarta.persistence.PersistenceException;
+import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
+import kr.co.shineware.nlp.komoran.core.Komoran;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import scala.collection.Seq;
 
 /**
  * 賛美歌サービス実装クラス
@@ -68,6 +67,11 @@ public final class HymnServiceImpl implements IHymnService {
 	 */
 	protected static final Specification<Hymn> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
 			.equal(root.get("visibleFlg"), Boolean.TRUE);
+
+	/**
+	 * KOMORAN-API
+	 */
+	private static final Komoran KOMORAN = new Komoran(DEFAULT_MODEL.FULL);
 
 	/**
 	 * 日時フォマーター
@@ -698,8 +702,12 @@ public final class HymnServiceImpl implements IHymnService {
 				builder.append(ch);
 			}
 		}
-		final Seq<KoreanToken> tokens = OpenKoreanTextProcessorJava.tokenize(builder.toString());
-		return OpenKoreanTextProcessorJava.tokensToJavaStringList(tokens);
+		final String koreanText = builder.toString();
+		if (CoProjectUtils.isEmpty(koreanText)) {
+			return new ArrayList<>();
+		}
+		final List<kr.co.shineware.nlp.komoran.model.Token> tokenList = KOMORAN.analyze(koreanText).getTokenList();
+		return tokenList.stream().map(kr.co.shineware.nlp.komoran.model.Token::getMorph).toList();
 	}
 
 	/**
