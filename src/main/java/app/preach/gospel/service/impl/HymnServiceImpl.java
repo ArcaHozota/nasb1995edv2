@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
 import org.hibernate.bytecode.enhance.VersionMismatchException;
@@ -198,8 +197,15 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param hymns  他の賛美歌テキスト
 	 * @return Map<Hymn, Double>
 	 */
-	private Map<Hymn, Double> commonTfIdf(final List<String> allTexts, final List<List<String>> tokenizedTexts,
-			final @NotNull List<Hymn> hymns) {
+	private @NotNull Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final @NotNull List<Hymn> hymns) {
+		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
+		final List<String> allTexts = new ArrayList<>(hymnTextList);
+		allTexts.add(target); // 将目标文本也加入计算
+		// 1. 进行韩语分词处理
+		final List<List<String>> tokenizedTexts = new ArrayList<>();
+		for (final String text : allTexts) {
+			tokenizedTexts.add(this.tokenizeKoreanText(text));
+		}
 		// 2. 构建词汇表 (Vocabulary)
 		final List<String> vocabulary = new ArrayList<>();
 		for (final List<String> tokens : tokenizedTexts) {
@@ -243,45 +249,6 @@ public final class HymnServiceImpl implements IHymnService {
 			similarityMap.put(hymns.get(i), similarity);
 		}
 		return similarityMap;
-	}
-
-	/**
-	 * TF-IDFコサイン類似度を計算する2
-	 *
-	 * @param target 目標テキスト
-	 * @param hymns  他の賛美歌テキスト
-	 * @return Map<Hymn, Double>
-	 */
-	private @NotNull Map<Hymn, Double> computeTfIdfOfJapaneseText(final String target,
-			final @NotNull List<Hymn> hymns) {
-		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
-		final List<String> allTexts = new ArrayList<>(hymnTextList);
-		allTexts.add(target); // 将目标文本也加入计算
-		// 1. 进行日本語分词处理
-		final List<List<String>> tokenizedTexts = new ArrayList<>();
-		for (final String text : allTexts) {
-			tokenizedTexts.add(this.tokenizeJapaneseText(text));
-		}
-		return this.commonTfIdf(allTexts, tokenizedTexts, hymns);
-	}
-
-	/**
-	 * TF-IDFコサイン類似度を計算する1
-	 *
-	 * @param target 目標テキスト
-	 * @param hymns  他の賛美歌テキスト
-	 * @return Map<Hymn, Double>
-	 */
-	private @NotNull Map<Hymn, Double> computeTfIdfOfKoreanText(final String target, final @NotNull List<Hymn> hymns) {
-		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
-		final List<String> allTexts = new ArrayList<>(hymnTextList);
-		allTexts.add(target); // 将目标文本也加入计算
-		// 1. 进行韩语分词处理
-		final List<List<String>> tokenizedTexts = new ArrayList<>();
-		for (final String text : allTexts) {
-			tokenizedTexts.add(this.tokenizeKoreanText(text));
-		}
-		return this.commonTfIdf(allTexts, tokenizedTexts, hymns);
 	}
 
 	@Override
@@ -460,11 +427,7 @@ public final class HymnServiceImpl implements IHymnService {
 					.notEqual(root.get("id"), id);
 			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2),
 					Sort.by(Direction.ASC, "id"));
-			final Map<Hymn, Double> tfIdfOfSerivies1 = this.computeTfIdfOfKoreanText(val.getSerif(), hymns);
-			final Map<Hymn, Double> tfIdfOfSerivies2 = this.computeTfIdfOfJapaneseText(val.getSerif(), hymns);
-			final Map<Hymn, Double> tfIdfOfSerivies = tfIdfOfSerivies1.keySet().stream().collect(
-					Collectors.toMap(key -> key, key -> (tfIdfOfSerivies1.get(key).doubleValue() * Double.valueOf(0.80))
-							+ (tfIdfOfSerivies2.get(key).doubleValue() * Double.valueOf(0.20))));
+			final Map<Hymn, Double> tfIdfOfSerivies = this.computeTfIdfOfSerivies(val.getSerif(), hymns);
 			final List<Entry<Hymn, Double>> arrayList = new ArrayList<>(tfIdfOfSerivies.entrySet());
 			arrayList.sort(Entry.comparingByValue(Comparator.reverseOrder()));
 			final Hymn hymn1 = arrayList.get(0).getKey();
@@ -667,25 +630,6 @@ public final class HymnServiceImpl implements IHymnService {
 			}
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;
-	}
-
-	/**
-	 * テキストによって日本語単語を取得する
-	 *
-	 * @param originalText テキスト
-	 * @return List<String>
-	 */
-	private List<String> tokenizeJapaneseText(final String originalText) {
-		final String regex = "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}]+";
-		final StringBuilder builder = new StringBuilder();
-		for (final char ch : originalText.toCharArray()) {
-			if (Pattern.matches(regex, String.valueOf(ch))) {
-				builder.append(ch);
-			}
-		}
-		final Tokenizer tokenizer = new Tokenizer();
-		final List<Token> tokens = tokenizer.tokenize(builder.toString());
-		return tokens.stream().map(Token::getBaseForm).toList();
 	}
 
 	/**
