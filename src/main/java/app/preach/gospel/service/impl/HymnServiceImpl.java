@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,8 +12,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
 import java.util.Random;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.hibernate.HibernateException;
 import org.hibernate.bytecode.enhance.VersionMismatchException;
@@ -120,23 +123,6 @@ public final class HymnServiceImpl implements IHymnService {
 		return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 	}
 
-//	/**
-//	 * jaccard類似度を計算する
-//	 *
-//	 * @param vectorA ベクターA
-//	 * @param vectorB ベクターB
-//	 * @return コサイン類似度
-//	 */
-//	private static double jaccardSimilarity(final Set<String> setA, final Set<String> setB) {
-//		if (CollectionUtils.isEmpty(setA) && CollectionUtils.isEmpty(setB)) {
-//			return 0.00;
-//		}
-//		final Set<String> intersection = new HashSet<>(setA);
-//		intersection.retainAll(setB);
-//		final int unionSize = (setA.size() + setB.size()) - intersection.size();
-//		return unionSize == 0 ? 0.00 : intersection.size() / unionSize;
-//	}
-
 	/**
 	 * 賛美歌情報管理リポジトリ
 	 */
@@ -151,6 +137,21 @@ public final class HymnServiceImpl implements IHymnService {
 	 * 奉仕者管理リポジトリ
 	 */
 	private final StudentRepository studentRepository;
+
+	/**
+	 * 計算Map1
+	 */
+	private final Map<String, Integer> termToIndex = new LinkedHashMap<>();
+
+	/**
+	 * 計算Map2
+	 */
+	private final Map<String, Integer> docFreq = new LinkedHashMap<>();
+
+	/**
+	 * コーパスサイズ
+	 */
+	private int corpusSize;
 
 	@Override
 	public CoResult<Integer, PersistenceException> checkDuplicated(final String id, final String nameJp) {
@@ -191,64 +192,50 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	/**
-	 * TF-IDFコサイン類似度を計算する
+	 * TF-IDFベクターを計算する
 	 *
-	 * @param target 目標テキスト
-	 * @param hymns  他の賛美歌テキスト
-	 * @return Map<Hymn, Double>
+	 * @param originalText 生のストリング
+	 * @return double[]
 	 */
-	private @NotNull Map<Hymn, Double> computeTfIdfOfSerivies(final String target, final @NotNull List<Hymn> hymns) {
-		final List<String> hymnTextList = hymns.stream().map(Hymn::getSerif).toList();
-		final List<String> allTexts = new ArrayList<>(hymnTextList);
-		allTexts.add(target); // 将目标文本也加入计算
-		// 1. 进行韩语分词处理
-		final List<List<String>> tokenizedTexts = new ArrayList<>();
-		for (final String text : allTexts) {
-			tokenizedTexts.add(this.tokenizeKoreanText(text));
-		}
-		// 2. 构建词汇表 (Vocabulary)
-		final List<String> vocabulary = new ArrayList<>();
-		for (final List<String> tokens : tokenizedTexts) {
-			vocabulary.addAll(tokens);
-		}
-		// 3. 计算 TF 矩阵
-		final double[][] tfMatrix = new double[allTexts.size()][vocabulary.size()];
-		for (int i = 0; i < tokenizedTexts.size(); i++) {
-			final List<String> words = tokenizedTexts.get(i);
-			final Map<String, Integer> termCount = new LinkedHashMap<>();
-			for (final String word : words) { // 単語の頻度を計算
-				termCount.put(word, termCount.getOrDefault(word, 0) + 1);
+	private double[] computeTFIDFVector(final String originalText) {
+		final Map<String, Integer> termFreq = this.tokenizeKoreanTextWithFrequency(originalText);
+		final int totalTerms = termFreq.values().stream().mapToInt(Integer::intValue).sum();
+		final double[] vector = new double[this.termToIndex.size()];
+		Arrays.fill(vector, 0.00);
+		termFreq.forEach((term, count) -> {
+			if (this.termToIndex.containsKey(term)) {
+				final int index = this.termToIndex.get(term);
+				// 计算TF
+				final double tf = (double) count / totalTerms;
+				// 计算IDF
+				final int df = this.docFreq.getOrDefault(term, 0);
+				final double idf = Math.log((double) this.corpusSize / (df + 1));
+				vector[index] = tf * idf;
 			}
-			for (int j = 0; j < vocabulary.size(); j++) {
-				tfMatrix[i][j] = termCount.getOrDefault(vocabulary.get(j), 0);
-			}
+		});
+		return vector;
+	}
+
+	/**
+	 * 最も似てる三つの賛美歌を取得する
+	 *
+	 * @param target   目標テキスト
+	 * @param elements 賛美歌リスト
+	 * @return List<Hymn>
+	 */
+	public List<Hymn> findTopTwoMatches(final String target, final List<Hymn> elements) {
+		final List<String> texts = elements.stream().map(Hymn::getSerif).toList();
+		this.preprocessCorpus(texts);
+		final double[] targetVector = this.computeTFIDFVector(target);
+		final List<double[]> elementVectors = elements.stream().map(item -> this.computeTFIDFVector(item.getSerif()))
+				.toList();
+		final PriorityQueue<Entry<Hymn, Double>> maxHeap = new PriorityQueue<>(
+				Comparator.comparing(Entry<Hymn, Double>::getValue).reversed());
+		for (int i = 0; i < elements.size(); i++) {
+			final double similarity = HymnServiceImpl.cosineSimilarity(targetVector, elementVectors.get(i));
+			maxHeap.add(new AbstractMap.SimpleEntry<>(elements.get(i), similarity));
 		}
-		// 4. 计算 IDF 矩阵
-		final double[] idfVector = new double[vocabulary.size()];
-		for (int j = 0; j < vocabulary.size(); j++) {
-			int docCount = 0;
-			for (final List<String> tokens : tokenizedTexts) {
-				if (tokens.contains(vocabulary.get(j))) {
-					docCount++;
-				}
-			}
-			idfVector[j] = Math.log((double) allTexts.size() / (docCount + 1)); // 避免除0
-		}
-		// 5. 计算 TF-IDF 矩阵
-		final double[][] tfidfMatrix = new double[allTexts.size()][vocabulary.size()];
-		for (int i = 0; i < allTexts.size(); i++) {
-			for (int j = 0; j < vocabulary.size(); j++) {
-				tfidfMatrix[i][j] = tfMatrix[i][j] * idfVector[j];
-			}
-		}
-		// 6. 计算目标文本（最后一个）与其他文本的余弦相似度
-		final double[] targetVector = tfidfMatrix[allTexts.size() - 1]; // 目标文本向量
-		final Map<Hymn, Double> similarityMap = new LinkedHashMap<>();
-		for (int i = 0; i < (allTexts.size() - 1); i++) {
-			final double similarity = HymnServiceImpl.cosineSimilarity(targetVector, tfidfMatrix[i]);
-			similarityMap.put(hymns.get(i), similarity);
-		}
-		return similarityMap;
+		return maxHeap.stream().limit(3).map(Entry::getKey).toList();
 	}
 
 	@Override
@@ -427,18 +414,13 @@ public final class HymnServiceImpl implements IHymnService {
 					.notEqual(root.get("id"), id);
 			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2),
 					Sort.by(Direction.ASC, "id"));
-			final Map<Hymn, Double> tfIdfOfSerivies = this.computeTfIdfOfSerivies(val.getSerif(), hymns);
-			final List<Entry<Hymn, Double>> arrayList = new ArrayList<>(tfIdfOfSerivies.entrySet());
-			arrayList.sort(Entry.comparingByValue(Comparator.reverseOrder()));
-			final Hymn hymn1 = arrayList.get(0).getKey();
-			final Hymn hymn2 = arrayList.get(1).getKey();
-			final Hymn hymn3 = arrayList.get(2).getKey();
-			hymnDtos.add(new HymnDto(hymn1.getId().toString(), hymn1.getNameJp(), hymn1.getNameKr(), hymn1.getSerif(),
-					hymn1.getLink(), hymn1.getScore(), null, null, LineNumber.NAPLES));
-			hymnDtos.add(new HymnDto(hymn2.getId().toString(), hymn2.getNameJp(), hymn2.getNameKr(), hymn2.getSerif(),
-					hymn2.getLink(), hymn2.getScore(), null, null, LineNumber.NAPLES));
-			hymnDtos.add(new HymnDto(hymn3.getId().toString(), hymn3.getNameJp(), hymn3.getNameKr(), hymn3.getSerif(),
-					hymn3.getLink(), hymn3.getScore(), null, null, LineNumber.NAPLES));
+			final List<Hymn> topTwoMatches = this.findTopTwoMatches(val.getSerif(), hymns);
+			final List<HymnDto> list = topTwoMatches.stream()
+					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
+							hymnsRecord.getScore(), null, null, LineNumber.NAPLES))
+					.toList();
+			hymnDtos.addAll(list);
 			result.setSelf(CoResult.ok(hymnDtos));
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;
@@ -565,6 +547,27 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	/**
+	 * コーパスを取得する
+	 *
+	 * @param originalTexts
+	 */
+	private void preprocessCorpus(final List<String> originalTexts) {
+		this.termToIndex.clear();
+		this.docFreq.clear();
+		this.corpusSize = originalTexts.size();
+		int index = 0;
+		// 第一遍：建立文档频率
+		for (final String doc : originalTexts) {
+			final Map<String, Integer> termFreq = this.tokenizeKoreanTextWithFrequency(doc);
+			termFreq.keySet().forEach(term -> this.docFreq.put(term, this.docFreq.getOrDefault(term, 0) + 1));
+		}
+		// 第二遍：建立词汇表索引
+		for (final String term : this.docFreq.keySet()) {
+			this.termToIndex.put(term, index++);
+		}
+	}
+
+	/**
 	 * ランドム選択ループ1
 	 *
 	 * @param hymnsRecords 選択したレコード
@@ -636,9 +639,9 @@ public final class HymnServiceImpl implements IHymnService {
 	 * テキストによって韓国語単語を取得する
 	 *
 	 * @param originalText テキスト
-	 * @return List<String>
+	 * @return Map<String, Integer>
 	 */
-	private List<String> tokenizeKoreanText(final @NotNull String originalText) {
+	private Map<String, Integer> tokenizeKoreanTextWithFrequency(final @NotNull String originalText) {
 		final String regex = "\\p{IsHangul}";
 		final StringBuilder builder = new StringBuilder();
 		for (final char ch : originalText.toCharArray()) {
@@ -648,10 +651,11 @@ public final class HymnServiceImpl implements IHymnService {
 		}
 		final String koreanText = builder.toString();
 		if (CoProjectUtils.isEmpty(koreanText)) {
-			return new ArrayList<>();
+			return new LinkedHashMap<>();
 		}
 		final List<kr.co.shineware.nlp.komoran.model.Token> tokenList = KOMORAN.analyze(koreanText).getTokenList();
-		return tokenList.stream().map(kr.co.shineware.nlp.komoran.model.Token::getMorph).toList();
+		return tokenList.stream()
+				.collect(Collectors.toMap(kr.co.shineware.nlp.komoran.model.Token::getMorph, t -> 1, Integer::sum));
 	}
 
 	/**
