@@ -16,7 +16,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 	} else {
 		swal.fire({
 			title: "HINT",
-			text: "選択された曲に基づくセリフが似てる三つの曲を検索します。検索が約半分間ぐらいかかりますので行ってよろしいでしょうか。",
+			text: "選択された曲に基づくセリフが似てる三つの曲を検索します。検索が約1分間ぐらいかかりますので行ってよろしいでしょうか。",
 			footer: '<p style="font-size: 13px;">※この画面及び検索は金海嶺氏のアイディアによって作成されたものです。</p>',
 			icon: "info",
 			showDenyButton: true,
@@ -37,7 +37,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 					let slashIndex = nameJp.indexOf('/');
 					$("#nameDisplay").text('検索完了---' + nameJp.substring(0, slashIndex));
 					$("#nameDisplay").attr('idVal', 0);
-				}, 33000);
+				}, 66000);
 			} else if (result.isDenied) {
 				$(this).close();
 			}
