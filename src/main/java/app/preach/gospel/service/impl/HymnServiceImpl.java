@@ -412,8 +412,7 @@ public final class HymnServiceImpl implements IHymnService {
 					val.getLink(), val.getScore(), null, null, LineNumber.BUNRGUNDY));
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.notEqual(root.get("id"), id);
-			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2),
-					Sort.by(Direction.ASC, "id"));
+			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2));
 			final List<Hymn> topTwoMatches = this.findTopTwoMatches(val.getSerif(), hymns);
 			final List<HymnDto> list = topTwoMatches.stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
