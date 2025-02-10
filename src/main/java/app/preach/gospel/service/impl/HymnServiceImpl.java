@@ -139,12 +139,12 @@ public final class HymnServiceImpl implements IHymnService {
 	private final StudentRepository studentRepository;
 
 	/**
-	 * 計算Map1
+	 * 計算マップ1
 	 */
 	private final Map<String, Integer> termToIndex = new LinkedHashMap<>();
 
 	/**
-	 * 計算Map2
+	 * 計算マップ2
 	 */
 	private final Map<String, Integer> docFreq = new LinkedHashMap<>();
 
@@ -223,7 +223,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param elements 賛美歌リスト
 	 * @return List<Hymn>
 	 */
-	public List<Hymn> findTopTwoMatches(final String target, final List<Hymn> elements) {
+	private List<Hymn> findTopTwoMatches(final String target, final List<Hymn> elements) {
 		final List<String> texts = elements.stream().map(Hymn::getSerif).toList();
 		this.preprocessCorpus(texts);
 		final double[] targetVector = this.computeTFIDFVector(target);
