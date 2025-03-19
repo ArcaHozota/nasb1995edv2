@@ -52,8 +52,8 @@
 		</div>
 	</nav>
 	<div class="col-sm-6 offset-sm-3 col-md-8 offset-md-2 main">
-		<div class="card border-reflexblue" style="margin-top: 2rem;">
-			<div class="card-header text-bg-reflexblue mb-3">
+		<div class="card border-burgundy" style="margin-top: 2rem;">
+			<div class="card-header text-bg-burgundy mb-3">
 				<h5 class="card-title" style="padding-top: 8px;font-weight: 500;">
 					<i class="fa-solid fa-cross"></i> 賛美歌一覧表
 				</h5>
@@ -78,7 +78,7 @@
 				</div>
 				<table class="table table-sm table-hover" id="indexTable">
 					<thead id="indexTablehead">
-						<tr class="table-primary">
+						<tr class="table-danger">
 							<th scope="col" class="text-center" style="width: 10%;">#</th>
 							<th scope="col" class="text-center" style="width: 60%;">名称</th>
 							<th scope="col" class="text-center" style="width: 30%;">楽譜</th>
