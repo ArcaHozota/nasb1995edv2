@@ -5,6 +5,36 @@ body {
 	background-position: center;
 	background-attachment: fixed;
 	background-blend-mode: overlay;
+	overflow: hidden;
+}
+
+body::before{
+	content: "";
+	position: absolute;
+	z-index: 1;
+	top: -50%;
+	left: -50%;
+	width: 12%;
+	height: 200%;
+	/* 线性渐变：中间亮、边缘淡 */
+	background: linear-gradient(to right,
+	rgba(255, 255, 255, 0) 0%,
+	rgba(255, 255, 255, 0.8) 50%,
+	rgba(255, 255, 255, 0) 100%);
+	transform: rotate(30deg);
+	animation: moveLight 6600ms infinite linear;
+	/* 启用动画 */
+}
+
+/* 定义光柱从左至右运动的关键帧 */
+@keyframes moveLight {
+	0% {
+		left: -50%;
+	}
+
+	100% {
+		left: 150%;
+	}
 }
 
 nav,
