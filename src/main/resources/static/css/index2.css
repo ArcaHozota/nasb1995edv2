@@ -14,13 +14,13 @@ body::before{
 	z-index: 1;
 	top: -50%;
 	left: -50%;
-	width: 12%;
+	width: 5%;
 	height: 200%;
 	/* 线性渐变：中间亮、边缘淡 */
 	background: linear-gradient(to right,
-	rgba(255, 255, 255, 0) 0%,
-	rgba(255, 255, 255, 0.8) 50%,
-	rgba(255, 255, 255, 0) 100%);
+	rgba(255, 255, 255, 0.1) 0%,
+	rgba(255, 255, 255, 0.9) 50%,
+	rgba(255, 255, 255, 0.1) 100%);
 	transform: rotate(30deg);
 	animation: moveLight 6600ms infinite linear;
 	/* 启用动画 */
