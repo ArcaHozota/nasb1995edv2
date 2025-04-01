@@ -30,7 +30,7 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	 *
 	 * @return List<Hymn>
 	 */
-	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
+	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.workId = hm.id "
 			+ "where hm.visibleFlg = true and (hmk.updatedTime is null or hm.updatedTime > hmk.updatedTime)")
 	List<Hymn> findForUpdatedTime();
 
@@ -40,9 +40,9 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	 * @param keyword キーワード
 	 * @return List<Hymn>
 	 */
-	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
-			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword or hmk.title like :keyword2)")
-	List<Hymn> retrieveRandomFive1(@Param("keyword") String keyword, @Param("keyword2") String keyword2);
+	@Query(value = "select hm from Hymn as hm "
+			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword)")
+	List<Hymn> retrieveRandomFive1(@Param("keyword") String keyword);
 
 	/**
 	 * ランドム選択検索2
@@ -50,8 +50,8 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	 * @param keyword キーワード
 	 * @return List<Hymn>
 	 */
-	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.id = hm.id "
-			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword or hm.serif like :keyword "
-			+ "or hmk.serif like :keyword2 or cast(hm.id as string) like :keyword)")
-	List<Hymn> retrieveRandomFive2(@Param("keyword") String keyword, @Param("keyword2") String keyword2);
+	@Query(value = "select hm from Hymn as hm where hm.visibleFlg = true "
+			+ "and (hm.nameJp like :keyword or hm.nameKr like :keyword or hm.serif like :keyword "
+			+ "or cast(hm.id as string) like :keyword)")
+	List<Hymn> retrieveRandomFive2(@Param("keyword") String keyword);
 }

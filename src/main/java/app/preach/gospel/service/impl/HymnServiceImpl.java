@@ -321,12 +321,9 @@ public final class HymnServiceImpl implements IHymnService {
 					return CoResult.ok(hymnDtos);
 				}
 			}
-			final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
 			final String searchStr1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
 					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-			final String searchKatakana1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(kanjiToKatakanaKeyword)
-					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-			final List<Hymn> hymnsTitle = this.hymnRepository.retrieveRandomFive1(searchStr1, searchKatakana1);
+			final List<Hymn> hymnsTitle = this.hymnRepository.retrieveRandomFive1(searchStr1);
 			final List<HymnDto> hymnDtos = new ArrayList<>();
 			final List<HymnDto> hymnDtos0 = hymnsTitle.stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -334,14 +331,13 @@ public final class HymnServiceImpl implements IHymnService {
 							LineNumber.CADIMIUM))
 					.toList();
 			hymnDtos.addAll(hymnDtos0);
-			final List<Hymn> hymns1 = this.hymnRepository.retrieveRandomFive2(searchStr1, searchKatakana1);
+			final List<Hymn> hymns1 = this.hymnRepository.retrieveRandomFive2(searchStr1);
 			final List<Long> titleIds = hymnsTitle.stream().map(Hymn::getId).toList();
 			if (CollectionUtils.isEmpty(hymns1) || (hymns1.size() <= ProjectConstants.DEFAULT_PAGE_SIZE)) {
 				final List<Hymn> hymns = new ArrayList<>();
 				hymns.addAll(hymns1);
 				final String searchStr2 = CoProjectUtils.getDetailKeyword(keyword);
-				final String searchKatakana2 = CoProjectUtils.getDetailKeyword(kanjiToKatakanaKeyword);
-				final List<Hymn> hymns2 = this.hymnRepository.retrieveRandomFive2(searchStr2, searchKatakana2);
+				final List<Hymn> hymns2 = this.hymnRepository.retrieveRandomFive2(searchStr2);
 				hymns.addAll(hymns2);
 				final List<Hymn> hymns3 = hymns.stream().distinct().toList();
 				final List<Long> ids1 = hymns1.stream().map(Hymn::getId).toList();
