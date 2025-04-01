@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,23 +37,24 @@ public final class HymnsWork implements Serializable {
 	 * ID
 	 */
 	@Id
-	private Long id;
+	private Long workId;
 
 	/**
-	 * 歌の名称
+	 * 楽譜
 	 */
-	@Column
-	private String title;
-
-	/**
-	 * セリフ
-	 */
-	@Column(columnDefinition = "text")
-	private String serif;
+	@Column(columnDefinition = "bytea")
+	private byte[] score;
 
 	/**
 	 * 更新時間
 	 */
-	@Column
+	@Version
+	@Column(nullable = false)
 	private OffsetDateTime updatedTime;
+
+	/**
+	 * PDFフラグ
+	 */
+	@Column
+	private Boolean pdfFlg;
 }

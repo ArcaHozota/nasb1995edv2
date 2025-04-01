@@ -248,10 +248,12 @@ public final class HymnServiceImpl implements IHymnService {
 					.equal(root.get("id"), val.getUpdatedUser());
 			this.studentRepository.findOne(StudentServiceImpl.COMMON_CONDITION.and(specification2))
 					.ifPresentOrElse(subVal -> {
+						final HymnsWork hymnsWork = this.hymnsWorkRepository.findById(val.getId())
+								.orElseGet(HymnsWork::new);
 						final ZonedDateTime zonedDateTime = val.getUpdatedTime()
 								.atZoneSameInstant(ZoneOffset.ofHours(9));
 						final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
-								val.getSerif(), val.getLink(), val.getScore(), subVal.getUsername(),
+								val.getSerif(), val.getLink(), hymnsWork.getScore(), subVal.getUsername(),
 								FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
 						result.setSelf(CoResult.ok(hymnDto));
 					}, () -> result.setSelf(
@@ -275,8 +277,8 @@ public final class HymnServiceImpl implements IHymnService {
 					pageRequest);
 			final List<HymnDto> hymnDtos = hymnsRecords.getContent().stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-							hymnsRecord.getScore(), null, null, null))
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
+							null))
 					.toList();
 			return CoResult.ok(Pagination.of(hymnDtos, totalRecords, pageNum, ProjectConstants.DEFAULT_PAGE_SIZE));
 		} catch (final PersistenceException e) {
@@ -291,8 +293,8 @@ public final class HymnServiceImpl implements IHymnService {
 				final List<Hymn> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION);
 				final List<HymnDto> hymnDtos = this.randomFiveLoop2(totalRecords).stream()
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-								hymnsRecord.getScore(), null, null, LineNumber.SNOWY))
+								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+								null, LineNumber.SNOWY))
 						.toList();
 				return CoResult.ok(hymnDtos);
 			}
@@ -300,26 +302,13 @@ public final class HymnServiceImpl implements IHymnService {
 				if (keyword.toLowerCase().contains(starngement) || (keyword.length() >= 100)) {
 					final List<HymnDto> hymnDtos = this.hymnRepository.findForStrangement().stream()
 							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-									hymnsRecord.getScore(), null, null, LineNumber.SNOWY))
+									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+									null, LineNumber.SNOWY))
 							.toList();
 					log.error("怪しいキーワード： " + keyword);
 					return CoResult.ok(hymnDtos);
 				}
 			}
-			final List<HymnsWork> hymnsWorks = this.hymnRepository.findForUpdatedTime().stream().map(item -> {
-				final HymnsWork hymnsWork = new HymnsWork();
-				final String title = item.getNameJp();
-				final String serif = item.getSerif();
-				final String toKatakanaTitle = this.kanjiToKatakana(title);
-				final String toKatakanaSerif = this.kanjiToKatakana(serif);
-				hymnsWork.setId(item.getId());
-				hymnsWork.setTitle(toKatakanaTitle);
-				hymnsWork.setSerif(toKatakanaSerif);
-				hymnsWork.setUpdatedTime(OffsetDateTime.now());
-				return hymnsWork;
-			}).toList();
-			this.hymnsWorkRepository.saveAllAndFlush(hymnsWorks);
 			final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
 			final String searchStr1 = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
 					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
@@ -329,8 +318,8 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> hymnDtos = new ArrayList<>();
 			final List<HymnDto> hymnDtos0 = hymnsTitle.stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-							hymnsRecord.getScore(), null, null, LineNumber.CADIMIUM))
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
+							LineNumber.CADIMIUM))
 					.toList();
 			hymnDtos.addAll(hymnDtos0);
 			final List<Hymn> hymns1 = this.hymnRepository.retrieveRandomFive2(searchStr1, searchKatakana1);
@@ -351,23 +340,23 @@ public final class HymnServiceImpl implements IHymnService {
 					final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
 							.filter(a -> !titleIds.contains(a.getId()) && ids1.contains(a.getId()))
 							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-									hymnsRecord.getScore(), null, null, LineNumber.BUNRGUNDY))
+									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+									null, LineNumber.BUNRGUNDY))
 							.toList();
 					hymnDtos.addAll(hymnDtos1);
 					final List<HymnDto> hymnDtos2 = randomFiveLoop.stream().filter(
 							a -> !titleIds.contains(a.getId()) && !ids1.contains(a.getId()) && ids2.contains(a.getId()))
 							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-									hymnsRecord.getScore(), null, null, LineNumber.NAPLES))
+									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+									null, LineNumber.NAPLES))
 							.toList();
 					hymnDtos.addAll(hymnDtos2);
 					final List<HymnDto> hymnDtos3 = randomFiveLoop.stream()
 							.filter(a -> !titleIds.contains(a.getId()) && !ids1.contains(a.getId())
 									&& !ids2.contains(a.getId()))
 							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-									hymnsRecord.getScore(), null, null, LineNumber.SNOWY))
+									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+									null, LineNumber.SNOWY))
 							.toList();
 					hymnDtos.addAll(hymnDtos3);
 					return CoResult.ok(hymnDtos.subList(0, 5));
@@ -376,15 +365,15 @@ public final class HymnServiceImpl implements IHymnService {
 				final List<HymnDto> hymnDtos1 = randomFiveLoop.stream()
 						.filter(a -> !titleIds.contains(a.getId()) && ids1.contains(a.getId()))
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-								hymnsRecord.getScore(), null, null, LineNumber.BUNRGUNDY))
+								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+								null, LineNumber.BUNRGUNDY))
 						.toList();
 				hymnDtos.addAll(hymnDtos1);
 				final List<HymnDto> hymnDtos2 = randomFiveLoop.stream()
 						.filter(a -> !titleIds.contains(a.getId()) && !ids1.contains(a.getId()))
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-								hymnsRecord.getScore(), null, null, LineNumber.NAPLES))
+								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
+								null, LineNumber.NAPLES))
 						.toList();
 				hymnDtos.addAll(hymnDtos2);
 				return CoResult.ok(hymnDtos.subList(0, 5));
@@ -392,8 +381,8 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<Hymn> randomFiveLoop2 = this.randomFiveLoop2(hymns1);
 			final List<HymnDto> hymnDtos1 = randomFiveLoop2.stream().filter(a -> !titleIds.contains(a.getId()))
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-							hymnsRecord.getScore(), null, null, LineNumber.BUNRGUNDY))
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
+							LineNumber.BUNRGUNDY))
 					.toList();
 			hymnDtos.addAll(hymnDtos1);
 			return CoResult.ok(hymnDtos.subList(0, 5));
@@ -410,15 +399,15 @@ public final class HymnServiceImpl implements IHymnService {
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification1)).ifPresentOrElse(val -> {
 			final List<HymnDto> hymnDtos = new ArrayList<>();
 			hymnDtos.add(new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(), val.getSerif(),
-					val.getLink(), val.getScore(), null, null, LineNumber.BUNRGUNDY));
+					val.getLink(), null, null, null, LineNumber.BUNRGUNDY));
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.notEqual(root.get("id"), id);
 			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2));
 			final List<Hymn> topTwoMatches = this.findTopTwoMatches(val.getSerif(), hymns);
 			final List<HymnDto> list = topTwoMatches.stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-							hymnsRecord.getScore(), null, null, LineNumber.NAPLES))
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
+							LineNumber.NAPLES))
 					.toList();
 			hymnDtos.addAll(list);
 			result.setSelf(CoResult.ok(hymnDtos));
@@ -432,8 +421,8 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> hymnDtos = this.hymnRepository.findAll(COMMON_CONDITION, Sort.by(Direction.ASC, "id"))
 					.stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(),
-							hymnsRecord.getScore(), null, null, null))
+							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
+							null))
 					.toList();
 			return CoResult.ok(hymnDtos);
 		} catch (final PersistenceException e) {
@@ -468,7 +457,7 @@ public final class HymnServiceImpl implements IHymnService {
 		hymnsRecord.setSerif(trimSerif);
 		hymnsRecord.setVisibleFlg(Boolean.TRUE);
 		hymnsRecord.setUpdatedUser(Long.parseLong(hymnDto.updatedUser()));
-		hymnsWork.setId(hymnsRecord.getId());
+		hymnsWork.setWorkId(hymnsRecord.getId());
 		try {
 			this.hymnsWorkRepository.saveAndFlush(hymnsWork);
 			this.hymnRepository.saveAndFlush(hymnsRecord);
@@ -491,9 +480,7 @@ public final class HymnServiceImpl implements IHymnService {
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final OffsetDateTime updatedTime1 = val.getUpdatedTime();
-			final byte[] score1 = val.getScore();
 			final String updatedUser2 = hymnDto.updatedUser();
-			val.setScore(null);
 			val.setUpdatedUser(null);
 			val.setUpdatedTime(null);
 			if (CoProjectUtils.isEqual(val, hymn)) {
@@ -502,7 +489,6 @@ public final class HymnServiceImpl implements IHymnService {
 				CoBeanUtils.copyNullableProperties(hymn, val);
 				final String trimSerif = this.trimSerif(hymn.getSerif());
 				val.setSerif(trimSerif);
-				val.setScore(score1);
 				val.setUpdatedUser(Long.parseLong(updatedUser2));
 				val.setUpdatedTime(updatedTime1);
 				try {
@@ -616,16 +602,14 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public @NotNull CoResult<String, PersistenceException> scoreStorage(final byte[] file, final Long id) {
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
-				.equal(root.get("id"), id);
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
-		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
+		this.hymnsWorkRepository.findById(id).ifPresentOrElse(val -> {
 			if (Arrays.equals(val.getScore(), file)) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
 				try {
 					val.setScore(file);
-					this.hymnRepository.saveAndFlush(val);
+					this.hymnsWorkRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
 				} catch (final PersistenceException e) {
 					result.setSelf(CoResult.err(e));

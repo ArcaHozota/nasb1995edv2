@@ -77,12 +77,6 @@ public final class Hymn implements Serializable {
 	private String serif;
 
 	/**
-	 * 楽譜
-	 */
-	@Column(columnDefinition = "bytea")
-	private byte[] score;
-
-	/**
 	 * 論理削除フラグ
 	 */
 	@Column(nullable = false)
