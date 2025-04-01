@@ -270,17 +270,29 @@ public final class HymnServiceImpl implements IHymnService {
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder.or(
 				criteriaBuilder.like(root.get(NAME_JP), searchStr), criteriaBuilder.like(root.get(NAME_KR), searchStr));
 		try {
-			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION.and(specification));
+			final List<HymnDto> hymnDtos = new ArrayList<>();
 			final PageRequest pageRequest = PageRequest.of(pageNum - 1, ProjectConstants.DEFAULT_PAGE_SIZE,
 					Sort.by(Direction.ASC, "id"));
 			final Page<Hymn> hymnsRecords = this.hymnRepository.findAll(COMMON_CONDITION.and(specification),
 					pageRequest);
-			final List<HymnDto> hymnDtos = hymnsRecords.getContent().stream()
+			hymnDtos.addAll(hymnsRecords.getContent().stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
 							null))
-					.toList();
-			return CoResult.ok(Pagination.of(hymnDtos, totalRecords, pageNum, ProjectConstants.DEFAULT_PAGE_SIZE));
+					.toList());
+			final List<Hymn> listAll = this.hymnRepository.findAll(COMMON_CONDITION);
+			hymnDtos.addAll(listAll.stream().filter(a -> {
+				final String kanjiToKatakana = this.kanjiToKatakana(a.getNameJp());
+				final String kanjiToKatakana2 = this.kanjiToKatakana(keyword);
+				if ((kanjiToKatakana == null) || (kanjiToKatakana2 == null)) {
+					return false;
+				}
+				return kanjiToKatakana.contains(kanjiToKatakana2);
+			}).map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
+					hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null, null))
+					.toList());
+			final List<HymnDto> list = hymnDtos.stream().distinct().toList();
+			return CoResult.ok(Pagination.of(list, list.size(), pageNum, ProjectConstants.DEFAULT_PAGE_SIZE));
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
 		}
@@ -518,14 +530,12 @@ public final class HymnServiceImpl implements IHymnService {
 		final Tokenizer tokenizer = new Tokenizer();
 		for (final char ch : inputText.toCharArray()) {
 			final String inputChar = String.valueOf(ch);
-			if (Pattern.matches(regex1, inputChar)) {
-				if (Pattern.matches(regex2, inputChar)) {
-					builder.append(inputChar);
-				} else {
-					final List<Token> tokens = tokenizer.tokenize(inputChar);
-					for (final Token token : tokens) {
-						builder.append(token.getReading());
-					}
+			if (!Pattern.matches(regex1, inputChar) || Pattern.matches(regex2, inputChar)) {
+				builder.append(inputChar);
+			} else {
+				final List<Token> tokens = tokenizer.tokenize(inputChar);
+				for (final Token token : tokens) {
+					builder.append(token.getReading());
 				}
 			}
 		}
