@@ -40,9 +40,6 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     show-sql: true
     open-in-view: false
-  output:
-    ansi:
-      enabled: ALWAYS
   freemarker:
     allow-request-override: true
     allow-session-override: true
