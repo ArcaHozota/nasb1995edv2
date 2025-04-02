@@ -319,7 +319,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
 				return criteriaBuilder.or(criteriaBuilder.equal(root.get(NAME_JP), keyword),
 						criteriaBuilder.equal(root.get(NAME_KR), keyword),
-						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), "%[".concat(keyword).concat("]%")));
+						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), "[".concat(keyword).concat("]")));
 			};
 			final List<HymnDto> withName = this.hymnRepository.findAll(specification1).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -327,36 +327,40 @@ public final class HymnServiceImpl implements IHymnService {
 							LineNumber.CADIMIUM))
 					.toList();
 			hymnDtos.addAll(withName);
-			final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
-					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
+			final List<String> withNameIds = withName.stream().map(HymnDto::id).toList();
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> {
 				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
-				return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
-						criteriaBuilder.like(root.get(NAME_KR), searchStr),
-						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), searchStr));
+				return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), keyword),
+						criteriaBuilder.like(root.get(NAME_KR), keyword),
+						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), keyword));
 			};
 			final List<HymnDto> withNameLike = this.hymnRepository.findAll(specification2).stream()
+					.filter(a -> !withNameIds.contains(a.getId().toString()))
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
 							LineNumber.BUNRGUNDY))
 					.toList();
 			hymnDtos.addAll(withNameLike);
+			final List<String> withNameLikeIds = withNameLike.stream().map(HymnDto::id).toList();
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
-				final List<HymnDto> hymnDtos2 = hymnDtos.stream().distinct().toList();
-				final List<HymnDto> randomFiveLoop = this.randomFiveLoop2(hymnDtos2);
+				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(withName, withNameLike);
 				return CoResult.ok(randomFiveLoop.stream()
 						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
 			}
 			final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
-			final List<HymnDto> withRandomFive = this.hymnRepository.retrieveRandomFive(detailKeyword).stream()
+			final List<HymnDto> withRandomFive = this.hymnRepository.retrieveRandomFive(detailKeyword).stream().filter(
+					a -> !withNameIds.contains(a.getId().toString()) && !withNameLikeIds.contains(a.getId().toString()))
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
 							LineNumber.NAPLES))
 					.toList();
 			hymnDtos.addAll(withRandomFive);
+			final List<String> withRandomFiveIds = withRandomFive.stream().map(HymnDto::id).toList();
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
-				final List<HymnDto> hymnDtos2 = hymnDtos.stream().distinct().toList();
-				final List<HymnDto> randomFiveLoop = this.randomFiveLoop2(hymnDtos2);
+				final List<HymnDto> hymnDtos2 = new ArrayList<>();
+				hymnDtos2.addAll(withName);
+				hymnDtos2.addAll(withNameLike);
+				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos2, withRandomFive);
 				return CoResult.ok(randomFiveLoop.stream()
 						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
 			}
@@ -366,14 +370,21 @@ public final class HymnServiceImpl implements IHymnService {
 							LineNumber.SNOWY))
 					.toList();
 			final List<HymnDto> filteredList = totalRecords.stream().filter(item -> {
+				if (withNameIds.contains(item.id()) || withNameLikeIds.contains(item.id())
+						|| withRandomFiveIds.contains(item.id())) {
+					return false;
+				}
 				final String kanjiToKatakanaKashi = this.kanjiToKatakana(item.serif());
 				final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
 				return kanjiToKatakanaKashi.contains(kanjiToKatakanaKeyword);
 			}).toList();
 			hymnDtos.addAll(filteredList);
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
-				final List<HymnDto> hymnDtos2 = hymnDtos.stream().distinct().toList();
-				final List<HymnDto> randomFiveLoop = this.randomFiveLoop2(hymnDtos2);
+				final List<HymnDto> hymnDtos2 = new ArrayList<>();
+				hymnDtos2.addAll(withName);
+				hymnDtos2.addAll(withNameLike);
+				hymnDtos2.addAll(withRandomFive);
+				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos2, filteredList);
 				return CoResult.ok(randomFiveLoop.stream()
 						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
 			}
