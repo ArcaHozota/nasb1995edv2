@@ -20,6 +20,7 @@ server:
     # Jetty のアクセスログ設定
     accesslog:
       enabled: true
+      filename: logs/jetty-log.log
       custom-format: "%h %l %u %t \"%r\" %s %b"
 spring:
   application:
