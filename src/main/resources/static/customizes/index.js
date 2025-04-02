@@ -14,7 +14,7 @@ $("#randomSearchBtn").on("click", function() {
 		$("#loadingContainer").hide();
 		$("#loadingBackground").hide();
 		$("#randomSearchBtn").prop("disabled", false);
-	}, 10000);
+	}, 33000);
 });
 $("#tableBody").on("click", '.link-btn', function(e) {
 	e.preventDefault();
