@@ -269,7 +269,7 @@ public final class HymnServiceImpl implements IHymnService {
 		final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
 				.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymns_work", JoinType.INNER);
+			final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
 			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
 					criteriaBuilder.like(root.get(NAME_KR), searchStr),
 					criteriaBuilder.like(hymnsJoin.get("nameJpRa"), searchStr));
@@ -319,7 +319,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
 				return criteriaBuilder.or(criteriaBuilder.equal(root.get(NAME_JP), keyword),
 						criteriaBuilder.equal(root.get(NAME_KR), keyword),
-						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), "[".concat(keyword).concat("]")));
+						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), "%[".concat(keyword).concat("]%")));
 			};
 			final List<HymnDto> withName = this.hymnRepository.findAll(specification1).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -328,11 +328,13 @@ public final class HymnServiceImpl implements IHymnService {
 					.toList();
 			hymnDtos.addAll(withName);
 			final List<String> withNameIds = withName.stream().map(HymnDto::id).toList();
+			final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
+					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> {
 				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
-				return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), keyword),
-						criteriaBuilder.like(root.get(NAME_KR), keyword),
-						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), keyword));
+				return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
+						criteriaBuilder.like(root.get(NAME_KR), searchStr),
+						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), searchStr));
 			};
 			final List<HymnDto> withNameLike = this.hymnRepository.findAll(specification2).stream()
 					.filter(a -> !withNameIds.contains(a.getId().toString()))
