@@ -31,7 +31,7 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	 * @param keyword キーワード
 	 * @return List<Hymn>
 	 */
-	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk "
+	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.workId= hm.id "
 			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword "
 			+ "or hm.serif like :keyword or hmk.nameJpRa like :keyword or cast(hm.id as string) like :keyword)")
 	List<Hymn> retrieveRandomFive(@Param("keyword") String keyword);

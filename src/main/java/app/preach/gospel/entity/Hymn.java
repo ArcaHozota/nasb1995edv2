@@ -6,7 +6,9 @@ import java.time.OffsetDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
 import lombok.EqualsAndHashCode;
@@ -81,4 +83,10 @@ public final class Hymn implements Serializable {
 	 */
 	@Column(nullable = false)
 	private Boolean visibleFlg;
+
+	/**
+	 * 外部キー
+	 */
+	@OneToOne(mappedBy = "hymn", fetch = FetchType.LAZY)
+	private HymnsWork hymnsWork;
 }
