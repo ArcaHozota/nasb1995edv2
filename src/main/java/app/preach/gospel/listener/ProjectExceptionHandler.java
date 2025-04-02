@@ -24,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler {
 
+	/**
+	 * スラッシュマーク
+	 */
 	private static final String SLASH = "\u002f";
 
 	@Override

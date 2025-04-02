@@ -1,11 +1,32 @@
 server:
   port: 8277
+  servlet:
+    session:
+      # セッションのタイムアウト
+      timeout: 20m
+      cookie:
+        http-only: true
+        secure: true
+  compression:
+    enabled: true
+    min-response-size: 1024
+  # Tomcat => Jetty へ切り替え
+  jetty:
+    # スレッドプールの設定（Tomcat の threads.max/min-spare に対応）
+    threads:
+      min: 2     # Tomcat の min-spare 相当
+      max: 20    # Tomcat の max  相当
+      idle-timeout: 66s
+    # Jetty のアクセスログ設定
+    accesslog:
+      enabled: true
+      custom-format: "%h %l %u %t \"%r\" %s %b"
 spring:
   application:
     name: nasb1995edv2
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://52.199.163.241:5432/nasb1995
+    url: jdbc:postgresql://172.26.6.87:5432/nasb1995
     username: postgres
     password: postgres
     hikari:
@@ -28,7 +49,4 @@ spring:
     settings:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0ms}
   profiles:
-    active: dev
-logging:
-  level:
-    root: INFO
+    active: prod

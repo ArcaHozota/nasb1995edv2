@@ -39,13 +39,23 @@ ext.strutsVersion = '7.0.3'
 
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation ('org.springframework.boot:spring-boot-starter-security') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation ('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-freemarker
-    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation ('org.springframework.boot:spring-boot-starter-freemarker') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jetty
-    implementation 'org.springframework.boot:spring-boot-starter-jetty'
+    implementation ('org.springframework.boot:spring-boot-starter-jetty') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     // https://mvnrepository.com/artifact/org.jetbrains/annotations
     implementation 'org.jetbrains:annotations:26.0.1'
     // https://mvnrepository.com/artifact/org.apache.struts/struts2-core
