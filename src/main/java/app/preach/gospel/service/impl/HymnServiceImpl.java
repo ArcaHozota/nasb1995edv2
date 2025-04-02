@@ -452,6 +452,7 @@ public final class HymnServiceImpl implements IHymnService {
 		hymnsRecord.setVisibleFlg(Boolean.TRUE);
 		hymnsRecord.setUpdatedUser(Long.parseLong(hymnDto.updatedUser()));
 		hymnsWork.setWorkId(hymnsRecord.getId());
+		hymnsWork.setPdfFlg(Boolean.FALSE);
 		try {
 			this.hymnsWorkRepository.saveAndFlush(hymnsWork);
 			this.hymnRepository.saveAndFlush(hymnsRecord);
