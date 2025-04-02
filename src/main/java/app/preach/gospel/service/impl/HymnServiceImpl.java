@@ -319,7 +319,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymns_work", JoinType.INNER);
 				return criteriaBuilder.or(criteriaBuilder.equal(root.get(NAME_JP), keyword),
 						criteriaBuilder.equal(root.get(NAME_KR), keyword),
-						criteriaBuilder.equal(hymnsJoin.get("nameJpRa"), keyword));
+						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), "%[".concat(keyword).concat("]%")));
 			};
 			final List<HymnDto> withName = this.hymnRepository.findAll(specification1).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
