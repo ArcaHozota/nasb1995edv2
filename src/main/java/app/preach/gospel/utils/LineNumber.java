@@ -8,24 +8,24 @@ package app.preach.gospel.utils;
  */
 public enum LineNumber {
 
-	BUNRGUNDY("Burgundy Red"),
+	BUNRGUNDY(2),
 
-	CADIMIUM("Cadmium Green"),
+	CADIMIUM(1),
 
-	NAPLES("Napoli Yellow"),
+	NAPLES(3),
 
-	SNOWY("Standard White");
+	SNOWY(5);
 
-	private final String color;
+	private final Integer lineNumber;
 
 	// 构造器
-	private LineNumber(final String color) {
-		this.color = color;
+	private LineNumber(final Integer lineNumber) {
+		this.lineNumber = lineNumber;
 	}
 
 	// 方法
-	public String getColor() {
-		return this.color;
+	public Integer getLineNumber() {
+		return this.lineNumber;
 	}
 
 }

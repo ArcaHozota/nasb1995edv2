@@ -26,32 +26,13 @@ public interface HymnRepository extends JpaRepository<Hymn, Long>, JpaSpecificat
 	List<Hymn> findForStrangement();
 
 	/**
-	 * 更新すべき情報検索
-	 *
-	 * @return List<Hymn>
-	 */
-	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk on hmk.workId = hm.id "
-			+ "where hm.visibleFlg = true and (hmk.updatedTime is null or hm.updatedTime > hmk.updatedTime)")
-	List<Hymn> findForUpdatedTime();
-
-	/**
-	 * ランドム選択検索1
+	 * ランドム選択検索
 	 *
 	 * @param keyword キーワード
 	 * @return List<Hymn>
 	 */
-	@Query(value = "select hm from Hymn as hm "
-			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword)")
-	List<Hymn> retrieveRandomFive1(@Param("keyword") String keyword);
-
-	/**
-	 * ランドム選択検索2
-	 *
-	 * @param keyword キーワード
-	 * @return List<Hymn>
-	 */
-	@Query(value = "select hm from Hymn as hm where hm.visibleFlg = true "
-			+ "and (hm.nameJp like :keyword or hm.nameKr like :keyword or hm.serif like :keyword "
-			+ "or cast(hm.id as string) like :keyword)")
-	List<Hymn> retrieveRandomFive2(@Param("keyword") String keyword);
+	@Query(value = "select hm from Hymn as hm inner join HymnsWork as hmk "
+			+ "where hm.visibleFlg = true and (hm.nameJp like :keyword or hm.nameKr like :keyword "
+			+ "or hm.serif like :keyword or hmk.nameJpRa like :keyword or cast(hm.id as string) like :keyword)")
+	List<Hymn> retrieveRandomFive(@Param("keyword") String keyword);
 }

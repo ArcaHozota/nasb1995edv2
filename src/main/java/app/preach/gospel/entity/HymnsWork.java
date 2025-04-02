@@ -55,6 +55,12 @@ public final class HymnsWork implements Serializable {
 	/**
 	 * PDFフラグ
 	 */
-	@Column
+	@Column(nullable = false)
 	private Boolean pdfFlg;
+
+	/**
+	 * 日本語名称
+	 */
+	@Column(name = "nameJpRational")
+	private String nameJpRa;
 }
