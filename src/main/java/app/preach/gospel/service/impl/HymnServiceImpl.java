@@ -27,9 +27,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.atilika.kuromoji.ipadic.Token;
-import com.atilika.kuromoji.ipadic.Tokenizer;
-
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.entity.Hymn;
@@ -50,6 +47,7 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
 import kr.co.shineware.nlp.komoran.core.Komoran;
+import kr.co.shineware.nlp.komoran.model.Token;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -356,7 +354,7 @@ public final class HymnServiceImpl implements IHymnService {
 							LineNumber.NAPLES))
 					.toList();
 			hymnDtos.addAll(withRandomFive);
-			final List<String> withRandomFiveIds = withRandomFive.stream().map(HymnDto::id).toList();
+			withRandomFive.stream().map(HymnDto::id).toList();
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
 				final List<HymnDto> hymnDtos2 = new ArrayList<>();
 				hymnDtos2.addAll(withName);
@@ -370,25 +368,6 @@ public final class HymnServiceImpl implements IHymnService {
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
 							LineNumber.SNOWY))
 					.toList();
-			final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
-			final List<HymnDto> filteredList = totalRecords.stream().filter(item -> {
-				if (withNameIds.contains(item.id()) || withNameLikeIds.contains(item.id())
-						|| withRandomFiveIds.contains(item.id())) {
-					return false;
-				}
-				final String kanjiToKatakanaKashi = this.kanjiToKatakana(item.serif());
-				return kanjiToKatakanaKashi.contains(kanjiToKatakanaKeyword);
-			}).toList();
-			hymnDtos.addAll(filteredList);
-			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
-				final List<HymnDto> hymnDtos2 = new ArrayList<>();
-				hymnDtos2.addAll(withName);
-				hymnDtos2.addAll(withNameLike);
-				hymnDtos2.addAll(withRandomFive);
-				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos2, filteredList);
-				return CoResult.ok(randomFiveLoop.stream()
-						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
-			}
 			final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos, totalRecords);
 			return CoResult.ok(randomFiveLoop.stream()
 					.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
@@ -507,32 +486,6 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	/**
-	 * 漢字から片仮名へ転換する
-	 *
-	 * @param inputText インプットストリング
-	 * @return 片仮名
-	 */
-	private @NotNull String kanjiToKatakana(final @NotNull String inputText) {
-		// レギューラーエクスプレスで漢字、平仮名及び片仮名を抽出する
-		final String regex1 = "[\\p{IsHiragana}\\p{IsKatakana}\\p{IsHan}\\p{IsLatin}\\p{Nd}]+";
-		final String regex2 = "[\\p{IsKatakana}\\p{IsLatin}\\p{Nd}]+";
-		final StringBuilder builder = new StringBuilder();
-		final Tokenizer tokenizer = new Tokenizer();
-		for (final char ch : inputText.toCharArray()) {
-			final String inputChar = String.valueOf(ch);
-			if (!Pattern.matches(regex1, inputChar) || Pattern.matches(regex2, inputChar)) {
-				builder.append(inputChar);
-			} else {
-				final List<Token> tokens = tokenizer.tokenize(inputChar);
-				for (final Token token : tokens) {
-					builder.append(token.getReading());
-				}
-			}
-		}
-		return builder.toString();
-	}
-
-	/**
 	 * コーパスを取得する
 	 *
 	 * @param originalTexts
@@ -637,9 +590,8 @@ public final class HymnServiceImpl implements IHymnService {
 		if (CoProjectUtils.isEmpty(koreanText)) {
 			return new LinkedHashMap<>();
 		}
-		final List<kr.co.shineware.nlp.komoran.model.Token> tokenList = KOMORAN.analyze(koreanText).getTokenList();
-		return tokenList.stream()
-				.collect(Collectors.toMap(kr.co.shineware.nlp.komoran.model.Token::getMorph, t -> 1, Integer::sum));
+		final List<Token> tokenList = KOMORAN.analyze(koreanText).getTokenList();
+		return tokenList.stream().collect(Collectors.toMap(Token::getMorph, t -> 1, Integer::sum));
 	}
 
 	/**

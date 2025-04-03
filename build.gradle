@@ -81,8 +81,6 @@ dependencies {
     implementation 'org.postgresql:postgresql'
     // https://mvnrepository.com/artifact/org.eclipse/yasson
     implementation 'org.eclipse:yasson:3.0.4'
-    // https://mvnrepository.com/artifact/com.atilika.kuromoji/kuromoji-ipadic
-    implementation 'com.atilika.kuromoji:kuromoji-ipadic:0.9.0'
     // https://mvnrepository.com/artifact/jakarta.servlet.jsp/jakarta.servlet.jsp-api
     implementation 'jakarta.servlet.jsp:jakarta.servlet.jsp-api:4.0.0'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
