@@ -8,11 +8,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<meta name="_csrf_token" content="${_csrf.token}">
-	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/index.css">
-	<link rel="stylesheet" type="text/css" href="/static/css/customize.css">
+	<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/css/customize.css">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Niconne&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap">
@@ -29,9 +29,9 @@
 			font-family: "Niconne", serif;
 		}
 	</style>
-	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
-	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script type="text/javascript" src="/static/layer/layer.js"></script>
+	<script type="text/javascript" src="/jquery/jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="/layer/layer.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -117,7 +117,7 @@
 			<p style="font-size: 11px;color: #FFF;">※赤色：アキュレイトクエリの結果、黄色：ファジークエリの結果。五つに満たされなかった場合にシステムが補充されます。</p>
 		</div>
 	</div>
-	<script type="text/javascript" src="/static/customizes/index.js"></script>
+	<script type="text/javascript" src="/customizes/index.js"></script>
 </body>
 
 </html>
