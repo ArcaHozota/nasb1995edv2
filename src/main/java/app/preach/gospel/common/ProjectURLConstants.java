@@ -30,9 +30,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_CHECK_DELETE = "deletionCheck";
 
-	public static final String URL_TO_LOGIN = "login";
+	public static final String URL_TO_LOGIN = "login.action";
 
-	public static final String URL_TO_LOGIN_WITH_ERROR = "loginWithError";
+	public static final String URL_TO_LOGIN_WITH_ERROR = "loginWithError.action";
 
 	public static final String URL_LOG_OUT = "logout";
 

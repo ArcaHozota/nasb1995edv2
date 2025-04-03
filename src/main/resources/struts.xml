@@ -52,15 +52,6 @@
 			</result>
 			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
-		<action name="''"
-			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
-			<result name="success">/templates/index.ftl</result>
-			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
-		</action>
 		<!-- 其他 Action 显式添加 -->
 		<action name="toIchiranhyo"
 			class="app.preach.gospel.handler.HomePageHandler"
