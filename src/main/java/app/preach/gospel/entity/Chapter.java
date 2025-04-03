@@ -40,13 +40,13 @@ public final class Chapter implements Serializable {
 	/**
 	 * 名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 33)
 	private String name;
 
 	/**
 	 * 日本語名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 33)
 	private String nameJp;
 
 	/**

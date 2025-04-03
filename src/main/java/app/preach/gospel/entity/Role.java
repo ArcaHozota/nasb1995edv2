@@ -40,7 +40,7 @@ public final class Role implements Serializable {
 	/**
 	 * 名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 40)
 	private String name;
 
 	/**

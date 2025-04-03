@@ -64,7 +64,7 @@ public final class HymnsWork implements Serializable {
 	/**
 	 * 日本語名称
 	 */
-	@Column(name = "nameJpRational")
+	@Column(name = "nameJpRational", length = 120)
 	private String nameJpRa;
 
 	/**

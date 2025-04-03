@@ -40,13 +40,13 @@ public final class Authority implements Serializable {
 	/**
 	 * 名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 50)
 	private String name;
 
 	/**
 	 * タイトル
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 40)
 	private String title;
 
 	/**

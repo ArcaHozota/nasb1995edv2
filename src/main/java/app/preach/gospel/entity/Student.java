@@ -42,19 +42,19 @@ public final class Student implements Serializable {
 	/**
 	 * アカウント
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 40)
 	private String loginAccount;
 
 	/**
 	 * ユーザ名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 40)
 	private String username;
 
 	/**
 	 * パスワード
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 120)
 	private String password;
 
 	/**
@@ -66,7 +66,7 @@ public final class Student implements Serializable {
 	/**
 	 * メール
 	 */
-	@Column
+	@Column(length = 60)
 	private String email;
 
 	/**

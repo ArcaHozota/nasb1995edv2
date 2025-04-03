@@ -40,7 +40,7 @@ public final class Phrase implements Serializable {
 	/**
 	 * 名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 33)
 	private String name;
 
 	/**

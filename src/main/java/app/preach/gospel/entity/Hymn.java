@@ -44,13 +44,13 @@ public final class Hymn implements Serializable {
 	/**
 	 * 名称
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, length = 66)
 	private String nameJp;
 
 	/**
 	 * 韓国語名称
 	 */
-	@Column
+	@Column(length = 66)
 	private String nameKr;
 
 	/**
