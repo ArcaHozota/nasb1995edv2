@@ -1,6 +1,7 @@
 package app.preach.gospel.config;
 
 import org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -22,11 +23,14 @@ public class ServletFilterConfiguration {
 	 *
 	 * @return StrutsPrepareAndExecuteFilter
 	 */
-	@Bean
 	@Order(10)
-	protected StrutsPrepareAndExecuteFilter strutsPrepareAndExecuteFilter() {
+	@Bean
+	protected FilterRegistrationBean<StrutsPrepareAndExecuteFilter> struts2Filter() {
+		final FilterRegistrationBean<StrutsPrepareAndExecuteFilter> filter = new FilterRegistrationBean<>();
+		filter.setFilter(new StrutsPrepareAndExecuteFilter());
+		filter.addUrlPatterns("*.action"); // ⚠️ 这是会拦截所有请求，包括静态资源
 		log.info("Struts2フレームワーク配置成功！");
-		return new StrutsPrepareAndExecuteFilter();
+		return filter;
 	}
 
 }

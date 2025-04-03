@@ -14,9 +14,9 @@
 	</package>
 	<!-- ホームページハンドラ -->
 	<package name="homeHandler" extends="projectPackage"
-		namespace="/">
+		namespace="/home">
 		<!-- 显式定义 home Action -->
-		<action name="home"
+		<action name="page"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success">/templates/index.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
