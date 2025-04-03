@@ -34,8 +34,7 @@ public class SpringSecurityConfiguration {
 	/**
 	 * 除外するパス
 	 */
-	private static final String[] IGNORANCE_PATHS = { "/category/initial.action", "/home/**.action", "/css/**",
-			"/js/**", "/images/**", "/bootstrap/**", "/jquery/**", "/customizes/**", "/layer/**", "/favicon.ico",
+	private static final String[] IGNORANCE_PATHS = { "/category/initial.action", "/static/**", "/home/**.action",
 			"/category/loginWithError.action", "/students/preLogin.action", "/hymns/pagination", "/hymns/scoreDownload",
 			"/hymns/getInfoById", "/hymns/kanumiRetrieve", "/hymns/commonRetrieve" };
 
