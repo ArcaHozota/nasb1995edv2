@@ -69,6 +69,13 @@ public interface IHymnService {
 	/**
 	 * 賛美歌のレコードを取得する
 	 *
+	 * @return CoResult<Long, PersistenceException>
+	 */
+	CoResult<Long, PersistenceException> getTotalCounts();
+
+	/**
+	 * 賛美歌のレコードを取得する
+	 *
 	 * @return CoResult<List<HymnDto>, PersistenceException>
 	 */
 	CoResult<List<HymnDto>, PersistenceException> getTotalRecords();

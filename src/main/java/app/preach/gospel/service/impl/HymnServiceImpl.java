@@ -423,6 +423,16 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
+	public CoResult<Long, PersistenceException> getTotalCounts() {
+		try {
+			final long count = this.hymnRepository.count(COMMON_CONDITION);
+			return CoResult.ok(count);
+		} catch (final PersistenceException e) {
+			return CoResult.err(e);
+		}
+	}
+
+	@Override
 	public CoResult<List<HymnDto>, PersistenceException> getTotalRecords() {
 		try {
 			final List<HymnDto> hymnDtos = this.hymnRepository.findAll(COMMON_CONDITION, Sort.by(Direction.ASC, "id"))

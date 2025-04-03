@@ -57,11 +57,11 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * @return String
 	 */
 	public String toHomePage() {
-		final CoResult<List<HymnDto>, PersistenceException> totalRecords = this.iHymnService.getTotalRecords();
-		if (!totalRecords.isOk()) {
-			throw totalRecords.getErr();
+		final CoResult<Long, PersistenceException> totalCounts = this.iHymnService.getTotalCounts();
+		if (!totalCounts.isOk()) {
+			throw totalCounts.getErr();
 		}
-		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalRecords.getOk().size());
+		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getOk());
 		return SUCCESS;
 	}
 
