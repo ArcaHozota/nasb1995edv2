@@ -28,7 +28,7 @@ public class ServletFilterConfiguration {
 	protected FilterRegistrationBean<StrutsPrepareAndExecuteFilter> struts2Filter() {
 		final FilterRegistrationBean<StrutsPrepareAndExecuteFilter> filter = new FilterRegistrationBean<>();
 		filter.setFilter(new StrutsPrepareAndExecuteFilter());
-		filter.addUrlPatterns("*.action"); // ⚠️ 这是会拦截所有请求，包括静态资源
+		filter.addUrlPatterns("*.action");
 		log.info("Struts2フレームワーク配置成功！");
 		return filter;
 	}

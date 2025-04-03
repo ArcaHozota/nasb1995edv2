@@ -57,6 +57,7 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * @return String
 	 */
 	public String toHomePage() {
+		System.out.println(">>>> HomePageHandler#toHomePage() 被调用 <<<<");
 		final CoResult<Long, PersistenceException> totalCounts = this.iHymnService.getTotalCounts();
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
