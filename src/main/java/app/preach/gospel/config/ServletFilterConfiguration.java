@@ -28,6 +28,7 @@ public class ServletFilterConfiguration {
 	protected FilterRegistrationBean<StrutsPrepareAndExecuteFilter> struts2Filter() {
 		final FilterRegistrationBean<StrutsPrepareAndExecuteFilter> filter = new FilterRegistrationBean<>();
 		filter.setFilter(new StrutsPrepareAndExecuteFilter());
+		filter.setName("struts2");
 		filter.addUrlPatterns("*.action");
 		log.info("Struts2フレームワーク配置成功！");
 		return filter;
