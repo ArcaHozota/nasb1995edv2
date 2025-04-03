@@ -21,11 +21,6 @@
 			<result name="success">/templates/index.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
 		</action>
-		<action name="homePage"
-			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
-			<result name="success">/templates/index.ftl</result>
-			<result name="error">/templates/system-error.ftl</result>
-		</action>
 		<action name="toHomePage"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success">/templates/index.ftl</result>
