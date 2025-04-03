@@ -133,8 +133,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Actions(value = { @Action(ProjectURLConstants.URL_COMMON_RETRIEVE),
-//			@Action(ProjectURLConstants.URL_RANDOM_FIVE_RETRIEVE) })
 	public String commonRetrieve() {
 		final String keyword = this.getServletRequest().getParameter("keyword");
 		final CoResult<List<HymnDto>, PersistenceException> hymnsRandomFive = this.iHymnService
@@ -171,7 +169,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_GET_INFO)
 	public String getInfoById() {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
@@ -236,7 +233,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_KANUMI_RETRIEVE)
 	public String kanumiRetrieve() {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
 		final CoResult<List<HymnDto>, PersistenceException> kanumiList = this.iHymnService
@@ -254,7 +250,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		final String keyword = this.getServletRequest().getParameter("keyword");

@@ -433,21 +433,6 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public CoResult<List<HymnDto>, PersistenceException> getTotalRecords() {
-		try {
-			final List<HymnDto> hymnDtos = this.hymnRepository.findAll(COMMON_CONDITION, Sort.by(Direction.ASC, "id"))
-					.stream()
-					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
-							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							null))
-					.toList();
-			return CoResult.ok(hymnDtos);
-		} catch (final PersistenceException e) {
-			return CoResult.err(e);
-		}
-	}
-
-	@Override
 	public @NotNull CoResult<String, PersistenceException> infoDeletion(final Long id) {
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);

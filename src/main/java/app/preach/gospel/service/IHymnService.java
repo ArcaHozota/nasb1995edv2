@@ -67,18 +67,11 @@ public interface IHymnService {
 	CoResult<List<HymnDto>, PersistenceException> getKanumiList(Long id);
 
 	/**
-	 * 賛美歌のレコードを取得する
+	 * 賛美歌のレコード数を取得する
 	 *
 	 * @return CoResult<Long, PersistenceException>
 	 */
 	CoResult<Long, PersistenceException> getTotalCounts();
-
-	/**
-	 * 賛美歌のレコードを取得する
-	 *
-	 * @return CoResult<List<HymnDto>, PersistenceException>
-	 */
-	CoResult<List<HymnDto>, PersistenceException> getTotalRecords();
 
 	/**
 	 * 賛美情報を削除する

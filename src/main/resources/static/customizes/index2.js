@@ -48,7 +48,7 @@ $("#tableBody").on("click", '.form-check-input', function() {
 	if ($(this).prop('checked')) {
 		let idVal = $(this).val();
 		$.ajax({
-			url: '/hymns/getInfoById',
+			url: '/hymns/getInfoById.action',
 			data: 'hymnId=' + idVal,
 			success: function(response) {
 				$("#nameDisplay").text(response.nameJp);
@@ -64,7 +64,7 @@ $("#tableBody").on("click", '.form-check-input', function() {
 		for (const element of checkBoxArray) {
 			if ($(element).prop('checked')) {
 				$.ajax({
-					url: '/hymns/getInfoById',
+					url: '/hymns/getInfoById.action',
 					data: 'hymnId=' + $(element).val(),
 					success: function(response) {
 						$("#nameDisplay").text(response.nameJp);
@@ -87,7 +87,7 @@ $("#tableBody").on("click", '.link-btn', function(e) {
 });
 function initialPagination(pageNum, keyword) {
 	$.ajax({
-		url: '/hymns/pagination',
+		url: '/hymns/pagination.action',
 		data: 'pageNum=' + pageNum,
 		success: function(response) {
 			buildTableBody1(response);

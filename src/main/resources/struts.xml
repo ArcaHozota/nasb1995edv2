@@ -84,6 +84,58 @@
 			</result>
 		</action>
 	</package>
+	<!-- 賛美歌管理ハンドラ -->
+	<package name="hymnsHandler" extends="projectPackage"
+		namespace="/hymns">
+		<action name="commonRetrieve"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="commonRetrieve">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="kanumiRetrieve"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="kanumiRetrieve">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="getInfoById"
+			class="app.preach.gospel.handler.HymnsHandler" method="getInfoById">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="pagination"
+			class="app.preach.gospel.handler.HymnsHandler" method="pagination">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="retrieveRandomFive"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="commonRetrieve">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+	</package>
 	<!-- IOC容器交给spring -->
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 设置Spring自动装配规则 -->
