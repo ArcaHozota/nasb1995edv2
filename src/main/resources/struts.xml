@@ -6,8 +6,9 @@
 	<!-- 基础包名 -->
 	<package name="projectPackage"
 		extends="struts-default,json-default" strict-method-invocation="true">
-		<global-allowed-methods>initial,menuInitial,toMainmenu,checkDuplicated,checkEdition,
-			checkDelete,toPages,pagination,infoDelete,infoUpdate,infoSave,toAddition,toEdition</global-allowed-methods>
+		<global-allowed-methods>initial,menuInitial,toMainmenu,toMainmenuWithLogin,checkDuplicated,checkEdition,login,loginWithError,
+			checkDelete,toPages,pagination,infoDeletion,infoUpdation,infoStorage,toAddition,toEdition,toHomePage,toIchiranhyo,toSystemError,commonRetrieve,
+			getInfoById,kanumiRetrieve,toRandomFive,toScoreUpload,scoreDownload,getChapters,preLogin</global-allowed-methods>
 	</package>
 	<constant
 		name="struts.convention.package.locators.basePackage"
