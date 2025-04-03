@@ -25,9 +25,12 @@
 	</Appenders>
 	<Loggers>
 		<!-- プロジェクト共通ログ設定 -->
-		<Root level="DEBUG">
+		<Root level="INFO">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="File" />
 		</Root>
+		<Logger name="org.apache.struts2.dispatcher.mapper"
+			level="DEBUG" />
+		<Logger name="org.apache.struts2.config" level="DEBUG" />
 	</Loggers>
 </Configuration>
