@@ -173,7 +173,7 @@ function buildPageNavi(result) {
 }
 function kanumiRetrieve(hymnId) {
 	$.ajax({
-		url: '/hymns/kanumiRetrieve',
+		url: '/hymns/kanumiRetrieve.action',
 		data: 'hymnId=' + hymnId,
 		success: function(response) {
 			buildTableBody2(response);

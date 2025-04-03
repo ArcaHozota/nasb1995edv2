@@ -34,11 +34,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-//@Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
-//@Results({ @Result(name = SUCCESS, location = "/templates/hymns-pagination.ftl"),
-//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
 public class HymnsHandler extends DefaultActionSupport implements ServletRequestAware {
@@ -150,7 +145,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_CHECK_DELETE)
 	public String deletionCheck() {
 		return NONE;
 	}
@@ -251,6 +245,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * @return String
 	 */
 	public String pagination() {
+		System.out.println(">>>>呼び出し中<<<<");
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		final String keyword = this.getServletRequest().getParameter("keyword");
 		final CoResult<Pagination<HymnDto>, PersistenceException> hymnsByKeyword = this.iHymnService
