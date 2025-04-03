@@ -34,9 +34,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_LOGIN_WITH_ERROR = "loginWithError.action";
 
-	public static final String URL_LOG_OUT = "logout";
+	public static final String URL_PRE_LOGIN = "preLogin.action";
 
-	public static final String URL_PRE_LOGIN = "preLogin";
+	public static final String URL_LOG_OUT = "logout";
 
 	public static final String URL_LOGIN = "doLogin";
 
@@ -44,9 +44,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_ERROR = "toSystemError";
 
-	public static final String URL_TO_MAINMENU = "toMainmenu";
+	public static final String URL_TO_MAINMENU = "toMainmenu.action";
 
-	public static final String URL_TO_MAINMENU_WITH_LOGIN = "toMainmenuWithLogin";
+	public static final String URL_TO_MAINMENU_WITH_LOGIN = "toMainmenuWithLogin.action";
 
 	public static final String URL_TO_ADDITION = "toAddition.action";
 

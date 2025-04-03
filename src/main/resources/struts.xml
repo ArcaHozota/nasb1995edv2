@@ -145,6 +145,19 @@
 			</result>
 		</action>
 	</package>
+	<!-- 奉仕者管理ハンドラ -->
+	<package name="studentsHandler" extends="projectPackage"
+		namespace="/students">
+		<action name="preLogin"
+			class="app.preach.gospel.handler.StudentsHandler" method="preLogin">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+	</package>
 	<!-- IOC容器交给spring -->
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 设置Spring自动装配规则 -->
@@ -164,7 +177,4 @@
 	<!-- 例外処理ハンドラ -->
 	<constant name="struts.dispatcher.errorHandler"
 		value="app.preach.gospel.listener.ProjectExceptionHandler" />
-	<!-- 除外すべきパターン -->
-	<constant name="struts.action.excludePattern"
-		value="\.(css|js|png|jpg|jpeg|gif|ico)$" />
 </struts>

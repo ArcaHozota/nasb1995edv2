@@ -30,11 +30,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-//@Namespace(ProjectURLConstants.URL_STUDENTS_NAMESPACE)
-//@Results({ @Result(name = SUCCESS, location = "/templates/students-edition.ftl"),
-//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
 public class StudentsHandler extends DefaultActionSupport implements ServletRequestAware {
@@ -145,7 +140,6 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_PRE_LOGIN)
 	public String preLogin() {
 		final CoResult<String, PersistenceException> preLoginUpdation = this.iStudentService.preLoginUpdation(
 				this.getServletRequest().getParameter("loginAccount"),
@@ -162,7 +156,6 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_TO_EDITION)
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
 		final CoResult<StudentDto, PersistenceException> studentInfoById = this.iStudentService
