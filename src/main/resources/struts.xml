@@ -12,37 +12,71 @@
 			toIchiranhyo,toSystemError,commonRetrieve,getInfoById,kanumiRetrieve,toRandomFive,toScoreUpload,scoreDownload,getChapters,preLogin
 		</global-allowed-methods>
 	</package>
-	<constant
-		name="struts.convention.package.locators.basePackage"
-		value="app.preach.gospel" />
-	<!-- 包名后缀，默认为action、actions、struts、struts2 -->
-	<constant name="struts.convention.package.locators"
-		value="handler" />
-	<constant name="struts.convention.action.suffix"
-		value="Handler" />
+	<package name="homeHandler" extends="projectPackage"
+		namespace="/">
+		<!-- 显式定义 home Action -->
+		<action name="home"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success">/templates/index.ftl</result>
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="homePage"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success">/templates/index.ftl</result>
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="toHomePage"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success">/templates/index.ftl</result>
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="index"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success">/templates/index.ftl</result>
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="''"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success">/templates/index.ftl</result>
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+		<!-- 其他 Action 显式添加 -->
+		<action name="toIchiranhyo"
+			class="app.preach.gospel.handler.HomePageHandler"
+			method="toIchiranhyo">
+			<result name="success">/templates/index2.ftl</result>
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+	</package>
 	<!-- IOC容器交给spring -->
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 设置Spring自动装配规则 -->
 	<constant name="struts.objectFactory.spring.autoWire"
 		value="type" />
-	<!-- springboot集成struts2需要使内置tomcat的类加载器不被排除 -->
-	<constant name="struts.convention.exclude.parentClassLoader"
-		value="false" />
-	<!-- 指定视图文件所在的目录地址 -->
-	<constant name="struts.convention.result.path"
-		value="/templates/" />
-	<!-- 启用 JAR 包扫描 -->
-	<constant name="struts.convention.action.disableJarScanning"
-		value="false" />
-	<!-- 显式匹配 Spring Boot 或普通 class 路径 -->
-	<constant name="struts.convention.action.includeJars"
-		value=".*BOOT-INF/classes/.*|.*target/classes/.*" />
-	<!--设置Action的默认继承包 -->
-	<constant name="struts.convention.default.parent.package"
-		value="projectPackage" />
-	<!--设置Convention插件文件协议类型 -->
-	<constant name="struts.convention.action.fileProtocols"
-		value="jar,wsjar" />
 	<!-- 指定web应用的默认编码集 -->
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<!-- 默认action方法中URL无斜杠 -->
