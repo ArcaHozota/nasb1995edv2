@@ -54,7 +54,7 @@ public final class Student implements Serializable {
 	/**
 	 * パスワード
 	 */
-	@Column(nullable = false, length = 120)
+	@Column(nullable = false)
 	private String password;
 
 	/**
