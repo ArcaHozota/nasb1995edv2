@@ -1,10 +1,5 @@
 package app.preach.gospel.handler;
 
-import static org.apache.struts2.action.Action.ERROR;
-import static org.apache.struts2.action.Action.LOGIN;
-import static org.apache.struts2.action.Action.NONE;
-import static org.apache.struts2.action.Action.SUCCESS;
-
 import java.io.IOException;
 import java.io.Serial;
 import java.util.Base64;
@@ -13,10 +8,6 @@ import java.util.Map;
 import org.apache.struts2.ActionContext;
 import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.preach.gospel.common.ProjectConstants;
-import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
@@ -45,13 +35,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/templates/hymns-score-upload.ftl"),
-		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
-@Scope("prototype")
+//@Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
+//@Results({ @Result(name = SUCCESS, location = "/templates/hymns-score-upload.ftl"),
+//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
+//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
+//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
+@Scope("prototype")
 public class ScoreUploadHandler extends ActionSupport implements ServletRequestAware {
 
 	@Serial
@@ -83,7 +73,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_SCORE_UPLOAD)
+//	@Action(ProjectURLConstants.URL_SCORE_UPLOAD)
 	@Override
 	public String execute() {
 		try {
@@ -116,7 +106,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	 * @return String
 	 * @throws IOException
 	 */
-	@Action(value = ProjectURLConstants.URL_SCORE_DOWNLOAD, results = { @Result(type = "stream") })
+//	@Action(value = ProjectURLConstants.URL_SCORE_DOWNLOAD, results = { @Result(type = "stream") })
 	public String scoreDownload() {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
@@ -146,7 +136,7 @@ public class ScoreUploadHandler extends ActionSupport implements ServletRequestA
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_SCORE_UPLOAD)
+//	@Action(ProjectURLConstants.URL_TO_SCORE_UPLOAD)
 	public String toScoreUpload() {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final String pageNum = this.getServletRequest().getParameter("pageNum");

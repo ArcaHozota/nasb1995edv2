@@ -1,22 +1,11 @@
 package app.preach.gospel.handler;
 
-import static org.apache.struts2.action.Action.ERROR;
-import static org.apache.struts2.action.Action.LOGIN;
-import static org.apache.struts2.action.Action.NONE;
-import static org.apache.struts2.action.Action.SUCCESS;
-
 import java.io.Serial;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
 import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Actions;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
@@ -25,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import com.alibaba.fastjson2.JSON;
 
 import app.preach.gospel.common.ProjectConstants;
-import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoProjectUtils;
@@ -46,13 +34,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/templates/hymns-pagination.ftl"),
-		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
-@Scope("prototype")
+//@Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
+//@Results({ @Result(name = SUCCESS, location = "/templates/hymns-pagination.ftl"),
+//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
+//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
+//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
+@Scope("prototype")
 public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 
 	@Serial
@@ -124,7 +112,6 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
 		final CoResult<Integer, PersistenceException> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
 				this.getNameJp());
@@ -146,8 +133,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Actions(value = { @Action(ProjectURLConstants.URL_COMMON_RETRIEVE),
-			@Action(ProjectURLConstants.URL_RANDOM_FIVE_RETRIEVE) })
+//	@Actions(value = { @Action(ProjectURLConstants.URL_COMMON_RETRIEVE),
+//			@Action(ProjectURLConstants.URL_RANDOM_FIVE_RETRIEVE) })
 	public String commonRetrieve() {
 		final String keyword = this.getServletRequest().getParameter("keyword");
 		final CoResult<List<HymnDto>, PersistenceException> hymnsRandomFive = this.iHymnService
@@ -165,7 +152,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_CHECK_DELETE)
+//	@Action(ProjectURLConstants.URL_CHECK_DELETE)
 	public String deletionCheck() {
 		return NONE;
 	}
@@ -184,7 +171,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_GET_INFO)
+//	@Action(ProjectURLConstants.URL_GET_INFO)
 	public String getInfoById() {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
@@ -201,7 +188,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_INFO_DELETION)
+//	@Action(ProjectURLConstants.URL_INFO_DELETION)
 	public String infoDeletion() {
 		final String deleteId = this.getServletRequest().getParameter("deleteId");
 		final CoResult<String, PersistenceException> infoDeletion = this.iHymnService
@@ -218,7 +205,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_INFO_STORAGE, interceptorRefs = { @InterceptorRef("json") })
+//	@Action(value = ProjectURLConstants.URL_INFO_STORAGE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoStorage() {
 		final CoResult<Integer, PersistenceException> infoStorage = this.iHymnService.infoStorage(this.getHymnDto());
 		if (!infoStorage.isOk()) {
@@ -234,7 +221,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
+//	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdation() {
 		final CoResult<String, PersistenceException> infoUpdation = this.iHymnService.infoUpdation(this.getHymnDto());
 		if (!infoUpdation.isOk()) {
@@ -249,7 +236,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_KANUMI_RETRIEVE)
+//	@Action(ProjectURLConstants.URL_KANUMI_RETRIEVE)
 	public String kanumiRetrieve() {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
 		final CoResult<List<HymnDto>, PersistenceException> kanumiList = this.iHymnService
@@ -267,7 +254,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_PAGINATION)
+//	@Action(ProjectURLConstants.URL_PAGINATION)
 	public String pagination() {
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		final String keyword = this.getServletRequest().getParameter("keyword");
@@ -286,8 +273,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_TO_ADDITION, results = {
-			@Result(name = SUCCESS, location = "/templates/hymns-addition.ftl") })
+//	@Action(value = ProjectURLConstants.URL_TO_ADDITION, results = {
+//			@Result(name = SUCCESS, location = "/templates/hymns-addition.ftl") })
 	public String toAddition() {
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
@@ -299,8 +286,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_TO_EDITION, results = {
-			@Result(name = SUCCESS, location = "/templates/hymns-edition.ftl") })
+//	@Action(value = ProjectURLConstants.URL_TO_EDITION, results = {
+//			@Result(name = SUCCESS, location = "/templates/hymns-edition.ftl") })
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
@@ -320,7 +307,7 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_PAGES)
+//	@Action(ProjectURLConstants.URL_TO_PAGES)
 	public String toPages() {
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		if (CoProjectUtils.isDigital(pageNum)) {
@@ -336,8 +323,8 @@ public class HymnsHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_TO_RANDOM_FIVE, results = {
-			@Result(name = SUCCESS, location = "/templates/hymns-random-five.ftl") })
+//	@Action(value = ProjectURLConstants.URL_TO_RANDOM_FIVE, results = {
+//			@Result(name = SUCCESS, location = "/templates/hymns-random-five.ftl") })
 	public String toRandomFive() {
 		return SUCCESS;
 	}

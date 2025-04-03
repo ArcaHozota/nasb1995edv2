@@ -1,25 +1,16 @@
 package app.preach.gospel.handler;
 
-import static org.apache.struts2.action.Action.ERROR;
-import static org.apache.struts2.action.Action.LOGIN;
-import static org.apache.struts2.action.Action.NONE;
-import static org.apache.struts2.action.Action.SUCCESS;
+import java.io.Serial;
 
 import org.apache.struts2.ActionContext;
 import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
-import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.StudentDto;
 import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoProjectUtils;
@@ -31,8 +22,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serial;
-
 /**
  * 奉仕者管理ハンドラ
  *
@@ -41,13 +30,13 @@ import java.io.Serial;
  */
 @Getter
 @Setter
-@Namespace(ProjectURLConstants.URL_STUDENTS_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/templates/students-edition.ftl"),
-		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
-@Scope("prototype")
+//@Namespace(ProjectURLConstants.URL_STUDENTS_NAMESPACE)
+//@Results({ @Result(name = SUCCESS, location = "/templates/students-edition.ftl"),
+//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
+//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
+//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
+@Scope("prototype")
 public class StudentsHandler extends ActionSupport implements ServletRequestAware {
 
 	@Serial
@@ -109,7 +98,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_CHECK_NAME)
+//	@Action(ProjectURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
 		final CoResult<Integer, PersistenceException> checkDuplicated = this.iStudentService
 				.checkDuplicated(this.getId(), this.getLoginAccount());
@@ -140,7 +129,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
+//	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdation() {
 		final CoResult<String, PersistenceException> infoUpdation = this.iStudentService
 				.infoUpdation(this.getStudentDto());
@@ -156,7 +145,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_PRE_LOGIN)
+//	@Action(ProjectURLConstants.URL_PRE_LOGIN)
 	public String preLogin() {
 		final CoResult<String, PersistenceException> preLoginUpdation = this.iStudentService.preLoginUpdation(
 				this.getServletRequest().getParameter("loginAccount"),
@@ -173,7 +162,7 @@ public class StudentsHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_EDITION)
+//	@Action(ProjectURLConstants.URL_TO_EDITION)
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
 		final CoResult<StudentDto, PersistenceException> studentInfoById = this.iStudentService
