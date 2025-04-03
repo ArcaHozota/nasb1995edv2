@@ -34,5 +34,7 @@
 			additivity="false">
 			<AppenderRef ref="File" />
 		</Logger>
+		<Logger name="org.apache.struts2.convention" level="DEBUG" />
+		<Logger name="com.opensymphony.xwork2" level="DEBUG" />
 	</Loggers>
 </Configuration>
