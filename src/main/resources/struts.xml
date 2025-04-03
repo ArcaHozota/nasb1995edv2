@@ -34,7 +34,7 @@
 			<result name="error" type="freemarker">/templates/system-error.ftl</result>
 		</action>
 	</package>
-	<!-- 共通とSVGイメージハンドラ -->
+	<!-- 共通ハンドラ -->
 	<package name="categoryHandler" extends="projectPackage"
 		namespace="/category">
 		<action name="login"
@@ -62,17 +62,6 @@
 		<action name="toSystemError"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="toSystemError">
-			<result name="error" type="freemarker">/templates/system-error.ftl</result>
-		</action>
-		<action name="initial"
-			class="app.preach.gospel.handler.CategoryHandler" method="initial">
-			<result name="success" type="stream" />
-			<result name="error" type="freemarker">/templates/system-error.ftl</result>
-		</action>
-		<action name="menuInitial"
-			class="app.preach.gospel.handler.CategoryHandler"
-			method="menuInitial">
-			<result name="success" type="stream" />
 			<result name="error" type="freemarker">/templates/system-error.ftl</result>
 		</action>
 	</package>

@@ -31,7 +31,7 @@ $("#toIchiranHyoBtn").on("click", function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			window.location.href = '/toIchiranhyo';
+			window.location.href = '/home/toIchiranhyo';
 		} else if (result.isDenied) {
 			$(this).close();
 		}
