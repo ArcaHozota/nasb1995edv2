@@ -3,8 +3,8 @@ package app.preach.gospel.handler;
 import java.io.Serial;
 
 import org.apache.struts2.ActionContext;
-import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
+import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
@@ -37,7 +37,7 @@ import lombok.Setter;
 //		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
-public class StudentsHandler extends ActionSupport implements ServletRequestAware {
+public class StudentsHandler extends DefaultActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = 1592265866534993918L;

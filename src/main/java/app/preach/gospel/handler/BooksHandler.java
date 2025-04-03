@@ -4,8 +4,8 @@ import java.io.Serial;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
-import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
+import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -37,7 +37,7 @@ import lombok.Setter;
 //		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
-public class BooksHandler extends ActionSupport implements ServletRequestAware {
+public class BooksHandler extends DefaultActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = -6535194800678567557L;

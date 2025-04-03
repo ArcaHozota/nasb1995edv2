@@ -6,8 +6,8 @@ import java.util.Base64;
 import java.util.Map;
 
 import org.apache.struts2.ActionContext;
-import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
+import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -42,7 +42,7 @@ import lombok.Setter;
 //		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
-public class ScoreUploadHandler extends ActionSupport implements ServletRequestAware {
+public class ScoreUploadHandler extends DefaultActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = 4949258675703419344L;

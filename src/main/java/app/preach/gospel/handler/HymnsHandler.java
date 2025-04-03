@@ -4,8 +4,8 @@ import java.io.Serial;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
-import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
+import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
@@ -41,7 +41,7 @@ import lombok.Setter;
 //		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
-public class HymnsHandler extends ActionSupport implements ServletRequestAware {
+public class HymnsHandler extends DefaultActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = -6535194800678567557L;
