@@ -18,8 +18,8 @@
 		<!-- 显式定义 home Action -->
 		<action name="toHomePage"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
-			<result name="success">/templates/index.ftl</result>
-			<result name="error">/templates/system-error.ftl</result>
+			<result name="success" type="freemarker">/templates/index.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
 		</action>
 		<action name="index"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
