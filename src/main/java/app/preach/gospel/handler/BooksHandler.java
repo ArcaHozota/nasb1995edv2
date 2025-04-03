@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson2.JSON;
@@ -45,6 +46,7 @@ import lombok.Setter;
 		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
 		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
 		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
+@Scope("prototype")
 @Controller
 public class BooksHandler extends ActionSupport implements ServletRequestAware {
 

@@ -17,6 +17,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.dispatcher.DefaultActionSupport;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -39,11 +40,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(ProjectURLConstants.URL_HOMEPAGE4)
+@Namespace("/")
 @Results({ @Result(name = SUCCESS, location = "/templates/index.ftl"),
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
 		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
+@Scope("prototype")
 @Controller
 public class HomePageHandler extends DefaultActionSupport implements ServletRequestAware {
 
@@ -71,7 +73,7 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 *
 	 * @return String
 	 */
-	@Actions({ @Action(ProjectURLConstants.URL_HOMEPAGE1), @Action(ProjectURLConstants.URL_HOMEPAGE2),
+	@Actions({ @Action("home"), @Action("homePage"),
 			@Action(ProjectURLConstants.URL_HOMEPAGE3), @Action(ProjectURLConstants.URL_HOMEPAGE5),
 			@Action(CoProjectUtils.EMPTY_STRING) })
 	public String toHomePage() {

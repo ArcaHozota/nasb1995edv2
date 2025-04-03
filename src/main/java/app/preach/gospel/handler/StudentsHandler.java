@@ -15,6 +15,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -45,6 +46,7 @@ import java.io.Serial;
 		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
 		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
 		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
+@Scope("prototype")
 @Controller
 public class StudentsHandler extends ActionSupport implements ServletRequestAware {
 

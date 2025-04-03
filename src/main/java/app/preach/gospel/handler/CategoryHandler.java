@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -43,6 +44,7 @@ import lombok.Setter;
 		@Result(name = ERROR, location = "/templates/system-error.ftl"),
 		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
 		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
+@Scope("prototype")
 @Controller
 public class CategoryHandler extends ActionSupport implements ServletRequestAware {
 

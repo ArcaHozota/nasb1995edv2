@@ -5,7 +5,7 @@
 <struts>
     <!-- 基础包名 -->
     <package name="projectPackage"
-             extends="struts-default,json-default" strict-method-invocation="true">
+             extends="struts-default,json-default">
         <global-allowed-methods>
             initial,menuInitial,toMainmenu,toMainmenuWithLogin,checkDuplicated,checkEdition,login,loginWithError,
             checkDelete,toPages,pagination,infoDeletion,infoUpdation,infoStorage,toAddition,toEdition,toHomePage,
