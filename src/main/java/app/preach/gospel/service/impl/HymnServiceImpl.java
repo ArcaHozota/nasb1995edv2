@@ -371,13 +371,13 @@ public final class HymnServiceImpl implements IHymnService {
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
 							LineNumber.SNOWY))
 					.toList();
+			final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
 			final List<HymnDto> filteredList = totalRecords.stream().filter(item -> {
 				if (withNameIds.contains(item.id()) || withNameLikeIds.contains(item.id())
 						|| withRandomFiveIds.contains(item.id())) {
 					return false;
 				}
 				final String kanjiToKatakanaKashi = this.kanjiToKatakana(item.serif());
-				final String kanjiToKatakanaKeyword = this.kanjiToKatakana(keyword);
 				return kanjiToKatakanaKashi.contains(kanjiToKatakanaKeyword);
 			}).toList();
 			hymnDtos.addAll(filteredList);

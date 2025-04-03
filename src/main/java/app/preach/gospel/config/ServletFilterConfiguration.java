@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Struts2設定クラス
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author ArkamaHozota
  * @version
  */
-@Slf4j
+@Log4j2
 @Configuration
 public class ServletFilterConfiguration {
 
@@ -28,4 +28,5 @@ public class ServletFilterConfiguration {
 		log.info("Struts2フレームワーク配置成功！");
 		return new StrutsPrepareAndExecuteFilter();
 	}
+
 }

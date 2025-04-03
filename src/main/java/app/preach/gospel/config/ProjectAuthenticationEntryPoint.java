@@ -12,7 +12,7 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * ログインエラーコントローラ
@@ -20,10 +20,13 @@ import lombok.extern.slf4j.Slf4j;
  * @author ArkamaHozota
  * @version
  */
-@Slf4j
+@Log4j2
 @Component
 public class ProjectAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+	/**
+	 * スラッシュマーク
+	 */
 	private static final String SLASH = "\u002f";
 
 	@Override
@@ -35,4 +38,5 @@ public class ProjectAuthenticationEntryPoint implements AuthenticationEntryPoint
 				.concat(ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR));
 		log.warn(ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
 	}
+
 }

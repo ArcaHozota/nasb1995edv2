@@ -18,7 +18,7 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.listener.ProjectUserDetailsService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * SpringSecurity配置クラス
@@ -26,11 +26,14 @@ import lombok.extern.slf4j.Slf4j;
  * @author ArkamaHozota
  * @version
  */
-@Slf4j
+@Log4j2
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
 
+	/**
+	 * 除外するパス
+	 */
 	private static final String[] IGNORANCE_PATHS = { "/category/initial", "/static/**", "/home", "/index",
 			"/toHomePage", "/homePage", "/", "/toIchiranhyo", "/category/loginWithError", "/students/preLogin",
 			"/hymns/pagination", "/hymns/scoreDownload", "/hymns/getInfoById", "/hymns/kanumiRetrieve",
