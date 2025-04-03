@@ -1,21 +1,14 @@
 package app.preach.gospel.handler;
 
-import static org.apache.struts2.action.Action.ERROR;
-import static org.apache.struts2.action.Action.LOGIN;
-import static org.apache.struts2.action.Action.NONE;
-import static org.apache.struts2.action.Action.SUCCESS;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serial;
 
 import org.apache.struts2.ActionContext;
-import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -39,14 +32,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(ProjectURLConstants.URL_CATEGORY_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/templates/mainmenu.ftl"),
-		@Result(name = ERROR, location = "/templates/system-error.ftl"),
-		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
-@Scope("prototype")
 @Controller
-public class CategoryHandler extends ActionSupport implements ServletRequestAware {
+@Scope("prototype")
+public class CategoryHandler extends DefaultActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = -3971408230922185628L;
@@ -71,7 +59,6 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_INITIAL_TEMPLATE, results = { @Result(type = "stream") })
 	public String initial() throws IOException {
 		final String svgSource = this.getServletRequest().getParameter("icons");
 		final Resource resource = this.getResourceLoader().getResource("classpath:/static/image/" + svgSource);
@@ -85,7 +72,7 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 		outputStream.write(buffer);
 		outputStream.flush();
 		outputStream.close();
-		return null;
+		return SUCCESS;
 	}
 
 	/**
@@ -93,7 +80,6 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_LOGIN)
 	public String login() {
 		return LOGIN;
 	}
@@ -103,7 +89,6 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_LOGIN_WITH_ERROR)
 	public String loginWithError() {
 		ActionContext.getContext().put("torokuMsg", ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
 		return LOGIN;
@@ -136,7 +121,6 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_MAINMENU)
 	public String toMainmenu() {
 		return SUCCESS;
 	}
@@ -146,7 +130,6 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_MAINMENU_WITH_LOGIN)
 	public String toMainmenuWithLogin() {
 		ActionContext.getContext().put("loginMsg", ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS);
 		return SUCCESS;
@@ -157,7 +140,6 @@ public class CategoryHandler extends ActionSupport implements ServletRequestAwar
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_ERROR)
 	public String toSystemError() {
 		final String errorMsg = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_EXCEPTION);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION, errorMsg);
