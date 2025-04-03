@@ -6,8 +6,8 @@
 	<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top" data-bs-theme="dark">
 		<div class="container-fluid">
 			<div class="d-flex justify-content-start">
-				<img src="/category/initial?icons=cross.svg" alt="img01" width="60" height="60">
-				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="/category/toMainmenu">
+				<img src="/static/image/cross.svg" alt="img01" width="60" height="60">
+				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="/category/toMainmenu.action">
 					NASB1995
 				</a>
 			</div>
