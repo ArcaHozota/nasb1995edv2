@@ -266,13 +266,12 @@ public final class HymnServiceImpl implements IHymnService {
 	@Override
 	public CoResult<Pagination<HymnDto>, PersistenceException> getHymnsByKeyword(final Integer pageNum,
 			final String keyword) {
-		final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
-				.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
+		final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
 			final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
-			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
-					criteriaBuilder.like(root.get(NAME_KR), searchStr),
-					criteriaBuilder.like(hymnsJoin.get("nameJpRa"), searchStr));
+			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), detailKeyword),
+					criteriaBuilder.like(root.get(NAME_KR), detailKeyword),
+					criteriaBuilder.like(hymnsJoin.get("nameJpRa"), detailKeyword));
 		};
 		try {
 			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION.and(specification));

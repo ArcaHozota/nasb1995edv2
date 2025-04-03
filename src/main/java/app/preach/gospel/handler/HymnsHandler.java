@@ -245,7 +245,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * @return String
 	 */
 	public String pagination() {
-		System.out.println(">>>>呼び出し中<<<<");
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		final String keyword = this.getServletRequest().getParameter("keyword");
 		final CoResult<Pagination<HymnDto>, PersistenceException> hymnsByKeyword = this.iHymnService
