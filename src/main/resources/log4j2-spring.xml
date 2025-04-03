@@ -25,15 +25,9 @@
 	</Appenders>
 	<Loggers>
 		<!-- プロジェクト共通ログ設定 -->
-		<Root level="INFO">
+		<Root level="DEBUG">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="File" />
 		</Root>
-		<!-- jOOQのログ出力設定 -->
-		<Logger name="org.jooq.tools.LoggerListener" level="DEBUG"
-			additivity="false">
-			<AppenderRef ref="File" />
-		</Logger>
-		<Logger name="org.apache.struts2.convention" level="DEBUG" />
 	</Loggers>
 </Configuration>

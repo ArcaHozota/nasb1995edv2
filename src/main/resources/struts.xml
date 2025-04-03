@@ -20,37 +20,21 @@
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success">/templates/index.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="homePage"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success">/templates/index.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="toHomePage"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success">/templates/index.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="index"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success">/templates/index.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<!-- 其他 Action 显式添加 -->
 		<action name="toIchiranhyo"
@@ -58,10 +42,6 @@
 			method="toIchiranhyo">
 			<result name="success">/templates/index2.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 	</package>
 	<!-- 共通とSVGイメージハンドラ -->
@@ -69,60 +49,60 @@
 		namespace="/category">
 		<action name="login"
 			class="app.preach.gospel.handler.CategoryHandler" method="login">
-			<result name="success">/templates/mainmenu.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
 			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="loginWithError"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="loginWithError">
-			<result name="success">/templates/mainmenu.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
 			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="toMainmenu"
 			class="app.preach.gospel.handler.CategoryHandler" method="toMainmenu">
 			<result name="success">/templates/mainmenu.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="toMainmenuWithLogin"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="toMainmenuWithLogin">
 			<result name="success">/templates/mainmenu.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="toSystemError"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="toSystemError">
-			<result name="success">/templates/mainmenu.ftl</result>
 			<result name="error">/templates/system-error.ftl</result>
-			<result name="none" type="json">
-				<param name="root">responseJsonData</param>
-			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
 		</action>
 		<action name="initial"
 			class="app.preach.gospel.handler.CategoryHandler" method="initial">
 			<result name="success" type="stream" />
 			<result name="error">/templates/system-error.ftl</result>
+		</action>
+		<action name="menuInitial"
+			class="app.preach.gospel.handler.CategoryHandler"
+			method="menuInitial">
+			<result name="success" type="stream" />
+			<result name="error">/templates/system-error.ftl</result>
+		</action>
+	</package>
+	<!-- 聖書章節入力ハンドラ -->
+	<package name="booksHandler" extends="projectPackage"
+		namespace="/books">
+		<action name="infoStorage"
+			class="app.preach.gospel.handler.BooksHandler" method="infoStorage">
+			<interceptor-ref name="json" />
+			<result name="error">/templates/system-error.ftl</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
-			<result name="login">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="getChapters"
+			class="app.preach.gospel.handler.BooksHandler" method="getChapters">
+			<result name="error">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
 		</action>
 	</package>
 	<!-- IOC容器交给spring -->

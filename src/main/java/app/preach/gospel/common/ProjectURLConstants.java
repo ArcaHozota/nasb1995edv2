@@ -48,7 +48,7 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_MAINMENU_WITH_LOGIN = "toMainmenuWithLogin";
 
-	public static final String URL_TO_ADDITION = "toAddition";
+	public static final String URL_TO_ADDITION = "toAddition.action";
 
 	public static final String URL_TO_EDITION = "toEdition";
 

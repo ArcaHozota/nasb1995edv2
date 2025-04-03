@@ -1,27 +1,16 @@
 package app.preach.gospel.handler;
 
-import static org.apache.struts2.action.Action.ERROR;
-import static org.apache.struts2.action.Action.LOGIN;
-import static org.apache.struts2.action.Action.NONE;
-import static org.apache.struts2.action.Action.SUCCESS;
-
 import java.io.Serial;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
 import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.alibaba.fastjson2.JSON;
 
-import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.dto.BookDto;
 import app.preach.gospel.dto.ChapterDto;
 import app.preach.gospel.dto.PhraseDto;
@@ -41,13 +30,13 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@Namespace(ProjectURLConstants.URL_BOOKS_NAMESPACE)
-@Results({ @Result(name = SUCCESS, location = "/templates/books-addition.ftl"),
-		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
-@Scope("prototype")
+//@Namespace(ProjectURLConstants.URL_BOOKS_NAMESPACE)
+//@Results({ @Result(name = SUCCESS, location = "/templates/books-addition.ftl"),
+//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
+//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
+//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
+@Scope("prototype")
 public class BooksHandler extends ActionSupport implements ServletRequestAware {
 
 	@Serial
@@ -104,7 +93,6 @@ public class BooksHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_GET_CHAPTERS)
 	public String getChapters() {
 		final String bookId = this.getServletRequest().getParameter("bookId");
 		final CoResult<List<ChapterDto>, PersistenceException> chaptersByBookId = this.iBookService
@@ -129,7 +117,6 @@ public class BooksHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_INFO_STORAGE, interceptorRefs = { @InterceptorRef("json") })
 	public String infoStorage() {
 		final CoResult<String, PersistenceException> infoStorage = this.iBookService.infoStorage(this.getPhraseDto());
 		if (!infoStorage.isOk()) {
@@ -144,7 +131,6 @@ public class BooksHandler extends ActionSupport implements ServletRequestAware {
 	 *
 	 * @return String
 	 */
-	@Action(ProjectURLConstants.URL_TO_ADDITION)
 	public String toAddition() {
 		final CoResult<List<BookDto>, PersistenceException> books = this.iBookService.getBooks();
 		final CoResult<List<ChapterDto>, PersistenceException> chaptersByBookId = this.iBookService

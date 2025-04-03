@@ -6,8 +6,6 @@ import java.io.Serial;
 
 import org.apache.struts2.ActionContext;
 import org.apache.struts2.action.ServletRequestAware;
-import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -16,7 +14,6 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
-import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
@@ -99,7 +96,6 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 	 *
 	 * @return String
 	 */
-	@Action(value = ProjectURLConstants.URL_MENU_INITIAL, results = { @Result(type = "stream") })
 	public String menuInitial() throws IOException {
 		final String svgSource = this.getServletRequest().getParameter("icons");
 		final Resource resource = this.getResourceLoader().getResource("classpath:/static/image/icons/" + svgSource);
@@ -113,7 +109,7 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 		outputStream.write(buffer);
 		outputStream.flush();
 		outputStream.close();
-		return null;
+		return SUCCESS;
 	}
 
 	/**
