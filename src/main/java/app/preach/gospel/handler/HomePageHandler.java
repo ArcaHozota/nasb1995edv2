@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.ActionContext;
-import org.apache.struts2.ActionSupport;
 import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Actions;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -45,7 +45,7 @@ import lombok.Setter;
 		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
 		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
-public class HomePageHandler extends ActionSupport implements ServletRequestAware {
+public class HomePageHandler extends DefaultActionSupport implements ServletRequestAware {
 
 	@Serial
 	private static final long serialVersionUID = -171237033831060185L;

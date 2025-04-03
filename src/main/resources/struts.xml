@@ -12,10 +12,10 @@
 	</package>
 	<constant
 		name="struts.convention.package.locators.basePackage"
-		value="app.preach.gospel.handler" />
+		value="app.preach.gospel" />
 	<!-- 包名后缀，默认为action、actions、struts、struts2 -->
 	<constant name="struts.convention.package.locators"
-		value="handler" />
+		value="handler,actions" />
 	<!-- IOC容器交给spring -->
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 设置Spring自动装配规则 -->
