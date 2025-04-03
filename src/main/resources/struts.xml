@@ -12,6 +12,15 @@
 			toIchiranhyo,toSystemError,commonRetrieve,getInfoById,kanumiRetrieve,toRandomFive,toScoreUpload,scoreDownload,getChapters,preLogin
 		</global-allowed-methods>
 	</package>
+	<!-- インデクスハンドラ -->
+	<package name="indexHandler" extends="projectPackage"
+		namespace="/">
+		<action name="index"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success" type="freemarker">/templates/index.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+	</package>
 	<!-- ホームページハンドラ -->
 	<package name="homeHandler" extends="projectPackage"
 		namespace="/home">
