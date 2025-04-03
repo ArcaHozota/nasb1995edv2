@@ -38,10 +38,15 @@ spring:
     show-sql: true
     open-in-view: false
   freemarker:
+    charset: UTF-8
     allow-request-override: true
     allow-session-override: true
+    template-loader-path: classpath:/templates/
     suffix: .ftl
     settings:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0ms}
+  web:
+    resources:
+      static-locations: classpath:/static/
   profiles:
     active: prod
