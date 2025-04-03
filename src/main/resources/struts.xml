@@ -31,12 +31,12 @@
 	<!-- 指定视图文件所在的目录地址 -->
 	<constant name="struts.convention.result.path"
 		value="/templates/" />
-	<!--设置Convention插件是否从其它jar包中搜索Action类，默认值为true -->
+	<!-- 启用 JAR 包扫描 -->
 	<constant name="struts.convention.action.disableJarScanning"
-		value="true" />
-	<!--显式指定允许包含的jar路径，解决Spring Boot下不能扫描的问题 -->
+		value="false" />
+	<!-- 显式匹配 Spring Boot 或普通 class 路径 -->
 	<constant name="struts.convention.action.includeJars"
-		value=".*?/classes/.*?jar(!/)?" />
+		value=".*BOOT-INF/classes/.*|.*target/classes/.*" />
 	<!--设置Action的默认继承包 -->
 	<constant name="struts.convention.default.parent.package"
 		value="projectPackage" />
