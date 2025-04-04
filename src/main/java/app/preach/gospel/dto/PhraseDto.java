@@ -33,5 +33,5 @@ public record PhraseDto(
 		/*
 		 * 章節ID
 		 */
-		Integer chapterId) implements Serializable {
+		String chapterId) implements Serializable {
 }

@@ -13,7 +13,7 @@ public record ChapterDto(
 		/*
 		 * ID
 		 */
-		Integer id,
+		String id,
 
 		/*
 		 * 名称
@@ -28,5 +28,5 @@ public record ChapterDto(
 		/*
 		 * 書別ID
 		 */
-		Short bookId) implements Serializable {
+		String bookId) implements Serializable {
 }

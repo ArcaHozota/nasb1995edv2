@@ -30,11 +30,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-//@Namespace(ProjectURLConstants.URL_BOOKS_NAMESPACE)
-//@Results({ @Result(name = SUCCESS, location = "/templates/books-addition.ftl"),
-//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
 public class BooksHandler extends DefaultActionSupport implements ServletRequestAware {
@@ -86,7 +81,7 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	/**
 	 * 章節ID
 	 */
-	private Integer chapterId;
+	private String chapterId;
 
 	/**
 	 * 章節情報を取得する

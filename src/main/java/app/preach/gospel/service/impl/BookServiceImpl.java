@@ -56,7 +56,7 @@ public final class BookServiceImpl implements IBookService {
 		final Sort sort = Sort.by(Direction.ASC, "id");
 		try {
 			final List<BookDto> bookDtos = this.bookRepository.findAll(sort).stream()
-					.map(item -> new BookDto(item.getId(), item.getName(), item.getNameJp())).toList();
+					.map(item -> new BookDto(item.getId().toString(), item.getName(), item.getNameJp())).toList();
 			return CoResult.ok(bookDtos);
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
@@ -74,7 +74,8 @@ public final class BookServiceImpl implements IBookService {
 		}
 		try {
 			final List<ChapterDto> chapterDtos = this.chapterRepository.findAll(specification, sort).stream()
-					.map(item -> new ChapterDto(item.getId(), item.getName(), item.getNameJp(), item.getBookId()))
+					.map(item -> new ChapterDto(item.getId().toString(), item.getName(), item.getNameJp(),
+							item.getBookId().toString()))
 					.toList();
 			return CoResult.ok(chapterDtos);
 		} catch (final PersistenceException e) {
@@ -85,7 +86,7 @@ public final class BookServiceImpl implements IBookService {
 	@Override
 	public @NotNull CoResult<String, PersistenceException> infoStorage(final @NotNull PhraseDto phraseDto) {
 		final Long id = Long.parseLong(phraseDto.id());
-		final Integer chapterId = phraseDto.chapterId();
+		final Integer chapterId = Integer.parseInt(phraseDto.chapterId());
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
 		this.chapterRepository.findById(chapterId).ifPresentOrElse(val -> {
 			final Phrase phrase = new Phrase();
