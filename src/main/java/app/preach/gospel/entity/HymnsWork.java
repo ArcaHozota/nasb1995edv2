@@ -71,6 +71,6 @@ public final class HymnsWork implements Serializable {
 	 * 外部キー
 	 */
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "work_id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "workId", nullable = false, insertable = false, updatable = false)
 	private Hymn hymn;
 }
