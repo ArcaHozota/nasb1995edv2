@@ -30,6 +30,8 @@ public final class ProjectConstants {
 
 	public static final String ATTRNAME_RECORDS = "totalRecords";
 
+	public static final String ATTRNAME_TOROKU_MSG = "torokuMsg";
+
 	public static final String MESSAGE_STRING_NOT_LOGIN = "ログインしてください";
 
 	public static final String MESSAGE_STRING_LOGIN_SUCCESS = "ログイン成功";

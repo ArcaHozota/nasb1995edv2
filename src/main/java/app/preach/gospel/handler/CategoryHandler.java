@@ -11,6 +11,10 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
+import app.preach.gospel.service.IHymnService;
+import app.preach.gospel.utils.CoResult;
+import jakarta.annotation.Resource;
+import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -47,6 +51,12 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 	private transient ResourceLoader resourceLoader = new DefaultResourceLoader();
 
 	/**
+	 * 賛美歌サービスインターフェス
+	 */
+	@Resource
+	private IHymnService iHymnService;
+
+	/**
 	 * ログイン画面初期表示する
 	 *
 	 * @return String
@@ -61,7 +71,12 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 	 * @return String
 	 */
 	public String loginWithError() {
-		ActionContext.getContext().put("torokuMsg", ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
+		final CoResult<Long, PersistenceException> totalCounts = this.iHymnService.getTotalCounts();
+		if (!totalCounts.isOk()) {
+			throw totalCounts.getErr();
+		}
+		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getOk());
+		ActionContext.getContext().put(ProjectConstants.ATTRNAME_TOROKU_MSG, ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
 		return LOGIN;
 	}
 
