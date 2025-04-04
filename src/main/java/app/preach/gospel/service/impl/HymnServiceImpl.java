@@ -445,7 +445,6 @@ public final class HymnServiceImpl implements IHymnService {
 		hymnsRecord.setVisibleFlg(Boolean.TRUE);
 		hymnsRecord.setUpdatedUser(Long.parseLong(hymnDto.updatedUser()));
 		hymnsWork.setWorkId(hymnsRecord.getId());
-		hymnsWork.setPdfFlg(Boolean.FALSE);
 		try {
 			this.hymnsWorkRepository.saveAndFlush(hymnsWork);
 			this.hymnRepository.saveAndFlush(hymnsRecord);
@@ -570,10 +569,8 @@ public final class HymnServiceImpl implements IHymnService {
 				final Tika tika = new Tika();
 				final String pdfDiscernment = tika.detect(file);
 				if (CoProjectUtils.isEqual(MediaType.APPLICATION_PDF_VALUE, pdfDiscernment)) {
-					val.setPdfFlg(Boolean.TRUE);
 					val.setBiko(PDF);
 				} else {
-					val.setPdfFlg(Boolean.FALSE);
 					val.setBiko(pdfDiscernment);
 				}
 				try {
