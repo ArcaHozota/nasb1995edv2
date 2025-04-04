@@ -17,6 +17,7 @@
 					NASB1995
 				</a>
 			</div>
+			<form id="logoutForm" method="post" action="/category/logout" style="display: none;"></form>
 		</nav>
 	</div>
 	<div class="container" style="margin-top: 60px;">
@@ -29,7 +30,7 @@
 	</div>
 	<script type="text/javascript">
 		$("#backBtn").on('click', function () {
-			window.history.back();
+			$("#logoutForm").submit();
 		});
 	</script>
 </body>
