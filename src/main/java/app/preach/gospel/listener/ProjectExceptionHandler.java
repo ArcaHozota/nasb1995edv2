@@ -41,8 +41,6 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 				response.getWriter().close();
 			} else {
 				// WW-4103: Only logs error when application error occurred, not Struts error
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-				response.setContentType(MediaType.APPLICATION_XHTML_XML_VALUE);
 				response.sendRedirect(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 						.concat(ProjectURLConstants.URL_TO_ERROR).concat("?exception=").concat(exception.getMessage()));
 			}

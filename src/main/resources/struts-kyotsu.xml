@@ -9,7 +9,6 @@
 		<action name="index"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 		</action>
 	</package>
 	<!-- ホームページハンドラ -->
@@ -19,19 +18,16 @@
 		<action name="toHomePage"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 		</action>
 		<action name="index"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 		</action>
 		<!-- 其他 Action 显式添加 -->
 		<action name="toIchiranhyo"
 			class="app.preach.gospel.handler.HomePageHandler"
 			method="toIchiranhyo">
 			<result name="success" type="freemarker">/templates/index2.ftlh</result>
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 		</action>
 	</package>
 	<!-- 共通ハンドラ -->
@@ -39,25 +35,21 @@
 		namespace="/category">
 		<action name="login"
 			class="app.preach.gospel.handler.CategoryHandler" method="login">
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 			<result name="login" type="freemarker">/templates/logintoroku.ftlh</result>
 		</action>
 		<action name="loginWithError"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="loginWithError">
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 			<result name="login" type="freemarker">/templates/index.ftlh</result>
 		</action>
 		<action name="toMainmenu"
 			class="app.preach.gospel.handler.CategoryHandler" method="toMainmenu">
 			<result name="success" type="freemarker">/templates/mainmenu.ftlh</result>
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 		</action>
 		<action name="toMainmenuWithLogin"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="toMainmenuWithLogin">
 			<result name="success" type="freemarker">/templates/mainmenu.ftlh</result>
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 		</action>
 		<action name="toSystemError"
 			class="app.preach.gospel.handler.CategoryHandler"
