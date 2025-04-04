@@ -155,7 +155,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	@Contract(" -> new")
 	private @NotNull HymnDto getHymnDto() {
 		return new HymnDto(this.getId(), this.getNameJp(), this.getNameKr(), this.getSerif(), this.getLink(), null,
-				this.getUpdatedUser(), this.getUpdatedTime(), null);
+				null, this.getUpdatedUser(), this.getUpdatedTime(), null);
 	}
 
 	/**

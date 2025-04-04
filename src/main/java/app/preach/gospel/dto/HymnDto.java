@@ -43,6 +43,11 @@ public record HymnDto(
 		byte[] score,
 
 		/*
+		 * 備考
+		 */
+		String biko,
+
+		/*
 		 * 更新者
 		 */
 		String updatedUser,

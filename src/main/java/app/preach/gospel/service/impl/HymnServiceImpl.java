@@ -272,8 +272,8 @@ public final class HymnServiceImpl implements IHymnService {
 						final ZonedDateTime zonedDateTime = val.getUpdatedTime()
 								.atZoneSameInstant(ZoneOffset.ofHours(9));
 						final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
-								val.getSerif(), val.getLink(), hymnsWork.getScore(), subVal.getUsername(),
-								FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
+								val.getSerif(), val.getLink(), hymnsWork.getScore(), hymnsWork.getBiko(),
+								subVal.getUsername(), FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
 						result.setSelf(CoResult.ok(hymnDto));
 					}, () -> result.setSelf(
 							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
@@ -300,7 +300,7 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> hymnDtos = hymnsRecords.getContent().stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							null))
+							null, null))
 					.toList();
 			return CoResult.ok(Pagination.of(hymnDtos, totalRecords, pageNum, ProjectConstants.DEFAULT_PAGE_SIZE));
 		} catch (final PersistenceException e) {
@@ -316,7 +316,7 @@ public final class HymnServiceImpl implements IHymnService {
 					final List<HymnDto> hymnDtos = this.hymnRepository.findForStrangement().stream()
 							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
-									null, LineNumber.SNOWY))
+									null, null, LineNumber.SNOWY))
 							.toList();
 					log.error("怪しいキーワード： " + keyword);
 					return CoResult.ok(hymnDtos);
@@ -327,7 +327,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final List<HymnDto> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION).stream()
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 								hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
-								null, LineNumber.SNOWY))
+								null, null, LineNumber.SNOWY))
 						.toList();
 				final List<HymnDto> hymnDtos1 = this.randomFiveLoop2(totalRecords);
 				return CoResult.ok(hymnDtos1);
@@ -341,7 +341,7 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> withName = this.hymnRepository.findAll(specification1).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							LineNumber.CADIMIUM))
+							null, LineNumber.CADIMIUM))
 					.toList();
 			hymnDtos.addAll(withName);
 			final List<String> withNameIds = withName.stream().map(HymnDto::id).toList();
@@ -357,7 +357,7 @@ public final class HymnServiceImpl implements IHymnService {
 					.filter(a -> !withNameIds.contains(a.getId().toString()))
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							LineNumber.BUNRGUNDY))
+							null, LineNumber.BUNRGUNDY))
 					.toList();
 			hymnDtos.addAll(withNameLike);
 			final List<String> withNameLikeIds = withNameLike.stream().map(HymnDto::id).toList();
@@ -371,7 +371,7 @@ public final class HymnServiceImpl implements IHymnService {
 					a -> !withNameIds.contains(a.getId().toString()) && !withNameLikeIds.contains(a.getId().toString()))
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							LineNumber.NAPLES))
+							null, LineNumber.NAPLES))
 					.toList();
 			hymnDtos.addAll(withRandomFive);
 			withRandomFive.stream().map(HymnDto::id).toList();
@@ -386,7 +386,7 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							LineNumber.SNOWY))
+							null, LineNumber.SNOWY))
 					.toList();
 			final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos, totalRecords);
 			return CoResult.ok(randomFiveLoop.stream()
@@ -404,7 +404,7 @@ public final class HymnServiceImpl implements IHymnService {
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification1)).ifPresentOrElse(val -> {
 			final List<HymnDto> hymnDtos = new ArrayList<>();
 			hymnDtos.add(new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(), val.getSerif(),
-					val.getLink(), null, null, null, LineNumber.BUNRGUNDY));
+					val.getLink(), null, null, null, null, LineNumber.BUNRGUNDY));
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.notEqual(root.get("id"), id);
 			final List<Hymn> hymns = this.hymnRepository.findAll(COMMON_CONDITION.and(specification2));
@@ -412,7 +412,7 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> list = topTwoMatches.stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
-							LineNumber.NAPLES))
+							null, LineNumber.NAPLES))
 					.toList();
 			hymnDtos.addAll(list);
 			result.setSelf(CoResult.ok(hymnDtos));
@@ -620,6 +620,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final String pdfDiscernment = this.pdfDiscernment(val.getScore());
 				if (CoProjectUtils.isEqual(PDF, pdfDiscernment)) {
 					val.setPdfFlg(Boolean.TRUE);
+					val.setBiko(null);
 				} else {
 					val.setPdfFlg(Boolean.FALSE);
 					val.setBiko(pdfDiscernment);

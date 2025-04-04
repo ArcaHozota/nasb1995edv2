@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.service.IHymnService;
+import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
 import jakarta.persistence.PersistenceException;
@@ -65,6 +66,11 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * ファイル名称
 	 */
 	private String fileName;
+
+	/**
+	 * 内容タイプ
+	 */
+	private String contentType;
 
 	/**
 	 * 賛美歌サービスインターフェス
@@ -126,8 +132,17 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			throw hymnInfoById.getErr();
 		}
 		final HymnDto hymnDto = hymnInfoById.getOk();
+		if (CoProjectUtils.isEmpty(hymnDto.biko())) {
+			this.setContentType("application/pdf");
+			this.setFileName(hymnDto.id() + ".pdf");
+		} else if (CoProjectUtils.isEqual("png", hymnDto.biko())) {
+			this.setContentType("image/png");
+			this.setFileName(hymnDto.id() + ".png");
+		} else {
+			this.setContentType("image/jpeg");
+			this.setFileName(hymnDto.id() + ".jpg");
+		}
 		this.setFileData(hymnDto.score());
-		this.setFileName(hymnDto.id() + ".pdf");
 		return SUCCESS;
 	}
 
