@@ -9,16 +9,19 @@
 		<action name="infoStorage"
 			class="app.preach.gospel.handler.BooksHandler" method="infoStorage">
 			<interceptor-ref name="json" />
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
 		<action name="getChapters"
 			class="app.preach.gospel.handler.BooksHandler" method="getChapters">
-			<result name="error" type="freemarker">/templates/error.ftlh</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="toAddition"
+			class="app.preach.gospel.handler.BooksHandler" method="toAddition">
+			<result name="success" type="freemarker">/templates/books-addition.ftlh
 			</result>
 		</action>
 	</package>
@@ -28,9 +31,6 @@
 		<action name="commonRetrieve"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="commonRetrieve">
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
@@ -38,27 +38,18 @@
 		<action name="kanumiRetrieve"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="kanumiRetrieve">
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
 		<action name="getInfoById"
 			class="app.preach.gospel.handler.HymnsHandler" method="getInfoById">
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
 		<action name="pagination"
 			class="app.preach.gospel.handler.HymnsHandler" method="pagination">
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
@@ -66,9 +57,6 @@
 		<action name="retrieveRandomFive"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="commonRetrieve">
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
@@ -77,41 +65,26 @@
 			class="app.preach.gospel.handler.HymnsHandler" method="toPages">
 			<result name="success" type="freemarker">/templates/hymns-pagination.ftlh
 			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 		</action>
 		<action name="toAddition"
 			class="app.preach.gospel.handler.HymnsHandler" method="toAddition">
 			<result name="success" type="freemarker">/templates/hymns-addition.ftlh
-			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
 			</result>
 		</action>
 		<action name="toEdition"
 			class="app.preach.gospel.handler.HymnsHandler" method="toEdition">
 			<result name="success" type="freemarker">/templates/hymns-edition.ftlh
 			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 		</action>
 		<action name="toRandomFive"
 			class="app.preach.gospel.handler.HymnsHandler" method="toRandomFive">
 			<result name="success" type="freemarker">/templates/hymns-random-five.ftlh
-			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
 			</result>
 		</action>
 		<action name="toScoreUpload"
 			class="app.preach.gospel.handler.ScoreUploadHandler"
 			method="toScoreUpload">
 			<result name="success" type="freemarker">/templates/hymns-score-upload.ftlh
-			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
 			</result>
 		</action>
 		<action name="scoreUpload"
@@ -132,9 +105,6 @@
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
 				<param name="bufferSize">1024</param>
 			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 		</action>
 	</package>
 	<!-- 奉仕者管理ハンドラ -->
@@ -142,9 +112,6 @@
 		namespace="/students">
 		<action name="preLogin"
 			class="app.preach.gospel.handler.StudentsHandler" method="preLogin">
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
@@ -163,9 +130,6 @@
 			class="app.preach.gospel.handler.StudentsHandler"
 			method="infoUpdation">
 			<interceptor-ref name="json" />
-			<result name="error" type="json">
-				<param name="root">responseError</param>
-			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
@@ -173,9 +137,6 @@
 		<action name="toEdition"
 			class="app.preach.gospel.handler.StudentsHandler" method="toEdition">
 			<result name="success" type="freemarker">/templates/students-edition.ftlh
-			</result>
-			<result name="error" type="json">
-				<param name="root">responseError</param>
 			</result>
 		</action>
 	</package>

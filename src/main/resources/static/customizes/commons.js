@@ -95,7 +95,7 @@ $(document).ready(function() {
 	});
 	$("#toTemporary").on("click", function(e) {
 		let url = '/books/toAddition.action';
-		checkPermissionAndTransfer2(url);
+		checkPermissionAndTransfer(url);
 	});
 	$("#toCollection").on("click", function(e) {
 		e.preventDefault();
@@ -118,16 +118,6 @@ function checkPermissionAndTransfer(stringUrl) {
 		window.location.replace(stringUrl);
 	} else {
 		layer.msg(ajaxResponse.message);
-	}
-}
-function checkPermissionAndTransfer2(stringUrl) {
-	let ajaxResponse = $.ajax({
-		url: stringUrl,
-		type: 'GET',
-		async: false
-	});
-	if (ajaxResponse.status === 200) {
-		window.location.replace(stringUrl);
 	}
 }
 function buildPageInfos(response) {
