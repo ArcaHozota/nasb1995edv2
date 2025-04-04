@@ -71,17 +71,16 @@ $(document).ready(function() {
 	});
 	$("#toMainmenu").on("click", function(e) {
 		e.preventDefault();
-		window.location.replace('/category/toMainmenu');
+		window.location.replace('/category/toMainmenu.action');
 	});
 	$("#toMainmenu2").on("click", function(e) {
 		e.preventDefault();
-		window.location.replace('/category/toMainmenu');
+		window.location.replace('/category/toMainmenu.action');
 	});
 	$("#toPersonal").on("click", function(e) {
 		e.preventDefault();
 		let userId = $(this).find("input").val().replace(/,/g, emptyString);
-		// let authChkFlag = $("#authChkFlgContainer").val();
-		let url = '/students/toEdition?editId=' + userId;
+		let url = '/students/toEdition.action?editId=' + userId;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toMessage").on("click", function(e) {
@@ -95,17 +94,17 @@ $(document).ready(function() {
 		// checkPermissionAndTransfer(url);
 	});
 	$("#toTemporary").on("click", function(e) {
-		let url = '/books/toAddition';
+		let url = '/books/toAddition.action';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCollection").on("click", function(e) {
 		e.preventDefault();
-		let url = '/hymns/toPages?pageNum=1';
+		let url = '/hymns/toPages.action?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toRandomFive").on("click", function(e) {
 		e.preventDefault();
-		let url = '/hymns/toRandomFive';
+		let url = '/hymns/toRandomFive.action';
 		checkPermissionAndTransfer(url);
 	});
 });
