@@ -100,16 +100,6 @@ public final class HymnServiceImpl implements IHymnService {
 	 */
 	private static final String PDF = "application/pdf";
 
-//	/**
-//	 * JPGまたはJPEG
-//	 */
-//	private static final String JPG = "jpg/jpeg";
-//
-//	/**
-//	 * PNG
-//	 */
-//	private static final String PNG = "png";
-
 	/**
 	 * 怪しいキーワードリスト
 	 */
