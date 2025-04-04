@@ -34,7 +34,7 @@ public final class ProjectURLConstants {
 
 	public static final String URL_LOGIN = "doLogin";
 
-	public static final String URL_REGISTER = "toroku";
+	public static final String URL_REGISTER = "toroku.action";
 
 	public static final String URL_TO_ERROR = "toSystemError.action";
 

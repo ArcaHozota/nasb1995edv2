@@ -46,9 +46,6 @@
 		<#else>
 			<input type="hidden" id="errorMsgContainer">
 		</#if>
-		<#if torokuMsg?exists!''>
-			<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
-		</#if>
 		<div class="login-box" id="loginBox">
 			<h2 class="login-title">
 				<span>すでにアカウント持ち？</span>ログイン

@@ -51,6 +51,9 @@
 			</div>
 		</div>
 	</nav>
+	<#if torokuMsg?exists!''>
+		<input type="hidden" value="${torokuMsg}" id="torokuMsgContainer">
+	</#if>
 	<div class="col-sm-6 offset-sm-3 col-md-8 offset-md-2 main">
 		<div class="card border-darkgreen" style="margin-top: 2rem;">
 			<div class="card-header text-bg-darkgreen mb-3">

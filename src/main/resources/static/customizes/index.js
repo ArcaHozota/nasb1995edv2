@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	adjustWidth();
 	$("#tableBody").hide();
+	let message2 = $("#torokuMsgContainer").val();
+	if (message2 !== '' && message2 !== null && message2 !== undefined) {
+		layer.msg(message2);
+	}
 });
 $("#randomSearchBtn").on("click", function() {
 	adjustWidth();

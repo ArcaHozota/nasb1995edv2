@@ -46,7 +46,7 @@
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="loginWithError">
 			<result name="error" type="freemarker">/templates/error.ftlh</result>
-			<result name="login" type="freemarker">/templates/logintoroku.ftlh</result>
+			<result name="login" type="freemarker">/templates/index.ftlh</result>
 		</action>
 		<action name="toMainmenu"
 			class="app.preach.gospel.handler.CategoryHandler" method="toMainmenu">
