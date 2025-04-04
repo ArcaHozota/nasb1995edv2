@@ -119,7 +119,7 @@
 			class="app.preach.gospel.handler.ScoreUploadHandler"
 			method="scoreDownload">
 			<result name="success" type="stream">
-				<param name="contentType">contentType</param>
+				<param name="contentType">${contentType}</param>
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
 				<param name="bufferSize">1024</param>
