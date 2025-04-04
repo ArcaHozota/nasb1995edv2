@@ -11,6 +11,7 @@ import org.apache.struts2.ActionContext;
 import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,6 +42,11 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 
 	@Serial
 	private static final long serialVersionUID = 4949258675703419344L;
+
+	/**
+	 * PDF
+	 */
+	private static final String PDF = "pdf";
 
 	/**
 	 * リクエスト
@@ -132,9 +138,9 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			throw hymnInfoById.getErr();
 		}
 		final HymnDto hymnDto = hymnInfoById.getOk();
-		if (CoProjectUtils.isEmpty(hymnDto.biko())) {
-			this.setContentType("application/pdf");
-			this.setFileName(hymnDto.id() + ".pdf");
+		if (CoProjectUtils.isEqual(PDF, hymnDto.biko())) {
+			this.setContentType(MediaType.APPLICATION_PDF_VALUE);
+			this.setFileName(hymnDto.id() + ".".concat(hymnDto.biko()));
 		} else {
 			final String biko = hymnDto.biko();
 			final int indexOf = biko.indexOf(CoProjectUtils.SLASH) + 1;

@@ -56,12 +56,6 @@ public final class HymnsWork implements Serializable {
 	private OffsetDateTime updatedTime;
 
 	/**
-	 * PDFフラグ
-	 */
-	@Column(nullable = false)
-	private Boolean pdfFlg;
-
-	/**
 	 * 日本語名称
 	 */
 	@Column(name = "nameJpRational", length = 120)

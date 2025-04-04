@@ -26,6 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 import app.preach.gospel.common.ProjectConstants;
@@ -98,7 +99,7 @@ public final class HymnServiceImpl implements IHymnService {
 	/**
 	 * PDF
 	 */
-	private static final String PDF = "application/pdf";
+	private static final String PDF = "pdf";
 
 	/**
 	 * 怪しいキーワードリスト
@@ -568,9 +569,9 @@ public final class HymnServiceImpl implements IHymnService {
 			} else {
 				final Tika tika = new Tika();
 				final String pdfDiscernment = tika.detect(file);
-				if (CoProjectUtils.isEqual(PDF, pdfDiscernment)) {
+				if (CoProjectUtils.isEqual(MediaType.APPLICATION_PDF_VALUE, pdfDiscernment)) {
 					val.setPdfFlg(Boolean.TRUE);
-					val.setBiko(null);
+					val.setBiko(PDF);
 				} else {
 					val.setPdfFlg(Boolean.FALSE);
 					val.setBiko(pdfDiscernment);
