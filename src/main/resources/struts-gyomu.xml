@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 6.0//EN"
+        "https://struts.apache.org/dtds/struts-6.0.dtd">
+<struts>
+	<!-- インデクスハンドラ -->
+	<package name="indexHandler" extends="projectPackage"
+		namespace="/">
+		<action name="index"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success" type="freemarker">/templates/index.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+	</package>
+	<!-- ホームページハンドラ -->
+	<package name="homeHandler" extends="projectPackage"
+		namespace="/home">
+		<!-- 显式定义 home Action -->
+		<action name="toHomePage"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success" type="freemarker">/templates/index.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+		<action name="index"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success" type="freemarker">/templates/index.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+		<!-- 其他 Action 显式添加 -->
+		<action name="toIchiranhyo"
+			class="app.preach.gospel.handler.HomePageHandler"
+			method="toIchiranhyo">
+			<result name="success" type="freemarker">/templates/index2.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+	</package>
+	<!-- 共通ハンドラ -->
+	<package name="categoryHandler" extends="projectPackage"
+		namespace="/category">
+		<action name="login"
+			class="app.preach.gospel.handler.CategoryHandler" method="login">
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+			<result name="login" type="freemarker">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="loginWithError"
+			class="app.preach.gospel.handler.CategoryHandler"
+			method="loginWithError">
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+			<result name="login" type="freemarker">/templates/logintoroku.ftl</result>
+		</action>
+		<action name="toMainmenu"
+			class="app.preach.gospel.handler.CategoryHandler" method="toMainmenu">
+			<result name="success" type="freemarker">/templates/mainmenu.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+		<action name="toMainmenuWithLogin"
+			class="app.preach.gospel.handler.CategoryHandler"
+			method="toMainmenuWithLogin">
+			<result name="success" type="freemarker">/templates/mainmenu.ftl</result>
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+		<action name="toSystemError"
+			class="app.preach.gospel.handler.CategoryHandler"
+			method="toSystemError">
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+		</action>
+	</package>
+	<!-- 聖書章節入力ハンドラ -->
+	<package name="booksHandler" extends="projectPackage"
+		namespace="/books">
+		<action name="infoStorage"
+			class="app.preach.gospel.handler.BooksHandler" method="infoStorage">
+			<interceptor-ref name="json" />
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="getChapters"
+			class="app.preach.gospel.handler.BooksHandler" method="getChapters">
+			<result name="error" type="freemarker">/templates/system-error.ftl</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+	</package>
+	<!-- 賛美歌管理ハンドラ -->
+	<package name="hymnsHandler" extends="projectPackage"
+		namespace="/hymns">
+		<action name="commonRetrieve"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="commonRetrieve">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="kanumiRetrieve"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="kanumiRetrieve">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="getInfoById"
+			class="app.preach.gospel.handler.HymnsHandler" method="getInfoById">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="pagination"
+			class="app.preach.gospel.handler.HymnsHandler" method="pagination">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="retrieveRandomFive"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="commonRetrieve">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+	</package>
+	<!-- 奉仕者管理ハンドラ -->
+	<package name="studentsHandler" extends="projectPackage"
+		namespace="/students">
+		<action name="preLogin"
+			class="app.preach.gospel.handler.StudentsHandler" method="preLogin">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+	</package>
+</struts>

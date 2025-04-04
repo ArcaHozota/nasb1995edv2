@@ -29,8 +29,7 @@
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="File" />
 		</Root>
-		<Logger name="org.apache.struts2.dispatcher.mapper"
-			level="DEBUG" />
-		<Logger name="org.apache.struts2.config" level="DEBUG" />
+		<Logger name="org.apache.struts2.dispatcher" level="DEBUG" />
+		<Logger name="org.springframework.data" level="DEBUG" />
 	</Loggers>
 </Configuration>
