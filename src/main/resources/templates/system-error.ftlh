@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
-<#include "include-header.ftl">
+<#include "include-header.ftlh">
 
 <body>
 	<style>
@@ -12,8 +12,8 @@
 		<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
 			<div class="container-fluid">
 				<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 900;"
-					href="/category/login">
-					<img src="/category/initial?icons=cross.svg" alt="img01" width="42px" height="42px">
+					href="/category/login.action">
+					<img src="/static/image/cross.svg" alt="img01" width="42px" height="42px">
 					NASB1995
 				</a>
 			</div>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
-<#include "include-header.ftl">
+<#include "include-header.ftlh">
 
 <body>
 	<style type="text/css">
@@ -16,10 +16,10 @@
 			color: #006400;
 		}
 	</style>
-	<#include "include-navbar.ftl">
+	<#include "include-navbar.ftlh">
 	<div class="container-fluid">
 		<div class="row">
-			<#include "include-sidebar.ftl">
+			<#include "include-sidebar.ftlh">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<#if loginMsg?exists>
 					<input type="hidden" value="${loginMsg}" id="loginMsgContainer">
