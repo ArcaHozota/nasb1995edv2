@@ -42,7 +42,7 @@ spring:
     allow-request-override: true
     allow-session-override: true
     template-loader-path: classpath:/templates/
-    suffix: .ftl
+    suffix: .ftlh
     settings:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0ms}
   web:

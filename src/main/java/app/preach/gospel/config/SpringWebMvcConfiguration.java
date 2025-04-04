@@ -8,6 +8,12 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import lombok.extern.log4j.Log4j2;
 
+/**
+ * SpringMVC配置クラス
+ *
+ * @author ArkamaHozota
+ * @version
+ */
 @Log4j2
 @Configuration
 public class SpringWebMvcConfiguration implements WebMvcConfigurer {
