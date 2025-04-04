@@ -81,6 +81,53 @@
 				<param name="root">responseError</param>
 			</result>
 		</action>
+		<action name="toAddition"
+			class="app.preach.gospel.handler.HymnsHandler" method="toAddition">
+			<result name="success" type="freemarker">/templates/hymns-addition.ftlh
+			</result>
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+		</action>
+		<action name="toEdition"
+			class="app.preach.gospel.handler.HymnsHandler" method="toEdition">
+			<result name="success" type="freemarker">/templates/hymns-edition.ftlh
+			</result>
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+		</action>
+		<action name="toScoreUpload"
+			class="app.preach.gospel.handler.ScoreUploadHandler"
+			method="toScoreUpload">
+			<result name="success" type="freemarker">/templates/hymns-score-upload.ftlh
+			</result>
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+		</action>
+		<action name="scoreUpload"
+			class="app.preach.gospel.handler.ScoreUploadHandler" method="execute">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="scoreDownload"
+			class="app.preach.gospel.handler.ScoreUploadHandler"
+			method="scoreDownload">
+			<result name="success" type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+		</action>
 	</package>
 	<!-- 奉仕者管理ハンドラ -->
 	<package name="studentsHandler" extends="projectPackage"

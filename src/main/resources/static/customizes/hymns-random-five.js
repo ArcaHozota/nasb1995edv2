@@ -8,7 +8,7 @@ $("#randomSearchBtn").on("click", function() {
 });
 function retrieveRandomFive(keyword) {
 	$.ajax({
-		url: '/hymns/retrieveRandomFive',
+		url: '/hymns/retrieveRandomFive.action',
 		data: 'keyword=' + keyword,
 		success: function(response) {
 			buildTableBody(response);

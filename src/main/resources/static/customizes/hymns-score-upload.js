@@ -5,7 +5,7 @@ $(document).ready(function() {
 });
 $("#toHymnPages").on("click", function(e) {
 	e.preventDefault();
-	let url = '/hymns/toPages?pageNum=' + pageNum;
+	let url = '/hymns/toPages.action?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
 $("#scoreUploadBtn").on("click", function() {
@@ -36,7 +36,7 @@ $("#scoreUploadBtn").on("click", function() {
 		});
 		// 发送 AJAX 请求
 		$.ajax({
-			url: '/hymns/scoreUpload',
+			url: '/hymns/scoreUpload.action',
 			type: 'POST',
 			data: jsonData,
 			headers: {
@@ -46,7 +46,7 @@ $("#scoreUploadBtn").on("click", function() {
 			success: function(response) {
 				let message = response.replace(/^"|"$/g, emptyString);
 				localStorage.setItem('redirectMessage', message);
-				window.location.replace('/hymns/toPages?pageNum=' + pageNum);
+				window.location.replace('/hymns/toPages.action?pageNum=' + pageNum);
 			},
 			error: function(xhr) {
 				let message = xhr.responseText.replace(/^"|"$/g, emptyString);

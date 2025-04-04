@@ -1,6 +1,8 @@
 package app.preach.gospel.handler;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serial;
 import java.util.Base64;
 import java.util.Map;
@@ -9,8 +11,6 @@ import org.apache.struts2.ActionContext;
 import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,7 +21,6 @@ import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
 import jakarta.persistence.PersistenceException;
-import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -35,11 +34,6 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-//@Namespace(ProjectURLConstants.URL_HYMNS_NAMESPACE)
-//@Results({ @Result(name = SUCCESS, location = "/templates/hymns-score-upload.ftl"),
-//		@Result(name = ERROR, type = "json", params = { "root", "responseError" }),
-//		@Result(name = NONE, type = "json", params = { "root", "responseJsonData" }),
-//		@Result(name = LOGIN, location = "/templates/logintoroku.ftl") })
 @Controller
 @Scope("prototype")
 public class ScoreUploadHandler extends DefaultActionSupport implements ServletRequestAware {
@@ -63,6 +57,16 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	private transient String responseError;
 
 	/**
+	 * データ
+	 */
+	private byte[] fileData;
+
+	/**
+	 * ファイル名称
+	 */
+	private String fileName;
+
+	/**
 	 * 賛美歌サービスインターフェス
 	 */
 	@Resource
@@ -73,7 +77,6 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_SCORE_UPLOAD)
 	@Override
 	public String execute() {
 		try {
@@ -101,12 +104,20 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	}
 
 	/**
+	 * ストリームを提供する
+	 *
+	 * @return InputStream
+	 */
+	public InputStream getInputStream() {
+		return new ByteArrayInputStream(this.getFileData());
+	}
+
+	/**
 	 * 賛美歌楽譜をダウンロードする
 	 *
 	 * @return String
 	 * @throws IOException
 	 */
-//	@Action(value = ProjectURLConstants.URL_SCORE_DOWNLOAD, results = { @Result(type = "stream") })
 	public String scoreDownload() {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
@@ -115,20 +126,9 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			throw hymnInfoById.getErr();
 		}
 		final HymnDto hymnDto = hymnInfoById.getOk();
-		ActionContext.getContext().getServletResponse().setContentType(MediaType.APPLICATION_PDF_VALUE);
-		ActionContext.getContext().getServletResponse().addHeader(HttpHeaders.CONTENT_DISPOSITION,
-				"attachment; filename=\"" + hymnDto.id() + ".pdf\"");
-		try {
-			final ServletOutputStream outputStream = ActionContext.getContext().getServletResponse().getOutputStream();
-			outputStream.write(hymnDto.score());
-			outputStream.flush();
-			outputStream.close();
-		} catch (final IOException e) {
-			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			this.setResponseError(e.getMessage());
-			return ERROR;
-		}
-		return null;
+		this.setFileData(hymnDto.score());
+		this.setFileName(hymnDto.id() + ".pdf");
+		return SUCCESS;
 	}
 
 	/**
@@ -136,7 +136,6 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_TO_SCORE_UPLOAD)
 	public String toScoreUpload() {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final String pageNum = this.getServletRequest().getParameter("pageNum");

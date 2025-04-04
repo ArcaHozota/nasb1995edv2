@@ -50,7 +50,7 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_ADDITION = "toAddition.action";
 
-	public static final String URL_TO_EDITION = "toEdition";
+	public static final String URL_TO_EDITION = "toEdition.action";
 
 	public static final String URL_GET_INFO = "getInfoById";
 

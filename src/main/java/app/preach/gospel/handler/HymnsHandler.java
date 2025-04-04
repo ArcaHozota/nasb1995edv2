@@ -262,8 +262,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(value = ProjectURLConstants.URL_TO_ADDITION, results = {
-//			@Result(name = SUCCESS, location = "/templates/hymns-addition.ftl") })
 	public String toAddition() {
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
@@ -275,8 +273,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(value = ProjectURLConstants.URL_TO_EDITION, results = {
-//			@Result(name = SUCCESS, location = "/templates/hymns-edition.ftl") })
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
