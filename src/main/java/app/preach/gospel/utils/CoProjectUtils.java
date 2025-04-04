@@ -48,6 +48,11 @@ public final class CoProjectUtils {
 	public static final String HANKAKU_PERCENTSIGN = "\u0025";
 
 	/**
+	 * スラッシュマーク
+	 */
+	public static final String SLASH = "\u002f";
+
+	/**
 	 * 全角半角変換マップ
 	 */
 	private static final BidiMap<String, String> ZENHANKAKU_CONVERTOR = new DualHashBidiMap<>();

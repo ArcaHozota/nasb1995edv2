@@ -17,6 +17,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.common.ProjectURLConstants;
 import app.preach.gospel.listener.ProjectUserDetailsService;
+import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
 
@@ -78,12 +79,15 @@ public class SpringSecurityConfiguration {
 								.requestMatchers(ProjectURLConstants.URL_HYMNS_NAMESPACE
 										.concat("/").concat(ProjectURLConstants.URL_CHECK_DELETE))
 								.hasAuthority("hymns%deletion")
-								.requestMatchers(ProjectURLConstants.URL_STUDENTS_NAMESPACE.concat("/")
+								.requestMatchers(ProjectURLConstants.URL_STUDENTS_NAMESPACE.concat(CoProjectUtils.SLASH)
 										.concat(ProjectURLConstants.URL_TO_EDITION))
 								.hasAuthority("students%retrievEdition").anyRequest().authenticated())
-				.csrf(csrf -> csrf.ignoringRequestMatchers(ProjectURLConstants.URL_STATIC_RESOURCE,
-						ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/").concat(ProjectURLConstants.URL_LOGIN),
-						ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/").concat(ProjectURLConstants.URL_LOG_OUT))
+				.csrf(csrf -> csrf
+						.ignoringRequestMatchers(ProjectURLConstants.URL_STATIC_RESOURCE,
+								ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
+										.concat(ProjectURLConstants.URL_LOGIN),
+								ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
+										.concat(ProjectURLConstants.URL_LOG_OUT))
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(handling -> {
 					handling.authenticationEntryPoint(this.projectAuthenticationEntryPoint);
@@ -94,17 +98,17 @@ public class SpringSecurityConfiguration {
 					});
 				})
 				.formLogin(formLogin -> formLogin
-						.loginPage(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
+						.loginPage(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 								.concat(ProjectURLConstants.URL_TO_LOGIN))
-						.loginProcessingUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
+						.loginProcessingUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 								.concat(ProjectURLConstants.URL_LOGIN))
-						.defaultSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
+						.defaultSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 								.concat(ProjectURLConstants.URL_TO_MAINMENU_WITH_LOGIN))
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout
-						.logoutUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
+						.logoutUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 								.concat(ProjectURLConstants.URL_LOG_OUT))
-						.logoutSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat("/")
+						.logoutSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 								.concat(ProjectURLConstants.URL_TO_LOGIN)));
 		log.info(ProjectConstants.MESSAGE_SPRING_SECURITY);
 		return httpSecurity.build();

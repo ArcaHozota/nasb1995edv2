@@ -135,12 +135,11 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 		if (CoProjectUtils.isEmpty(hymnDto.biko())) {
 			this.setContentType("application/pdf");
 			this.setFileName(hymnDto.id() + ".pdf");
-		} else if (CoProjectUtils.isEqual("png", hymnDto.biko())) {
-			this.setContentType("image/png");
-			this.setFileName(hymnDto.id() + ".png");
 		} else {
-			this.setContentType("image/jpeg");
-			this.setFileName(hymnDto.id() + ".jpg");
+			final String biko = hymnDto.biko();
+			final int indexOf = biko.indexOf(CoProjectUtils.SLASH) + 1;
+			this.setContentType(biko);
+			this.setFileName(hymnDto.id() + ".".concat(biko.substring(indexOf)));
 		}
 		this.setFileData(hymnDto.score());
 		return SUCCESS;

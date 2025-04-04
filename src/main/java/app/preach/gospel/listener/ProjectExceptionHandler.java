@@ -24,11 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler {
 
-	/**
-	 * スラッシュマーク
-	 */
-	private static final String SLASH = "\u002f";
-
 	@Override
 	protected void sendErrorResponse(final HttpServletRequest request, final @NotNull HttpServletResponse response,
 			final int code, final Exception exception) {
@@ -48,7 +43,7 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 				// WW-4103: Only logs error when application error occurred, not Struts error
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.setContentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-				response.sendRedirect(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(SLASH)
+				response.sendRedirect(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 						.concat(ProjectURLConstants.URL_TO_ERROR).concat("?exception=").concat(exception.getMessage()));
 			}
 			log.error("Exception occurred during processing request: {}", exception.getMessage());
