@@ -6,7 +6,7 @@ $("#bookInput").on('change', function() {
 	$("#chapterInput").empty();
 	let bookId = $(this).val();
 	$.ajax({
-		url: '/books/getChapters',
+		url: '/books/getChapters.action',
 		data: 'bookId=' + bookId,
 		success: function(response) {
 			let index = response.data;
@@ -36,7 +36,7 @@ $("#infoStorageBtn").on('click', function() {
 			'textEn': $("#phraseTextEnInput").val().trim(),
 			'textJp': $("#phraseTextJpInput").val().trim()
 		});
-		projectAjaxModify('/books/infoStorage', 'POST', postData, booksPostSuccessFunction);
+		projectAjaxModify('/books/infoStorage.action', 'POST', postData, booksPostSuccessFunction);
 	}
 });
 function booksPostSuccessFunction(xhr) {
