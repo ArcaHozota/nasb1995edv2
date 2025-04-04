@@ -95,6 +95,26 @@ public final class HymnServiceImpl implements IHymnService {
 	private static final String NAME_KR = "nameKr";
 
 	/**
+	 * タイプ不明
+	 */
+	private static final String UNKNOWN = "UNKNOWN";
+
+	/**
+	 * PDF
+	 */
+	private static final String PDF = "pdf";
+
+	/**
+	 * JPGまたはJPEG
+	 */
+	private static final String JPG = "jpg/jpeg";
+
+	/**
+	 * PNG
+	 */
+	private static final String PNG = "png";
+
+	/**
 	 * 怪しいキーワードリスト
 	 */
 	private static final String[] STRANGE_ARRAY = { "insert", "delete", "update", "create", "drop", "#", "$", "%", "&",
@@ -486,6 +506,43 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	/**
+	 * ファイルタイプを判断する
+	 *
+	 * @param bs 入力ファイル
+	 * @return String
+	 */
+	private String pdfDiscernment(final byte[] bs) {
+		// 为了安全，可以先做一个长度判断，若文件太小，直接返回 UNKNOWN。
+		if ((bs == null) || (bs.length < 8)) {
+			// 连基本头都读不够
+			return UNKNOWN;
+		}
+		// 读取文件前 8 个字节
+		final byte[] header = new byte[8];
+		for (int i = 0; i < header.length; i++) {
+			header[i] = bs[i];
+		}
+		// ================ PDF 判断：%PDF- (0x25 0x50 0x44 0x46 0x2D) ================
+		// 只需要对比前 5 个字节是否为 "%PDF-"
+		if ((header[0] == 0x25) && (header[1] == 0x50) && (header[2] == 0x44) && (header[3] == 0x46)
+				&& (header[4] == 0x2D)) {
+			return PDF;
+		}
+		// ================ JPG 判断：文件开头 0xFF 0xD8 ================
+		// 常见 JPG 开头：0xFF, 0xD8；结束：0xFF, 0xD9（但这里只判断开头即可）
+		if (((header[0] & 0xFF) == 0xFF) && ((header[1] & 0xFF) == 0xD8)) {
+			return JPG;
+		}
+		// ================ PNG 判断：89 50 4E 47 0D 0A 1A 0A ================
+		if (((header[0] & 0xFF) == 0x89) && (header[1] == 0x50) && (header[2] == 0x4E) && (header[3] == 0x47)
+				&& (header[4] == 0x0D) && (header[5] == 0x0A) && (header[6] == 0x1A) && (header[7] == 0x0A)) {
+			return PNG;
+		}
+		// 如果都不匹配，返回 UNKNOWN
+		return UNKNOWN;
+	}
+
+	/**
 	 * コーパスを取得する
 	 *
 	 * @param originalTexts
@@ -560,6 +617,13 @@ public final class HymnServiceImpl implements IHymnService {
 			if (Arrays.equals(val.getScore(), file)) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
 			} else {
+				final String pdfDiscernment = this.pdfDiscernment(val.getScore());
+				if (CoProjectUtils.isEqual(PDF, pdfDiscernment)) {
+					val.setPdfFlg(Boolean.TRUE);
+				} else {
+					val.setPdfFlg(Boolean.FALSE);
+					val.setBiko(pdfDiscernment);
+				}
 				try {
 					val.setScore(file);
 					this.hymnsWorkRepository.saveAndFlush(val);

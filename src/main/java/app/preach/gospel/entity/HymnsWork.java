@@ -68,6 +68,12 @@ public final class HymnsWork implements Serializable {
 	private String nameJpRa;
 
 	/**
+	 * 備考
+	 */
+	@Column(length = 10)
+	private String biko;
+
+	/**
 	 * 外部キー
 	 */
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
