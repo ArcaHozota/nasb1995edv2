@@ -97,11 +97,6 @@ public final class HymnServiceImpl implements IHymnService {
 	private static final String NAME_KR = "nameKr";
 
 	/**
-	 * PDF
-	 */
-	private static final String PDF = "pdf";
-
-	/**
 	 * 怪しいキーワードリスト
 	 */
 	private static final String[] STRANGE_ARRAY = { "insert", "delete", "update", "create", "drop", "#", "$", "%", "&",
@@ -569,7 +564,7 @@ public final class HymnServiceImpl implements IHymnService {
 				final Tika tika = new Tika();
 				final String pdfDiscernment = tika.detect(file);
 				if (CoProjectUtils.isEqual(MediaType.APPLICATION_PDF_VALUE, pdfDiscernment)) {
-					val.setBiko(PDF);
+					val.setBiko(ProjectConstants.ATTRNAME_PDF);
 				} else {
 					val.setBiko(pdfDiscernment);
 				}

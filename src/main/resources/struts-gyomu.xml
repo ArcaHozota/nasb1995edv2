@@ -97,6 +97,14 @@
 				<param name="root">responseError</param>
 			</result>
 		</action>
+		<action name="toRandomFive"
+			class="app.preach.gospel.handler.HymnsHandler" method="toRandomFive">
+			<result name="success" type="freemarker">/templates/hymns-random-five.ftlh
+			</result>
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+		</action>
 		<action name="toScoreUpload"
 			class="app.preach.gospel.handler.ScoreUploadHandler"
 			method="toScoreUpload">

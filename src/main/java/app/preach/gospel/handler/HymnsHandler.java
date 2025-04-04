@@ -42,11 +42,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	private static final long serialVersionUID = -6535194800678567557L;
 
 	/**
-	 * ページナンバー
-	 */
-	private static final String PAGENUM = "pageNum";
-
-	/**
 	 * リクエスト
 	 */
 	private transient HttpServletRequest servletRequest;
@@ -129,7 +124,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * @return String
 	 */
 	public String commonRetrieve() {
-		final String keyword = this.getServletRequest().getParameter("keyword");
+		final String keyword = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_KEYWORD);
 		final CoResult<List<HymnDto>, PersistenceException> hymnsRandomFive = this.iHymnService
 				.getHymnsRandomFive(keyword);
 		if (!hymnsRandomFive.isOk()) {
@@ -245,8 +240,8 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * @return String
 	 */
 	public String pagination() {
-		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
-		final String keyword = this.getServletRequest().getParameter("keyword");
+		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
+		final String keyword = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_KEYWORD);
 		final CoResult<Pagination<HymnDto>, PersistenceException> hymnsByKeyword = this.iHymnService
 				.getHymnsByKeyword(Integer.parseInt(pageNum), keyword);
 		if (!hymnsByKeyword.isOk()) {
@@ -263,7 +258,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * @return String
 	 */
 	public String toAddition() {
-		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
+		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		return SUCCESS;
 	}
@@ -275,7 +270,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 */
 	public String toEdition() {
 		final String editId = this.getServletRequest().getParameter("editId");
-		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
+		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(editId));
@@ -293,7 +288,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * @return String
 	 */
 	public String toPages() {
-		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
+		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		if (CoProjectUtils.isDigital(pageNum)) {
 			ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 			return SUCCESS;
@@ -307,8 +302,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(value = ProjectURLConstants.URL_TO_RANDOM_FIVE, results = {
-//			@Result(name = SUCCESS, location = "/templates/hymns-random-five.ftl") })
 	public String toRandomFive() {
 		return SUCCESS;
 	}

@@ -108,7 +108,7 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 		final String errorMsg = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_EXCEPTION);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION, errorMsg);
 		ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		return ERROR;
+		return SUCCESS;
 	}
 
 	@Override

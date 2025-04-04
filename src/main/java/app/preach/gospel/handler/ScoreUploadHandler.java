@@ -45,11 +45,6 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	private static final long serialVersionUID = 4949258675703419344L;
 
 	/**
-	 * PDF
-	 */
-	private static final String PDF = "pdf";
-
-	/**
 	 * リクエスト
 	 */
 	private transient HttpServletRequest servletRequest;
@@ -139,7 +134,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			throw hymnInfoById.getErr();
 		}
 		final HymnDto hymnDto = hymnInfoById.getOk();
-		if (CoProjectUtils.isEqual(PDF, hymnDto.biko())) {
+		if (CoProjectUtils.isEqual(ProjectConstants.ATTRNAME_PDF, hymnDto.biko())) {
 			this.setContentType(MediaType.APPLICATION_PDF_VALUE);
 			this.setFileName(hymnDto.id() + ".".concat(hymnDto.biko()));
 		} else {
@@ -163,7 +158,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 */
 	public String toScoreUpload() {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
-		final String pageNum = this.getServletRequest().getParameter("pageNum");
+		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
 		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
 				.getHymnInfoById(Long.parseLong(scoreId));

@@ -123,7 +123,6 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 *
 	 * @return String
 	 */
-//	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
 	public String infoUpdation() {
 		final CoResult<String, PersistenceException> infoUpdation = this.iStudentService
 				.infoUpdation(this.getStudentDto());
