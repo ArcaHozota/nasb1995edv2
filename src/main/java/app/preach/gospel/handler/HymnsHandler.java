@@ -296,7 +296,6 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_TO_PAGES)
 	public String toPages() {
 		final String pageNum = this.getServletRequest().getParameter(PAGENUM);
 		if (CoProjectUtils.isDigital(pageNum)) {

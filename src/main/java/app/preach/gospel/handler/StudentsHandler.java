@@ -93,7 +93,6 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 *
 	 * @return String
 	 */
-//	@Action(ProjectURLConstants.URL_CHECK_NAME)
 	public String checkDuplicated() {
 		final CoResult<Integer, PersistenceException> checkDuplicated = this.iStudentService
 				.checkDuplicated(this.getId(), this.getLoginAccount());

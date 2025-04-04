@@ -1,8 +1,8 @@
 $(document).ready(function() {
-    let loginMsg = $("#loginMsgContainer").val().trim();
-    if(loginMsg !== emptyString){
-        layer.msg(loginMsg);
-    }
+	let loginMsg = $("#loginMsgContainer").val().trim();
+	if (loginMsg !== emptyString) {
+		layer.msg(loginMsg);
+	}
 	let message = localStorage.getItem('redirectMessage');
 	if (message) {
 		layer.msg(message);
@@ -15,10 +15,10 @@ $("#booksKanriMainmenu").on("click", function() {
 	// checkPermissionAndTransfer(url);
 });
 $("#hymnsKanriMainmenu").on("click", function() {
-	let url = '/hymns/toPages?pageNum=1';
+	let url = '/hymns/toPages.action?pageNum=1';
 	checkPermissionAndTransfer(url);
 });
 $("#randomKanriMainmenu").on("click", function() {
-	let url = '/hymns/toRandomFive';
+	let url = '/hymns/toRandomFive.action';
 	checkPermissionAndTransfer(url);
 });

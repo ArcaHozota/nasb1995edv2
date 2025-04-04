@@ -135,12 +135,41 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
+		<action name="toPages"
+			class="app.preach.gospel.handler.HymnsHandler" method="toPages">
+			<result name="success" type="freemarker">/templates/hymns-pagination.ftlh
+			</result>
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+		</action>
 	</package>
 	<!-- 奉仕者管理ハンドラ -->
 	<package name="studentsHandler" extends="projectPackage"
 		namespace="/students">
 		<action name="preLogin"
 			class="app.preach.gospel.handler.StudentsHandler" method="preLogin">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="checkDuplicated"
+			class="app.preach.gospel.handler.StudentsHandler"
+			method="checkDuplicated">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="infoUpdation"
+			class="app.preach.gospel.handler.StudentsHandler"
+			method="infoUpdation">
+			<interceptor-ref name="json" />
 			<result name="error" type="json">
 				<param name="root">responseError</param>
 			</result>

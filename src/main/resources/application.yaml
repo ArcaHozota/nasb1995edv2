@@ -45,8 +45,5 @@ spring:
     suffix: .ftlh
     settings:
       {datetimeFormat: yyyy-MM-dd HH:mm:ss, templateUpdateDelay: 0ms}
-  web:
-    resources:
-      static-locations: classpath:/static/
   profiles:
     active: prod
