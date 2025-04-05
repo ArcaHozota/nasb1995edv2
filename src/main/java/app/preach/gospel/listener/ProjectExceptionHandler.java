@@ -1,6 +1,5 @@
 package app.preach.gospel.listener;
 
-import lombok.extern.log4j.Log4j2;
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
@@ -14,6 +13,7 @@ import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * Struts2例外処理インターセプト

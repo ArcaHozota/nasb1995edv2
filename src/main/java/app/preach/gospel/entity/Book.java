@@ -3,6 +3,7 @@ package app.preach.gospel.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,11 +11,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 書別エンティティ
@@ -25,10 +24,8 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "books")
-@EqualsAndHashCode(callSuper = false)
 public final class Book implements Serializable {
 
 	@Serial
@@ -57,4 +54,29 @@ public final class Book implements Serializable {
 	 */
 	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
 	private List<Chapter> chapters;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Book)) {
+			return false;
+		}
+		final Book other = (Book) obj;
+		return Objects.equals(this.chapters, other.chapters) && Objects.equals(this.id, other.id)
+				&& Objects.equals(this.name, other.name) && Objects.equals(this.nameJp, other.nameJp);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.chapters, this.id, this.name, this.nameJp);
+	}
+
+	@Override
+	public String toString() {
+		return "Book [id=" + this.id + ", name=" + this.name + ", nameJp=" + this.nameJp + ", chapters=" + this.chapters
+				+ "]";
+	}
+
 }

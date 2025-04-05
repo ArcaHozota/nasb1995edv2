@@ -4,16 +4,15 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 奉仕者エンティティ
@@ -24,10 +23,8 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "students")
-@EqualsAndHashCode(callSuper = false)
 public final class Student implements Serializable {
 
 	@Serial
@@ -80,4 +77,33 @@ public final class Student implements Serializable {
 	 */
 	@Column(nullable = false)
 	private Boolean visibleFlg;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Student)) {
+			return false;
+		}
+		final Student other = (Student) obj;
+		return Objects.equals(this.dateOfBirth, other.dateOfBirth) && Objects.equals(this.email, other.email)
+				&& Objects.equals(this.id, other.id) && Objects.equals(this.loginAccount, other.loginAccount)
+				&& Objects.equals(this.password, other.password) && Objects.equals(this.updatedTime, other.updatedTime)
+				&& Objects.equals(this.username, other.username) && Objects.equals(this.visibleFlg, other.visibleFlg);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.dateOfBirth, this.email, this.id, this.loginAccount, this.password, this.updatedTime,
+				this.username, this.visibleFlg);
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + this.id + ", loginAccount=" + this.loginAccount + ", username=" + this.username
+				+ ", password=" + this.password + ", dateOfBirth=" + this.dateOfBirth + ", email=" + this.email
+				+ ", updatedTime=" + this.updatedTime + ", visibleFlg=" + this.visibleFlg + "]";
+	}
+
 }

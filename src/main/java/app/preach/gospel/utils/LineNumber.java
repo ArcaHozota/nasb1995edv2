@@ -19,12 +19,18 @@ public enum LineNumber {
 
 	SNOWY(5);
 
-    // 方法
-    private final Integer lineNo;
+	/**
+	 * ラインナンバー
+	 */
+	private final Integer lineNo;
 
-	// 构造器
-	LineNumber(final Integer lineNumber) {
-		this.lineNo = lineNumber;
+	/**
+	 * コンストラクタ
+	 *
+	 * @param lineNo ラインナンバー
+	 */
+	LineNumber(final Integer lineNo) {
+		this.lineNo = lineNo;
 	}
 
 }

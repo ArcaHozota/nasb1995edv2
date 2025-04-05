@@ -2,16 +2,15 @@ package app.preach.gospel.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 奉仕者役割連携エンティティ
@@ -22,10 +21,8 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "student_role")
-@EqualsAndHashCode(callSuper = false)
 public final class StudentRole implements Serializable {
 
 	@Serial
@@ -42,4 +39,27 @@ public final class StudentRole implements Serializable {
 	 */
 	@Column(nullable = false)
 	private Long roleId;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof StudentRole)) {
+			return false;
+		}
+		final StudentRole other = (StudentRole) obj;
+		return Objects.equals(this.roleId, other.roleId) && Objects.equals(this.studentId, other.studentId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.roleId, this.studentId);
+	}
+
+	@Override
+	public String toString() {
+		return "StudentRole [studentId=" + this.studentId + ", roleId=" + this.roleId + "]";
+	}
+
 }

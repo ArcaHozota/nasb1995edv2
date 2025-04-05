@@ -52,7 +52,7 @@ import kr.co.shineware.nlp.komoran.core.Komoran;
 import kr.co.shineware.nlp.komoran.model.Token;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 /**
  * 賛美歌サービス実装クラス
@@ -60,7 +60,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author ArkamaHozota
  * @since 1.00beta
  */
-@Slf4j
+@Log4j2
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class HymnServiceImpl implements IHymnService {

@@ -2,16 +2,15 @@ package app.preach.gospel.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 役割権限連携エンティティ
@@ -22,11 +21,9 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "role_auth")
 @IdClass(RoleAuthIds.class)
-@EqualsAndHashCode(callSuper = false)
 public final class RoleAuthority implements Serializable {
 
 	@Serial
@@ -43,4 +40,27 @@ public final class RoleAuthority implements Serializable {
 	 */
 	@Id
 	private Long roleId;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof RoleAuthority)) {
+			return false;
+		}
+		final RoleAuthority other = (RoleAuthority) obj;
+		return Objects.equals(this.authId, other.authId) && Objects.equals(this.roleId, other.roleId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.authId, this.roleId);
+	}
+
+	@Override
+	public String toString() {
+		return "RoleAuthority [authId=" + this.authId + ", roleId=" + this.roleId + "]";
+	}
+
 }

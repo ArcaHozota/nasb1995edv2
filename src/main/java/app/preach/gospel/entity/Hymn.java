@@ -3,6 +3,7 @@ package app.preach.gospel.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,11 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 賛美歌エンティティ
@@ -26,10 +25,8 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @Table(name = "hymns")
-@EqualsAndHashCode(callSuper = false)
 public final class Hymn implements Serializable {
 
 	@Serial
@@ -89,4 +86,35 @@ public final class Hymn implements Serializable {
 	 */
 	@OneToOne(mappedBy = "hymn", fetch = FetchType.LAZY)
 	private HymnsWork hymnsWork;
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Hymn)) {
+			return false;
+		}
+		final Hymn other = (Hymn) obj;
+		return Objects.equals(this.hymnsWork, other.hymnsWork) && Objects.equals(this.id, other.id)
+				&& Objects.equals(this.link, other.link) && Objects.equals(this.nameJp, other.nameJp)
+				&& Objects.equals(this.nameKr, other.nameKr) && Objects.equals(this.serif, other.serif)
+				&& Objects.equals(this.updatedTime, other.updatedTime)
+				&& Objects.equals(this.updatedUser, other.updatedUser)
+				&& Objects.equals(this.visibleFlg, other.visibleFlg);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.hymnsWork, this.id, this.link, this.nameJp, this.nameKr, this.serif, this.updatedTime,
+				this.updatedUser, this.visibleFlg);
+	}
+
+	@Override
+	public String toString() {
+		return "Hymn [id=" + this.id + ", nameJp=" + this.nameJp + ", nameKr=" + this.nameKr + ", link=" + this.link
+				+ ", updatedTime=" + this.updatedTime + ", updatedUser=" + this.updatedUser + ", serif=" + this.serif
+				+ ", visibleFlg=" + this.visibleFlg + ", hymnsWork=" + this.hymnsWork + "]";
+	}
+
 }
