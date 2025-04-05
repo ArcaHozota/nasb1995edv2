@@ -23,6 +23,6 @@ public interface BookRepository extends JpaRepository<Book, Short>, JpaSpecifica
 	 * @param id 書別ID
 	 * @return Optional<Book>
 	 */
-	@Query("select bk from Book as bk left join fetch bk.chapters where bk.id =:id")
+	@Query("select bk from Book as bk inner join fetch bk.chapters where bk.id =:id")
 	Optional<Book> findByIdWithChapters(@Param("id") Short id);
 }

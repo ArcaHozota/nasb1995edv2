@@ -1,5 +1,6 @@
 package app.preach.gospel.service.impl;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -12,6 +13,7 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.dto.BookDto;
 import app.preach.gospel.dto.ChapterDto;
 import app.preach.gospel.dto.PhraseDto;
+import app.preach.gospel.entity.Chapter;
 import app.preach.gospel.entity.Phrase;
 import app.preach.gospel.repository.BookRepository;
 import app.preach.gospel.repository.ChapterRepository;
@@ -69,6 +71,7 @@ public final class BookServiceImpl implements IBookService {
 					.findByIdWithChapters(CoProjectUtils.isDigital(id) ? Short.parseShort(id) : Short.valueOf("1"))
 					.ifPresentOrElse(val -> {
 						final List<ChapterDto> chapterDtos = val.getChapters().stream()
+								.sorted(Comparator.comparingInt(Chapter::getId))
 								.map(item -> new ChapterDto(item.getId().toString(), item.getName(), item.getNameJp(),
 										item.getBookId().toString()))
 								.toList();
