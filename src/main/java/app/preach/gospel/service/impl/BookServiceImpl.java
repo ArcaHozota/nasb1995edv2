@@ -68,7 +68,7 @@ public final class BookServiceImpl implements IBookService {
 		try {
 			final CoResult<List<ChapterDto>, PersistenceException> result = CoResult.getInstance();
 			this.bookRepository
-					.findByIdWithChapters(CoProjectUtils.isDigital(id) ? Short.parseShort(id) : Short.valueOf("1"))
+					.findByIdWithChapters(CoProjectUtils.isDigital(id) ? Short.parseShort(id) : Short.parseShort("1"))
 					.ifPresentOrElse(val -> {
 						final List<ChapterDto> chapterDtos = val.getChapters().stream()
 								.sorted(Comparator.comparingInt(Chapter::getId))
@@ -86,7 +86,7 @@ public final class BookServiceImpl implements IBookService {
 
 	@Override
 	public @NotNull CoResult<String, PersistenceException> infoStorage(final @NotNull PhraseDto phraseDto) {
-		final Long id = Long.parseLong(phraseDto.id());
+		final long id = Long.parseLong(phraseDto.id());
 		final Integer chapterId = Integer.parseInt(phraseDto.chapterId());
 		final CoResult<String, PersistenceException> result = CoResult.getInstance();
 		this.chapterRepository.findById(chapterId).ifPresentOrElse(val -> {
