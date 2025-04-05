@@ -5,7 +5,10 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -66,4 +69,11 @@ public final class Phrase implements Serializable {
 	 */
 	@Column(nullable = false)
 	private Boolean changeLine;
+
+	/**
+	 * 外部キー
+	 */
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "chapterId", nullable = false, insertable = false, updatable = false)
+	private Chapter chapter;
 }

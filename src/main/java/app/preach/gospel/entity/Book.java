@@ -2,10 +2,13 @@ package app.preach.gospel.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,4 +51,10 @@ public final class Book implements Serializable {
 	 */
 	@Column(nullable = false, length = 33)
 	private String nameJp;
+
+	/**
+	 * 外部キー
+	 */
+	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+	private List<Chapter> chapters;
 }

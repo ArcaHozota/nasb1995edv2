@@ -6,14 +6,12 @@ import org.hibernate.HibernateException;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.dto.BookDto;
 import app.preach.gospel.dto.ChapterDto;
 import app.preach.gospel.dto.PhraseDto;
-import app.preach.gospel.entity.Chapter;
 import app.preach.gospel.entity.Phrase;
 import app.preach.gospel.repository.BookRepository;
 import app.preach.gospel.repository.ChapterRepository;
@@ -65,19 +63,18 @@ public final class BookServiceImpl implements IBookService {
 
 	@Override
 	public CoResult<List<ChapterDto>, PersistenceException> getChaptersByBookId(final String id) {
-		final Sort sort = Sort.by(Direction.ASC, "id");
-		Specification<Chapter> specification;
-		if (CoProjectUtils.isDigital(id)) {
-			specification = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("bookId"), id);
-		} else {
-			specification = (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("bookId"), 1);
-		}
 		try {
-			final List<ChapterDto> chapterDtos = this.chapterRepository.findAll(specification, sort).stream()
-					.map(item -> new ChapterDto(item.getId().toString(), item.getName(), item.getNameJp(),
-							item.getBookId().toString()))
-					.toList();
-			return CoResult.ok(chapterDtos);
+			final CoResult<List<ChapterDto>, PersistenceException> result = CoResult.getInstance();
+			this.bookRepository.findById(CoProjectUtils.isDigital(id) ? Short.parseShort(id) : Short.valueOf("1"))
+					.ifPresentOrElse(val -> {
+						final List<ChapterDto> chapterDtos = val.getChapters().stream()
+								.map(item -> new ChapterDto(item.getId().toString(), item.getName(), item.getNameJp(),
+										item.getBookId().toString()))
+								.toList();
+						result.setSelf(CoResult.ok(chapterDtos));
+					}, () -> result.setSelf(
+							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+			return result;
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
 		}
