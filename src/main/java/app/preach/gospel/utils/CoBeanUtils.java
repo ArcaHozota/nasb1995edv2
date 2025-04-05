@@ -27,7 +27,7 @@ public final class CoBeanUtils extends BeanUtils {
 	 *
 	 * @param source コピー元
 	 * @param target コピー先
-	 * @throws BeansException
+	 * @throws BeansException 例外
 	 */
 	public static void copyNullableProperties(final Object source, final Object target) throws BeansException {
 		BeanUtils.copyProperties(source, target, CoBeanUtils.getNullProperties(source));

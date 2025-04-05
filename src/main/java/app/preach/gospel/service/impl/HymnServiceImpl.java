@@ -312,7 +312,6 @@ public final class HymnServiceImpl implements IHymnService {
 					return CoResult.ok(hymnDtos);
 				}
 			}
-			final List<HymnDto> hymnDtos = new ArrayList<>();
 			if (CoProjectUtils.isEmpty(keyword)) {
 				final List<HymnDto> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION).stream()
 						.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -333,7 +332,7 @@ public final class HymnServiceImpl implements IHymnService {
 							hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null,
 							null, LineNumber.CADIMIUM))
 					.toList();
-			hymnDtos.addAll(withName);
+			final List<HymnDto> hymnDtos = new ArrayList<>(withName);
 			final List<String> withNameIds = withName.stream().map(HymnDto::id).toList();
 			final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
 					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);

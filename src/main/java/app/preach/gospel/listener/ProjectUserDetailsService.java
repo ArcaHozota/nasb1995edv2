@@ -3,7 +3,6 @@ package app.preach.gospel.listener;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -88,7 +87,7 @@ public class ProjectUserDetailsService implements UserDetailsService {
 				student.getUsername(), student.getPassword(), student.getEmail(),
 				DateTimeFormatter.ofPattern("yyyy-MM-dd").format(student.getDateOfBirth()), roleId.toString());
 		final List<SimpleGrantedAuthority> authorities = authoritiesRecords.stream()
-				.map(item -> new SimpleGrantedAuthority(item.getName())).collect(Collectors.toList());
+				.map(item -> new SimpleGrantedAuthority(item.getName())).toList();
 		return new SecurityAdmin(studentDto, authorities);
 	}
 

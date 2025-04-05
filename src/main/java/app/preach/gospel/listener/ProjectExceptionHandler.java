@@ -1,5 +1,6 @@
 package app.preach.gospel.listener;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author ArkamaHozota
  * @since 2.98
  */
-@Slf4j
+@Log4j2
 public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler {
 
 	@Override
