@@ -93,7 +93,7 @@ public final class BookServiceImpl implements IBookService {
 			final Phrase phrase = new Phrase();
 			CoBeanUtils.copyNullableProperties(phraseDto, phrase);
 			phrase.setId((chapterId * 1000) + id);
-			phrase.setName(val.getName().concat(CoProjectUtils.HANKAKU_COLON).concat(phraseDto.id().toString()));
+			phrase.setName(val.getName().concat(CoProjectUtils.HANKAKU_COLON).concat(phraseDto.id()));
 			phrase.setChapterId(chapterId);
 			final String textEn = phrase.getTextEn();
 			if (textEn.endsWith(CoProjectUtils.HANKAKU_SHARP)) {
