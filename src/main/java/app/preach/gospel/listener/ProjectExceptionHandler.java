@@ -14,7 +14,6 @@ import app.preach.gospel.utils.CoProjectUtils;
 import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Struts2例外処理インターセプト

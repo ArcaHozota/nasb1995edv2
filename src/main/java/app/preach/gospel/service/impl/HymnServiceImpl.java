@@ -495,7 +495,7 @@ public final class HymnServiceImpl implements IHymnService {
 	/**
 	 * コーパスを取得する
 	 *
-	 * @param originalTexts
+	 * @param originalTexts テキスト
 	 */
 	private void preprocessCorpus(final @NotNull List<String> originalTexts) {
 		this.termToIndex.clear();
