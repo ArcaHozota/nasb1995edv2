@@ -52,7 +52,7 @@ public final class Phrase implements Serializable {
 	/**
 	 * 日本語内容
 	 */
-	@Column
+	@Column(nullable = false)
 	private String textJp;
 
 	/**
@@ -64,5 +64,6 @@ public final class Phrase implements Serializable {
 	/**
 	 * 改行フラグ
 	 */
+	@Column(nullable = false)
 	private Boolean changeLine;
 }
