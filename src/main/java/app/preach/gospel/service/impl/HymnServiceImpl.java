@@ -68,7 +68,7 @@ public final class HymnServiceImpl implements IHymnService {
 	/**
 	 * 共通検索条件
 	 */
-	protected static final Specification<Hymn> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
+	private static final Specification<Hymn> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
 			.equal(root.get("visibleFlg"), Boolean.TRUE);
 
 	/**
@@ -95,6 +95,16 @@ public final class HymnServiceImpl implements IHymnService {
 	 * 韓国語名称
 	 */
 	private static final String NAME_KR = "nameKr";
+
+	/**
+	 * 日本語名称(別)
+	 */
+	private static final String NAME_JP_RA = "nameJpRa";
+
+	/**
+	 * 日本語名称(別)
+	 */
+	private static final String HYMNS_WORK = "hymnsWork";
 
 	/**
 	 * 怪しいキーワードリスト
@@ -198,7 +208,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param originalText 生のストリング
 	 * @return double[]
 	 */
-	private double[] computeTFIDFVector(final String originalText) {
+	private double @NotNull [] computeTFIDFVector(final String originalText) {
 		final Map<String, Integer> termFreq = this.tokenizeKoreanTextWithFrequency(originalText);
 		final int totalTerms = termFreq.values().stream().mapToInt(Integer::intValue).sum();
 		final double[] vector = new double[this.termToIndex.size()];
@@ -224,7 +234,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param elements 賛美歌リスト
 	 * @return List<Hymn>
 	 */
-	private List<Hymn> findTopTwoMatches(final String target, final List<Hymn> elements) {
+	private List<Hymn> findTopTwoMatches(final String target, final @NotNull List<Hymn> elements) {
 		final List<String> texts = elements.stream().map(Hymn::getSerif).toList();
 		this.preprocessCorpus(texts);
 		final double[] targetVector = this.computeTFIDFVector(target);
@@ -247,18 +257,16 @@ public final class HymnServiceImpl implements IHymnService {
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final Specification<Student> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.equal(root.get("id"), val.getUpdatedUser());
-			this.studentRepository.findOne(StudentServiceImpl.COMMON_CONDITION.and(specification2))
-					.ifPresentOrElse(subVal -> {
-						final HymnsWork hymnsWork = this.hymnsWorkRepository.findById(val.getId())
-								.orElseGet(HymnsWork::new);
-						final ZonedDateTime zonedDateTime = val.getUpdatedTime()
-								.atZoneSameInstant(ZoneOffset.ofHours(9));
-						final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
-								val.getSerif(), val.getLink(), hymnsWork.getScore(), hymnsWork.getBiko(),
-								subVal.getUsername(), FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
-						result.setSelf(CoResult.ok(hymnDto));
-					}, () -> result.setSelf(
-							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+			final Specification<Student> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
+					.equal(root.get("visibleFlg"), Boolean.TRUE);
+			this.studentRepository.findOne(specification1.and(specification2)).ifPresentOrElse(subVal -> {
+				final HymnsWork hymnsWork = this.hymnsWorkRepository.findById(val.getId()).orElseGet(HymnsWork::new);
+				final ZonedDateTime zonedDateTime = val.getUpdatedTime().atZoneSameInstant(ZoneOffset.ofHours(9));
+				final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
+						val.getSerif(), val.getLink(), hymnsWork.getScore(), hymnsWork.getBiko(), subVal.getUsername(),
+						FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
+				result.setSelf(CoResult.ok(hymnDto));
+			}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;
 	}
@@ -268,10 +276,10 @@ public final class HymnServiceImpl implements IHymnService {
 			final String keyword) {
 		final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
+			final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
 			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), detailKeyword),
 					criteriaBuilder.like(root.get(NAME_KR), detailKeyword),
-					criteriaBuilder.like(hymnsJoin.get("nameJpRa"), detailKeyword));
+					criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), detailKeyword));
 		};
 		try {
 			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION.and(specification));
@@ -315,10 +323,10 @@ public final class HymnServiceImpl implements IHymnService {
 				return CoResult.ok(hymnDtos1);
 			}
 			final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> {
-				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
+				final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
 				return criteriaBuilder.or(criteriaBuilder.equal(root.get(NAME_JP), keyword),
 						criteriaBuilder.equal(root.get(NAME_KR), keyword),
-						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), "%[".concat(keyword).concat("]%")));
+						criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), "%[".concat(keyword).concat("]%")));
 			};
 			final List<HymnDto> withName = this.hymnRepository.findAll(specification1).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -330,10 +338,10 @@ public final class HymnServiceImpl implements IHymnService {
 			final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
 					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
 			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> {
-				final Join<Hymn, HymnsWork> hymnsJoin = root.join("hymnsWork", JoinType.INNER);
+				final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
 				return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
 						criteriaBuilder.like(root.get(NAME_KR), searchStr),
-						criteriaBuilder.like(hymnsJoin.get("nameJpRa"), searchStr));
+						criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), searchStr));
 			};
 			final List<HymnDto> withNameLike = this.hymnRepository.findAll(specification2).stream()
 					.filter(a -> !withNameIds.contains(a.getId().toString()))
@@ -346,7 +354,7 @@ public final class HymnServiceImpl implements IHymnService {
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
 				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(withName, withNameLike);
 				return CoResult.ok(randomFiveLoop.stream()
-						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
+						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
 			}
 			final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
 			final List<HymnDto> withRandomFive = this.hymnRepository.retrieveRandomFive(detailKeyword).stream().filter(
@@ -356,14 +364,13 @@ public final class HymnServiceImpl implements IHymnService {
 							null, LineNumber.NAPLES))
 					.toList();
 			hymnDtos.addAll(withRandomFive);
-			withRandomFive.stream().map(HymnDto::id).toList();
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
 				final List<HymnDto> hymnDtos2 = new ArrayList<>();
 				hymnDtos2.addAll(withName);
 				hymnDtos2.addAll(withNameLike);
 				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos2, withRandomFive);
 				return CoResult.ok(randomFiveLoop.stream()
-						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
+						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
 			}
 			final List<HymnDto> totalRecords = this.hymnRepository.findAll(COMMON_CONDITION).stream()
 					.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
@@ -372,7 +379,7 @@ public final class HymnServiceImpl implements IHymnService {
 					.toList();
 			final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos, totalRecords);
 			return CoResult.ok(randomFiveLoop.stream()
-					.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNumber())).toList());
+					.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
 		} catch (final PersistenceException e) {
 			return CoResult.err(e);
 		}
@@ -491,7 +498,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 *
 	 * @param originalTexts
 	 */
-	private void preprocessCorpus(final List<String> originalTexts) {
+	private void preprocessCorpus(final @NotNull List<String> originalTexts) {
 		this.termToIndex.clear();
 		this.docFreq.clear();
 		this.corpusSize = originalTexts.size();
@@ -611,8 +618,7 @@ public final class HymnServiceImpl implements IHymnService {
 	private @NotNull String trimSerif(final @NotNull String serif) {
 		final String zenkakuSpace = "\u3000";
 		final String replace = serif.replace(zenkakuSpace, CoProjectUtils.EMPTY_STRING);
-		final String hankakuSpace = "\u0020";
-		return replace.replace(hankakuSpace, CoProjectUtils.EMPTY_STRING);
+		return replace.replace(CoProjectUtils.HANKAKU_SPACE, CoProjectUtils.EMPTY_STRING);
 	}
 
 }

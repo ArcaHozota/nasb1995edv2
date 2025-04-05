@@ -37,7 +37,7 @@ public final class StudentServiceImpl implements IStudentService {
 	/**
 	 * 共通検索条件
 	 */
-	protected static final Specification<Student> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
+	private static final Specification<Student> COMMON_CONDITION = (root, query, criteriaBuilder) -> criteriaBuilder
 			.equal(root.get("visibleFlg"), Boolean.TRUE);
 
 	/**

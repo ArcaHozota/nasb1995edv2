@@ -52,4 +52,5 @@ public final class CoBeanUtils extends BeanUtils {
 		}
 		return nullFields.toArray(new String[0]);
 	}
+
 }

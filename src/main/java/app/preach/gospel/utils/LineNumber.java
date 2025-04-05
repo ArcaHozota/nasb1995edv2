@@ -16,16 +16,16 @@ public enum LineNumber {
 
 	SNOWY(5);
 
-	private final Integer lineNumber;
+	private final Integer lineNo;
 
 	// 构造器
 	private LineNumber(final Integer lineNumber) {
-		this.lineNumber = lineNumber;
+		this.lineNo = lineNumber;
 	}
 
 	// 方法
-	public Integer getLineNumber() {
-		return this.lineNumber;
+	public Integer getLineNo() {
+		return this.lineNo;
 	}
 
 }
