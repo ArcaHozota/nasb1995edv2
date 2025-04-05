@@ -12,6 +12,7 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.util.StringUtils;
 
 import app.preach.gospel.common.ProjectConstants;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +26,7 @@ import lombok.NoArgsConstructor;
  * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class CoProjectUtils {
+public final class CoProjectUtils extends StringUtils {
 
 	/**
 	 * UTF-8キャラセット
@@ -51,6 +52,21 @@ public final class CoProjectUtils {
 	 * スラッシュマーク
 	 */
 	public static final String SLASH = "\u002f";
+
+	/**
+	 * ドットマーク
+	 */
+	public static final String DOT = "\u002e";
+
+	/**
+	 * 半角コロン
+	 */
+	public static final String HANKAKU_COLON = "\u003a";
+
+	/**
+	 * 半角シャープ
+	 */
+	public static final String HANKAKU_SHARP = "\u0023";
 
 	/**
 	 * 全角半角変換マップ

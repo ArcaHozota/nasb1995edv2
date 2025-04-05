@@ -136,13 +136,14 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 		final HymnDto hymnDto = hymnInfoById.getOk();
 		if (CoProjectUtils.isEqual(ProjectConstants.ATTRNAME_PDF, hymnDto.biko())) {
 			this.setContentType(MediaType.APPLICATION_PDF_VALUE);
-			this.setFileName(hymnDto.id() + ".".concat(hymnDto.biko()));
+			this.setFileName(hymnDto.id() + CoProjectUtils.DOT.concat(hymnDto.biko()));
+
 		} else {
 			final String biko = hymnDto.biko();
 			if (CoProjectUtils.isNotEmpty(biko)) {
 				final int indexOf = biko.indexOf(CoProjectUtils.SLASH) + 1;
 				this.setContentType(biko);
-				this.setFileName(hymnDto.id() + ".".concat(biko.substring(indexOf)));
+				this.setFileName(hymnDto.id() + CoProjectUtils.DOT.concat(biko.substring(indexOf)));
 			} else {
 				throw new HibernateError(ProjectConstants.MESSAGE_STRING_FATAL_ERROR);
 			}
