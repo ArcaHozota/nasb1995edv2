@@ -38,8 +38,8 @@ $("#infoStorageBtn").on('click', function() {
 		projectAjaxModify('/books/infoStorage.action', 'POST', postData, booksPostSuccessFunction);
 	}
 });
-function booksPostSuccessFunction(xhr) {
+function booksPostSuccessFunction() {
 	formReset("#inputForm");
 	formReset("#inputForm2");
-	layer.msg(xhr.responseText.replace(/^"|"$/g, emptyString));
+	layer.msg('更新或いは追加済み');
 }

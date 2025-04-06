@@ -1,6 +1,8 @@
 package app.preach.gospel.dto;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 import app.preach.gospel.utils.LineNumber;
 
@@ -61,4 +63,39 @@ public record HymnDto(
 		 * LINENUMBER
 		 */
 		LineNumber linenumber) implements Serializable {
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + Arrays.hashCode(this.score);
+		return (prime * result) + Objects.hash(this.biko, this.id, this.linenumber, this.link, this.nameJp, this.nameKr,
+				this.serif, this.updatedTime, this.updatedUser);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof HymnDto)) {
+			return false;
+		}
+		final HymnDto other = (HymnDto) obj;
+		return Objects.equals(this.biko, other.biko) && Objects.equals(this.id, other.id)
+				&& (this.linenumber == other.linenumber) && Objects.equals(this.link, other.link)
+				&& Objects.equals(this.nameJp, other.nameJp) && Objects.equals(this.nameKr, other.nameKr)
+				&& Arrays.equals(this.score, other.score) && Objects.equals(this.serif, other.serif)
+				&& Objects.equals(this.updatedTime, other.updatedTime)
+				&& Objects.equals(this.updatedUser, other.updatedUser);
+	}
+
+	@Override
+	public String toString() {
+		return "HymnDto [id=" + this.id + ", nameJp=" + this.nameJp + ", nameKr=" + this.nameKr + ", serif="
+				+ this.serif + ", link=" + this.link + ", score=" + Arrays.toString(this.score) + ", biko=" + this.biko
+				+ ", updatedUser=" + this.updatedUser + ", updatedTime=" + this.updatedTime + ", linenumber="
+				+ this.linenumber + "]";
+	}
+
 }
