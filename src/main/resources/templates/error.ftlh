@@ -42,8 +42,9 @@
 				<h7>想定外のエラーが発生しました。管理員へご連絡ください。</h7>
 			</#if>
 		</div>
-		<button id="backBtn" style="width: 300px; margin: 0px auto 0px auto;"
-			class="btn btn-lg btn-warning btn-block">戻る</button>
+		<div class="d-flex align-items-center justify-content-center">
+		  <button id="backBtn" style="width: 300px;" class="btn btn-lg btn-warning btn-block">戻る</button>
+		</div>
 	</div>
 	<script type="text/javascript">
 		$("#backBtn").on('click', function () {
