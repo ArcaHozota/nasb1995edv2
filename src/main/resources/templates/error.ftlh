@@ -36,7 +36,11 @@
 	<div class="container" style="margin-top: 60px;">
 		<div class="text-center">
 			<h2>システム情報</h2>
-			<h6>${exception}</h6>
+			<#if exception?exists>
+				<h7>${exception}</h7>
+			<#else>
+				<h7>想定外のエラーが発生しました。管理員へご連絡ください。</h7>
+			</#if>
 			<button id="backBtn" style="width: 300px; margin: 0px auto 0px auto;"
 				class="btn btn-lg btn-warning btn-block">戻る</button>
 		</div>
