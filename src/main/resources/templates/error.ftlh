@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja-JP">
-<#include "include-header.ftlh">
+<head>
+	<title>NASB1995</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf_header" content="${_csrf.headerName}">
+	<meta name="_csrf_token" content="${_csrf.token}">
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/customize.css">
+	<link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Corinthia:wght@700&family=Noto+Sans+JP:wght@100..900&display=swap">
+	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
+</head>
 
 <body>
 	<style>
@@ -8,18 +22,17 @@
 			background-color: #000000 !important;
 		}
 	</style>
-	<div>
-		<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
-			<div class="container-fluid">
-				<a class="navbar-brand effect-shine" style="font-size: 21px;font-weight: 900;"
-					href="/category/login.action">
-					<img src="/static/image/cross.svg" alt="img01" width="42px" height="42px">
+	<nav class="navbar navbar-dark bg-dark fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="d-flex justify-content-start">
+				<img src="/static/image/cross.svg" alt="img01" width="60" height="60">
+				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="#">
 					NASB1995
 				</a>
 			</div>
-			<form id="logoutForm" method="post" action="/category/logout" style="display: none;"></form>
-		</nav>
-	</div>
+		</div>
+		<form id="logoutForm" method="post" action="/category/logout" style="display: none;"></form>
+	</nav>
 	<div class="container" style="margin-top: 60px;">
 		<div class="text-center">
 			<h2>システム情報</h2>
