@@ -38,15 +38,15 @@
 			<h2>システム情報</h2>
 			<#if exception?exists>
 				<#if exception.length gt 120>
-					<p style="margin-top: 10px;font-size: 12px;">${exception.substring(0, 120)}</p>
+					<p style="margin-top: 33px;font-size: 22px;">${exception.substring(0, 120)}</p>
 				<#else>
-					<p style="margin-top: 10px;font-size: 12px;">${exception}</p>
+					<p style="margin-top: 33px;font-size: 22px;">${exception}</p>
 				</#if>
 			<#else>
-				<p style="margin-top: 10px;font-size: 12px;">想定外のエラーが発生しました。管理員へご連絡ください。</p>
+				<p style="margin-top: 33px;font-size: 22px;">想定外のエラーが発生しました。管理員へご連絡ください。</p>
 			</#if>
 		</div>
-		<div class="d-flex align-items-center justify-content-center" style="margin-top: 20px;">
+		<div class="d-flex align-items-center justify-content-center" style="margin-top: 33px;">
 		  <button id="backBtn" style="width: 300px;" class="btn btn-lg btn-warning btn-block">戻る</button>
 		</div>
 	</div>
