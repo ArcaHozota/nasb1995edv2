@@ -37,12 +37,16 @@
 		<div class="text-center">
 			<h2>システム情報</h2>
 			<#if exception?exists>
-				<h7>${exception}</h7>
+				<#if exception.length gt 120>
+					<p style="margin-top: 10px;font-size: 12px;">${exception.substring(0, 120)}</p>
+				<#else>
+					<p style="margin-top: 10px;font-size: 12px;">${exception}</p>
+				</#if>
 			<#else>
-				<h7>想定外のエラーが発生しました。管理員へご連絡ください。</h7>
+				<p style="margin-top: 10px;font-size: 12px;">想定外のエラーが発生しました。管理員へご連絡ください。</p>
 			</#if>
 		</div>
-		<div class="d-flex align-items-center justify-content-center">
+		<div class="d-flex align-items-center justify-content-center" style="margin-top: 20px;">
 		  <button id="backBtn" style="width: 300px;" class="btn btn-lg btn-warning btn-block">戻る</button>
 		</div>
 	</div>
