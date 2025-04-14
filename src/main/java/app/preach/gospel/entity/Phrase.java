@@ -46,13 +46,13 @@ public final class Phrase implements Serializable {
 	/**
 	 * 内容
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "text")
 	private String textEn;
 
 	/**
 	 * 日本語内容
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "text")
 	private String textJp;
 
 	/**

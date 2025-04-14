@@ -74,8 +74,8 @@ public final class StudentServiceImpl implements IStudentService {
 			}
 			final long duplicated = this.studentRepository.count(COMMON_CONDITION.and(specification));
 			return CoResult.ok((int) duplicated);
-		} catch (final PersistenceException e) {
-			return CoResult.err(e);
+		} catch (final Exception e) {
+			return CoResult.err(new HibernateException(e.getMessage()));
 		}
 	}
 
@@ -128,8 +128,8 @@ public final class StudentServiceImpl implements IStudentService {
 				try {
 					this.studentRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
-				} catch (final PersistenceException e) {
-					result.setSelf(CoResult.err(e));
+				} catch (final Exception e) {
+					result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
 				}
 			}
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
@@ -153,8 +153,8 @@ public final class StudentServiceImpl implements IStudentService {
 				try {
 					this.studentRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS));
-				} catch (final PersistenceException e) {
-					result.setSelf(CoResult.err(e));
+				} catch (final Exception e) {
+					result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
 				}
 			}
 		}, () -> result

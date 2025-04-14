@@ -23,6 +23,10 @@
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
 		</action>
+		<action name="page"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success" type="freemarker">/templates/index.ftlh</result>
+		</action>
 		<!-- 其他 Action 显式添加 -->
 		<action name="toIchiranhyo"
 			class="app.preach.gospel.handler.HomePageHandler"

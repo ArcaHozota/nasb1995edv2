@@ -58,8 +58,8 @@ public final class BookServiceImpl implements IBookService {
 			final List<BookDto> bookDtos = this.bookRepository.findAll(sort).stream()
 					.map(item -> new BookDto(item.getId().toString(), item.getName(), item.getNameJp())).toList();
 			return CoResult.ok(bookDtos);
-		} catch (final PersistenceException e) {
-			return CoResult.err(e);
+		} catch (final Exception e) {
+			return CoResult.err(new HibernateException(e.getMessage()));
 		}
 	}
 
@@ -79,8 +79,8 @@ public final class BookServiceImpl implements IBookService {
 					}, () -> result.setSelf(
 							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 			return result;
-		} catch (final PersistenceException e) {
-			return CoResult.err(e);
+		} catch (final Exception e) {
+			return CoResult.err(new HibernateException(e.getMessage()));
 		}
 	}
 
@@ -104,8 +104,8 @@ public final class BookServiceImpl implements IBookService {
 			try {
 				this.phraseRepository.saveAndFlush(phrase);
 				result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_INSERTED));
-			} catch (final PersistenceException e) {
-				result.setSelf(CoResult.err(e));
+			} catch (final Exception e) {
+				result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
 			}
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;
