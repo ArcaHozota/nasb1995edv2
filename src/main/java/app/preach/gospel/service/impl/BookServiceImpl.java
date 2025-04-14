@@ -103,7 +103,7 @@ public final class BookServiceImpl implements IBookService {
 			}
 			try {
 				this.phraseRepository.saveAndFlush(phrase);
-				result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_INSERTED));
+				result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_BOOKS));
 			} catch (final Exception e) {
 				result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
 			}

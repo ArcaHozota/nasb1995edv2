@@ -47,6 +47,8 @@ public final class ProjectConstants {
 	public static final String MESSAGE_STRING_DELETION_ERROR = "削除できません";
 
 	public static final String MESSAGE_STRING_INSERTED = "追加済み";
+	
+	public static final String MESSAGE_STRING_BOOKS = "更新或いは追加済み";
 
 	public static final String MESSAGE_STRING_STORAGE_ERROR = "追加処理エラー";
 
