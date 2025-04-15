@@ -106,6 +106,27 @@
 				<param name="bufferSize">1024</param>
 			</result>
 		</action>
+		<action name="infoDeletion"
+			class="app.preach.gospel.handler.HymnsHandler" method="infoDeletion">
+			<interceptor-ref name="json" />
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="infoStorage"
+			class="app.preach.gospel.handler.HymnsHandler" method="infoStorage">
+			<interceptor-ref name="json" />
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="infoUpdation"
+			class="app.preach.gospel.handler.HymnsHandler" method="infoUpdation">
+			<interceptor-ref name="json" />
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
 	</package>
 	<!-- 奉仕者管理ハンドラ -->
 	<package name="studentsHandler" extends="projectPackage"

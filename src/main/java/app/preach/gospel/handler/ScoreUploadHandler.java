@@ -23,7 +23,6 @@ import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -84,9 +83,10 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * 賛美歌楽譜の情報を保存する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
 	@Override
-	public String execute() {
+	public String execute() throws Exception {
 		try {
 			// 获取 JSON 数据
 			final ObjectMapper mapper = new ObjectMapper();
@@ -97,7 +97,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			final String fileData = data.get("score");
 			// 将 base64 文件数据解码并保存
 			final byte[] fileBytes = Base64.getDecoder().decode(fileData);
-			final CoResult<String, PersistenceException> scoreStorage = this.iHymnService.scoreStorage(fileBytes,
+			final CoResult<String, Exception> scoreStorage = this.iHymnService.scoreStorage(fileBytes,
 					Long.parseLong(editId));
 			if (!scoreStorage.isOk()) {
 				throw scoreStorage.getErr();
@@ -124,12 +124,12 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * 賛美歌楽譜をダウンロードする
 	 *
 	 * @return String
+	 * @throws Exception
 	 * @throws IOException
 	 */
-	public String scoreDownload() {
+	public String scoreDownload() throws Exception {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
-		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
-				.getHymnInfoById(Long.parseLong(scoreId));
+		final CoResult<HymnDto, Exception> hymnInfoById = this.iHymnService.getHymnInfoById(Long.parseLong(scoreId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
@@ -156,13 +156,13 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * 楽譜アプロード画面へ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String toScoreUpload() {
+	public String toScoreUpload() throws Exception {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
 		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
-				.getHymnInfoById(Long.parseLong(scoreId));
+		final CoResult<HymnDto, Exception> hymnInfoById = this.iHymnService.getHymnInfoById(Long.parseLong(scoreId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}

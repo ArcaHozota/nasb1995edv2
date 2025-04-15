@@ -12,7 +12,6 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,9 +51,10 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * インデクスへ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String toHomePage() {
-		final CoResult<Long, PersistenceException> totalCounts = this.iHymnService.getTotalCounts();
+	public String toHomePage() throws Exception {
+		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
 		}
@@ -66,9 +66,10 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * 一覧表へ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String toIchiranhyo() {
-		final CoResult<Long, PersistenceException> totalCounts = this.iHymnService.getTotalCounts();
+	public String toIchiranhyo() throws Exception {
+		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
 		}

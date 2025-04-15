@@ -5,7 +5,6 @@ import java.util.List;
 import app.preach.gospel.dto.HymnDto;
 import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.Pagination;
-import jakarta.persistence.PersistenceException;
 
 /**
  * 賛美歌サービスインターフェス
@@ -20,9 +19,9 @@ public interface IHymnService {
 	 *
 	 * @param id     ID
 	 * @param nameJp 日本語名称
-	 * @return CoResult<Integer, PersistenceException>
+	 * @return CoResult<Integer, Exception>
 	 */
-	CoResult<Integer, PersistenceException> checkDuplicated(String id, String nameJp);
+	CoResult<Integer, Exception> checkDuplicated(String id, String nameJp);
 
 	/**
 	 * 歌の名称の重複性をチェックする
@@ -31,78 +30,78 @@ public interface IHymnService {
 	 * @param nameJp 韓国語名称
 	 * @return CoResult<Integer, DataAccessException>
 	 */
-	CoResult<Integer, PersistenceException> checkDuplicated2(String id, String nameKr);
+	CoResult<Integer, Exception> checkDuplicated2(String id, String nameKr);
 
 	/**
 	 * IDによって歌の情報を取得する
 	 *
 	 * @param id ID
-	 * @return CoResult<HymnDto, PersistenceException>
+	 * @return CoResult<HymnDto, Exception>
 	 */
-	CoResult<HymnDto, PersistenceException> getHymnInfoById(Long id);
+	CoResult<HymnDto, Exception> getHymnInfoById(Long id);
 
 	/**
 	 * キーワードによって賛美歌情報を取得する
 	 *
 	 * @param pageNum ページ数
 	 * @param keyword キーワード
-	 * @return CoResult<Pagination<HymnDto>, PersistenceException>
+	 * @return CoResult<Pagination<HymnDto>, Exception>
 	 */
-	CoResult<Pagination<HymnDto>, PersistenceException> getHymnsByKeyword(Integer pageNum, String keyword);
+	CoResult<Pagination<HymnDto>, Exception> getHymnsByKeyword(Integer pageNum, String keyword);
 
 	/**
 	 * ランドム選択の五つの賛美歌情報を取得する
 	 *
 	 * @param keyword キーワード
-	 * @return CoResult<List<HymnDto>, PersistenceException>
+	 * @return CoResult<List<HymnDto>, Exception>
 	 */
-	CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(String keyword);
+	CoResult<List<HymnDto>, Exception> getHymnsRandomFive(String keyword);
 
 	/**
 	 * 金海氏の検索によって賛美歌情報を取得する
 	 *
 	 * @param id ID
-	 * @return CoResult<List<HymnDto>, PersistenceException>
+	 * @return CoResult<List<HymnDto>, Exception>
 	 */
-	CoResult<List<HymnDto>, PersistenceException> getKanumiList(Long id);
+	CoResult<List<HymnDto>, Exception> getKanumiList(Long id);
 
 	/**
 	 * 賛美歌のレコード数を取得する
 	 *
-	 * @return CoResult<Long, PersistenceException>
+	 * @return CoResult<Long, Exception>
 	 */
-	CoResult<Long, PersistenceException> getTotalCounts();
+	CoResult<Long, Exception> getTotalCounts();
 
 	/**
 	 * 賛美情報を削除する
 	 *
 	 * @param id ID
-	 * @return CoResult<String, PersistenceException>
+	 * @return CoResult<String, Exception>
 	 */
-	CoResult<String, PersistenceException> infoDeletion(Long id);
+	CoResult<String, Exception> infoDeletion(Long id);
 
 	/**
 	 * 賛美情報を保存する
 	 *
 	 * @param hymnDto 賛美情報転送クラス
-	 * @return CoResult<Integer, PersistenceException>
+	 * @return CoResult<Integer, Exception>
 	 */
-	CoResult<Integer, PersistenceException> infoStorage(HymnDto hymnDto);
+	CoResult<Integer, Exception> infoStorage(HymnDto hymnDto);
 
 	/**
 	 * 賛美情報を更新する
 	 *
 	 * @param hymnDto 賛美情報転送クラス
-	 * @return CoResult<String, PersistenceException>
+	 * @return CoResult<String, Exception>
 	 */
-	CoResult<String, PersistenceException> infoUpdation(HymnDto hymnDto);
+	CoResult<String, Exception> infoUpdation(HymnDto hymnDto);
 
 	/**
 	 * 賛美歌楽譜の情報を保存する
 	 *
 	 * @param file 楽譜ファイル
 	 * @param id   ID
-	 * @return CoResult<String, PersistenceException>
+	 * @return CoResult<String, Exception>
 	 */
-	CoResult<String, PersistenceException> scoreStorage(byte[] file, Long id);
+	CoResult<String, Exception> scoreStorage(byte[] file, Long id);
 }

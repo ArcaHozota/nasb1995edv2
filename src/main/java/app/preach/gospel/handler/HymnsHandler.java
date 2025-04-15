@@ -20,7 +20,6 @@ import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.Pagination;
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -101,9 +100,10 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * アカウント重複チェック
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String checkDuplicated() {
-		final CoResult<Integer, PersistenceException> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
+	public String checkDuplicated() throws Exception {
+		final CoResult<Integer, Exception> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
 				this.getNameJp());
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
@@ -122,11 +122,11 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * ランダム五つを検索する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String commonRetrieve() {
+	public String commonRetrieve() throws Exception {
 		final String keyword = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_KEYWORD);
-		final CoResult<List<HymnDto>, PersistenceException> hymnsRandomFive = this.iHymnService
-				.getHymnsRandomFive(keyword);
+		final CoResult<List<HymnDto>, Exception> hymnsRandomFive = this.iHymnService.getHymnsRandomFive(keyword);
 		if (!hymnsRandomFive.isOk()) {
 			throw hymnsRandomFive.getErr();
 		}
@@ -157,11 +157,11 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を取得する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String getInfoById() {
+	public String getInfoById() throws Exception {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
-		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
-				.getHymnInfoById(Long.parseLong(hymnId));
+		final CoResult<HymnDto, Exception> hymnInfoById = this.iHymnService.getHymnInfoById(Long.parseLong(hymnId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
@@ -173,12 +173,11 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を削除する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-//	@Action(ProjectURLConstants.URL_INFO_DELETION)
-	public String infoDeletion() {
+	public String infoDeletion() throws Exception {
 		final String deleteId = this.getServletRequest().getParameter("deleteId");
-		final CoResult<String, PersistenceException> infoDeletion = this.iHymnService
-				.infoDeletion(Long.parseLong(deleteId));
+		final CoResult<String, Exception> infoDeletion = this.iHymnService.infoDeletion(Long.parseLong(deleteId));
 		if (!infoDeletion.isOk()) {
 			throw infoDeletion.getErr();
 		}
@@ -190,10 +189,10 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を保存する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-//	@Action(value = ProjectURLConstants.URL_INFO_STORAGE, interceptorRefs = { @InterceptorRef("json") })
-	public String infoStorage() {
-		final CoResult<Integer, PersistenceException> infoStorage = this.iHymnService.infoStorage(this.getHymnDto());
+	public String infoStorage() throws Exception {
+		final CoResult<Integer, Exception> infoStorage = this.iHymnService.infoStorage(this.getHymnDto());
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
@@ -206,10 +205,10 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を更新する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-//	@Action(value = ProjectURLConstants.URL_INFO_UPDATION, interceptorRefs = { @InterceptorRef("json") })
-	public String infoUpdation() {
-		final CoResult<String, PersistenceException> infoUpdation = this.iHymnService.infoUpdation(this.getHymnDto());
+	public String infoUpdation() throws Exception {
+		final CoResult<String, Exception> infoUpdation = this.iHymnService.infoUpdation(this.getHymnDto());
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
@@ -221,11 +220,11 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 金海氏の検索を行う
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String kanumiRetrieve() {
+	public String kanumiRetrieve() throws Exception {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
-		final CoResult<List<HymnDto>, PersistenceException> kanumiList = this.iHymnService
-				.getKanumiList(Long.parseLong(hymnId));
+		final CoResult<List<HymnDto>, Exception> kanumiList = this.iHymnService.getKanumiList(Long.parseLong(hymnId));
 		if (!kanumiList.isOk()) {
 			throw kanumiList.getErr();
 		}
@@ -238,11 +237,12 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 情報一覧画面初期表示する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String pagination() {
+	public String pagination() throws Exception {
 		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		final String keyword = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_KEYWORD);
-		final CoResult<Pagination<HymnDto>, PersistenceException> hymnsByKeyword = this.iHymnService
+		final CoResult<Pagination<HymnDto>, Exception> hymnsByKeyword = this.iHymnService
 				.getHymnsByKeyword(Integer.parseInt(pageNum), keyword);
 		if (!hymnsByKeyword.isOk()) {
 			throw hymnsByKeyword.getErr();
@@ -267,13 +267,13 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 情報更新画面へ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String toEdition() {
+	public String toEdition() throws Exception {
 		final String editId = this.getServletRequest().getParameter("editId");
 		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_PAGE_NUMBER, pageNum);
-		final CoResult<HymnDto, PersistenceException> hymnInfoById = this.iHymnService
-				.getHymnInfoById(Long.parseLong(editId));
+		final CoResult<HymnDto, Exception> hymnInfoById = this.iHymnService.getHymnInfoById(Long.parseLong(editId));
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}

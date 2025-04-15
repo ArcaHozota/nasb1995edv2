@@ -14,7 +14,6 @@ import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.service.IHymnService;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -69,9 +68,10 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 	 * ログイン画面へ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String loginWithError() {
-		final CoResult<Long, PersistenceException> totalCounts = this.iHymnService.getTotalCounts();
+	public String loginWithError() throws Exception {
+		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
 		}

@@ -44,7 +44,6 @@ import app.preach.gospel.utils.CoResult;
 import app.preach.gospel.utils.LineNumber;
 import app.preach.gospel.utils.Pagination;
 import app.preach.gospel.utils.SnowflakeUtils;
-import jakarta.persistence.PersistenceException;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL;
@@ -128,7 +127,7 @@ public final class HymnServiceImpl implements IHymnService {
 			normA += Math.pow(vectorA[i], 2);
 			normB += Math.pow(vectorB[i], 2);
 		}
-		if ((normA == 0) || (normB == 0)) {
+		if (normA == 0 || normB == 0) {
 			return 0; // 避免除0
 		}
 		return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
@@ -165,7 +164,7 @@ public final class HymnServiceImpl implements IHymnService {
 	private int corpusSize;
 
 	@Override
-	public CoResult<Integer, PersistenceException> checkDuplicated(final String id, final String nameJp) {
+	public CoResult<Integer, Exception> checkDuplicated(final String id, final String nameJp) {
 		try {
 			final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 					.equal(root.get(NAME_JP), nameJp);
@@ -178,13 +177,13 @@ public final class HymnServiceImpl implements IHymnService {
 			}
 			final long duplicated = this.hymnRepository.count(COMMON_CONDITION.and(specification));
 			return CoResult.ok((int) duplicated);
-		} catch (final PersistenceException e) {
+		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public CoResult<Integer, PersistenceException> checkDuplicated2(final String id, final String nameKr) {
+	public CoResult<Integer, Exception> checkDuplicated2(final String id, final String nameKr) {
 		try {
 			final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 					.equal(root.get(NAME_KR), nameKr);
@@ -197,7 +196,7 @@ public final class HymnServiceImpl implements IHymnService {
 			}
 			final long duplicated = this.hymnRepository.count(COMMON_CONDITION.and(specification));
 			return CoResult.ok((int) duplicated);
-		} catch (final PersistenceException e) {
+		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
 	}
@@ -250,10 +249,10 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public @NotNull CoResult<HymnDto, PersistenceException> getHymnInfoById(final Long id) {
+	public @NotNull CoResult<HymnDto, Exception> getHymnInfoById(final Long id) {
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);
-		final CoResult<HymnDto, PersistenceException> result = CoResult.getInstance();
+		final CoResult<HymnDto, Exception> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final Specification<Student> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 					.equal(root.get("id"), val.getUpdatedUser());
@@ -272,8 +271,7 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public CoResult<Pagination<HymnDto>, PersistenceException> getHymnsByKeyword(final Integer pageNum,
-			final String keyword) {
+	public CoResult<Pagination<HymnDto>, Exception> getHymnsByKeyword(final Integer pageNum, final String keyword) {
 		final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
 			final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
@@ -293,16 +291,16 @@ public final class HymnServiceImpl implements IHymnService {
 							null, null))
 					.toList();
 			return CoResult.ok(Pagination.of(hymnDtos, totalRecords, pageNum, ProjectConstants.DEFAULT_PAGE_SIZE));
-		} catch (final PersistenceException e) {
+		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public CoResult<List<HymnDto>, PersistenceException> getHymnsRandomFive(final String keyword) {
+	public CoResult<List<HymnDto>, Exception> getHymnsRandomFive(final String keyword) {
 		try {
 			for (final String starngement : STRANGE_ARRAY) {
-				if (keyword.toLowerCase().contains(starngement) || (keyword.length() >= 100)) {
+				if (keyword.toLowerCase().contains(starngement) || keyword.length() >= 100) {
 					final List<HymnDto> hymnDtos = this.hymnRepository.findForStrangement().stream()
 							.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 									hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null,
@@ -379,16 +377,16 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos, totalRecords);
 			return CoResult.ok(randomFiveLoop.stream()
 					.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
-		} catch (final PersistenceException e) {
+		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public @NotNull CoResult<List<HymnDto>, PersistenceException> getKanumiList(final Long id) {
+	public @NotNull CoResult<List<HymnDto>, Exception> getKanumiList(final Long id) {
 		final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);
-		final CoResult<List<HymnDto>, PersistenceException> result = CoResult.getInstance();
+		final CoResult<List<HymnDto>, Exception> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification1)).ifPresentOrElse(val -> {
 			final List<HymnDto> hymnDtos = new ArrayList<>();
 			hymnDtos.add(new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(), val.getSerif(),
@@ -409,26 +407,26 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public CoResult<Long, PersistenceException> getTotalCounts() {
+	public CoResult<Long, Exception> getTotalCounts() {
 		try {
 			final long count = this.hymnRepository.count(COMMON_CONDITION);
 			return CoResult.ok(count);
-		} catch (final PersistenceException e) {
+		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public @NotNull CoResult<String, PersistenceException> infoDeletion(final Long id) {
+	public @NotNull CoResult<String, Exception> infoDeletion(final Long id) {
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);
-		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		final CoResult<String, Exception> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			val.setVisibleFlg(Boolean.FALSE);
 			try {
 				this.hymnRepository.saveAndFlush(val);
 				result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_DELETED));
-			} catch (final PersistenceException e) {
+			} catch (final Exception e) {
 				result.setSelf(CoResult.err(e));
 			}
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
@@ -436,7 +434,7 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public CoResult<Integer, PersistenceException> infoStorage(final HymnDto hymnDto) {
+	public CoResult<Integer, Exception> infoStorage(final HymnDto hymnDto) {
 		final Hymn hymnsRecord = new Hymn();
 		final HymnsWork hymnsWork = new HymnsWork();
 		CoBeanUtils.copyNullableProperties(hymnDto, hymnsRecord);
@@ -452,20 +450,20 @@ public final class HymnServiceImpl implements IHymnService {
 			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION);
 			final int discernedLargestPage = CoProjectUtils.discernLargestPage(totalRecords);
 			return CoResult.ok(discernedLargestPage);
-		} catch (final PersistenceException e) {
+		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public @NotNull CoResult<String, PersistenceException> infoUpdation(final HymnDto hymnDto) {
+	public @NotNull CoResult<String, Exception> infoUpdation(final HymnDto hymnDto) {
 		final Hymn hymn = new Hymn();
 		CoBeanUtils.copyNullableProperties(hymnDto, hymn);
 		hymn.setId(Long.parseLong(hymnDto.id()));
 		hymn.setVisibleFlg(Boolean.TRUE);
 		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), hymn.getId());
-		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		final CoResult<String, Exception> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final OffsetDateTime updatedTime1 = val.getUpdatedTime();
 			final String updatedUser2 = hymnDto.updatedUser();
@@ -484,7 +482,7 @@ public final class HymnServiceImpl implements IHymnService {
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
 				} catch (final VersionMismatchException e) {
 					result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_OPTIMISTIC_ERROR)));
-				} catch (final PersistenceException e) {
+				} catch (final Exception e) {
 					result.setSelf(CoResult.err(e));
 				}
 			}
@@ -561,8 +559,8 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	@Override
-	public @NotNull CoResult<String, PersistenceException> scoreStorage(final byte[] file, final Long id) {
-		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+	public @NotNull CoResult<String, Exception> scoreStorage(final byte[] file, final Long id) {
+		final CoResult<String, Exception> result = CoResult.getInstance();
 		this.hymnsWorkRepository.findById(id).ifPresentOrElse(val -> {
 			if (Arrays.equals(val.getScore(), file)) {
 				result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_NO_CHANGE)));
@@ -578,7 +576,7 @@ public final class HymnServiceImpl implements IHymnService {
 					val.setScore(file);
 					this.hymnsWorkRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
-				} catch (final PersistenceException e) {
+				} catch (final Exception e) {
 					result.setSelf(CoResult.err(e));
 				}
 			}
