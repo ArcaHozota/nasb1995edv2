@@ -17,7 +17,6 @@ import app.preach.gospel.dto.PhraseDto;
 import app.preach.gospel.service.IBookService;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
@@ -87,11 +86,11 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	 * 章節情報を取得する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String getChapters() {
+	public String getChapters() throws Exception {
 		final String bookId = this.getServletRequest().getParameter("bookId");
-		final CoResult<List<ChapterDto>, PersistenceException> chaptersByBookId = this.iBookService
-				.getChaptersByBookId(bookId);
+		final CoResult<List<ChapterDto>, Exception> chaptersByBookId = this.iBookService.getChaptersByBookId(bookId);
 		if (!chaptersByBookId.isOk()) {
 			throw chaptersByBookId.getErr();
 		}
@@ -111,9 +110,10 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	 * 聖書節別情報を保存する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String infoStorage() {
-		final CoResult<String, PersistenceException> infoStorage = this.iBookService.infoStorage(this.getPhraseDto());
+	public String infoStorage() throws Exception {
+		final CoResult<String, Exception> infoStorage = this.iBookService.infoStorage(this.getPhraseDto());
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
@@ -125,11 +125,11 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	 * 情報追加画面へ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String toAddition() {
-		final CoResult<List<BookDto>, PersistenceException> books = this.iBookService.getBooks();
-		final CoResult<List<ChapterDto>, PersistenceException> chaptersByBookId = this.iBookService
-				.getChaptersByBookId(null);
+	public String toAddition() throws Exception {
+		final CoResult<List<BookDto>, Exception> books = this.iBookService.getBooks();
+		final CoResult<List<ChapterDto>, Exception> chaptersByBookId = this.iBookService.getChaptersByBookId(null);
 		if (!books.isOk()) {
 			throw books.getErr();
 		}

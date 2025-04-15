@@ -22,7 +22,6 @@ import app.preach.gospel.service.IBookService;
 import app.preach.gospel.utils.CoBeanUtils;
 import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
-import jakarta.persistence.PersistenceException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -52,21 +51,21 @@ public final class BookServiceImpl implements IBookService {
 	private final PhraseRepository phraseRepository;
 
 	@Override
-	public CoResult<List<BookDto>, PersistenceException> getBooks() {
+	public CoResult<List<BookDto>, Exception> getBooks() {
 		final Sort sort = Sort.by(Direction.ASC, "id");
 		try {
 			final List<BookDto> bookDtos = this.bookRepository.findAll(sort).stream()
 					.map(item -> new BookDto(item.getId().toString(), item.getName(), item.getNameJp())).toList();
 			return CoResult.ok(bookDtos);
 		} catch (final Exception e) {
-			return CoResult.err(new HibernateException(e.getMessage()));
+			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public CoResult<List<ChapterDto>, PersistenceException> getChaptersByBookId(final String id) {
+	public CoResult<List<ChapterDto>, Exception> getChaptersByBookId(final String id) {
 		try {
-			final CoResult<List<ChapterDto>, PersistenceException> result = CoResult.getInstance();
+			final CoResult<List<ChapterDto>, Exception> result = CoResult.getInstance();
 			this.bookRepository
 					.findByIdWithChapters(CoProjectUtils.isDigital(id) ? Short.parseShort(id) : Short.parseShort("1"))
 					.ifPresentOrElse(val -> {
@@ -80,19 +79,19 @@ public final class BookServiceImpl implements IBookService {
 							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 			return result;
 		} catch (final Exception e) {
-			return CoResult.err(new HibernateException(e.getMessage()));
+			return CoResult.err(e);
 		}
 	}
 
 	@Override
-	public @NotNull CoResult<String, PersistenceException> infoStorage(final @NotNull PhraseDto phraseDto) {
+	public @NotNull CoResult<String, Exception> infoStorage(final @NotNull PhraseDto phraseDto) {
 		final long id = Long.parseLong(phraseDto.id());
 		final Integer chapterId = Integer.parseInt(phraseDto.chapterId());
-		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		final CoResult<String, Exception> result = CoResult.getInstance();
 		this.chapterRepository.findById(chapterId).ifPresentOrElse(val -> {
 			final Phrase phrase = new Phrase();
 			CoBeanUtils.copyNullableProperties(phraseDto, phrase);
-			phrase.setId((chapterId * 1000) + id);
+			phrase.setId(chapterId * 1000 + id);
 			phrase.setName(val.getName().concat(CoProjectUtils.HANKAKU_COLON).concat(phraseDto.id()));
 			phrase.setChapterId(chapterId);
 			final String textEn = phrase.getTextEn();
@@ -105,7 +104,7 @@ public final class BookServiceImpl implements IBookService {
 				this.phraseRepository.saveAndFlush(phrase);
 				result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_BOOKS));
 			} catch (final Exception e) {
-				result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
+				result.setSelf(CoResult.err(e));
 			}
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
 		return result;

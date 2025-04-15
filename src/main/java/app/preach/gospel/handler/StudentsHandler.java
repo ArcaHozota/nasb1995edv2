@@ -16,7 +16,6 @@ import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
-import jakarta.persistence.PersistenceException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -92,10 +91,11 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * アカウント重複チェック
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String checkDuplicated() {
-		final CoResult<Integer, PersistenceException> checkDuplicated = this.iStudentService
-				.checkDuplicated(this.getId(), this.getLoginAccount());
+	public String checkDuplicated() throws Exception {
+		final CoResult<Integer, Exception> checkDuplicated = this.iStudentService.checkDuplicated(this.getId(),
+				this.getLoginAccount());
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
@@ -122,10 +122,10 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * 奉仕者情報を更新する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String infoUpdation() {
-		final CoResult<String, PersistenceException> infoUpdation = this.iStudentService
-				.infoUpdation(this.getStudentDto());
+	public String infoUpdation() throws Exception {
+		final CoResult<String, Exception> infoUpdation = this.iStudentService.infoUpdation(this.getStudentDto());
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
@@ -137,9 +137,10 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * ログイン時間記録
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String preLogin() {
-		final CoResult<String, PersistenceException> preLoginUpdation = this.iStudentService.preLoginUpdation(
+	public String preLogin() throws Exception {
+		final CoResult<String, Exception> preLoginUpdation = this.iStudentService.preLoginUpdation(
 				this.getServletRequest().getParameter("loginAccount"),
 				this.getServletRequest().getParameter("password"));
 		if (!preLoginUpdation.isOk()) {
@@ -153,10 +154,11 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * 情報更新画面へ移動する
 	 *
 	 * @return String
+	 * @throws Exception
 	 */
-	public String toEdition() {
+	public String toEdition() throws Exception {
 		final String editId = this.getServletRequest().getParameter("editId");
-		final CoResult<StudentDto, PersistenceException> studentInfoById = this.iStudentService
+		final CoResult<StudentDto, Exception> studentInfoById = this.iStudentService
 				.getStudentInfoById(Long.parseLong(editId));
 		if (!studentInfoById.isOk()) {
 			throw studentInfoById.getErr();

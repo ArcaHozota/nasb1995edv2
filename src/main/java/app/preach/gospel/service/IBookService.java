@@ -6,7 +6,6 @@ import app.preach.gospel.dto.BookDto;
 import app.preach.gospel.dto.ChapterDto;
 import app.preach.gospel.dto.PhraseDto;
 import app.preach.gospel.utils.CoResult;
-import jakarta.persistence.PersistenceException;
 
 /**
  * 聖書章節サービスインターフェス
@@ -19,23 +18,23 @@ public interface IBookService {
 	/**
 	 * 聖書書別情報を取得する
 	 *
-	 * @return CoResult<List<BookDto>, PersistenceException>
+	 * @return CoResult<List<BookDto>, Exception>
 	 */
-	CoResult<List<BookDto>, PersistenceException> getBooks();
+	CoResult<List<BookDto>, Exception> getBooks();
 
 	/**
 	 * 聖書章節情報を取得する
 	 *
 	 * @param id 書別ID
-	 * @return CoResult<List<ChapterDto>, PersistenceException>
+	 * @return CoResult<List<ChapterDto>, Exception>
 	 */
-	CoResult<List<ChapterDto>, PersistenceException> getChaptersByBookId(String id);
+	CoResult<List<ChapterDto>, Exception> getChaptersByBookId(String id);
 
 	/**
 	 * 聖書節別情報を保存する
 	 *
 	 * @param phraseDto 節別情報転送クラス
-	 * @return CoResult<String, PersistenceException>
+	 * @return CoResult<String, Exception>
 	 */
-	CoResult<String, PersistenceException> infoStorage(PhraseDto phraseDto);
+	CoResult<String, Exception> infoStorage(PhraseDto phraseDto);
 }

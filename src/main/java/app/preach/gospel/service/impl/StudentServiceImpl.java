@@ -20,7 +20,6 @@ import app.preach.gospel.service.IStudentService;
 import app.preach.gospel.utils.CoBeanUtils;
 import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
-import jakarta.persistence.PersistenceException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -61,7 +60,7 @@ public final class StudentServiceImpl implements IStudentService {
 	private final StudentRepository studentRepository;
 
 	@Override
-	public CoResult<Integer, PersistenceException> checkDuplicated(final String id, final String loginAccount) {
+	public CoResult<Integer, Exception> checkDuplicated(final String id, final String loginAccount) {
 		try {
 			final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 					.equal(root.get(LOGIN_ACCOUNT), loginAccount);
@@ -80,10 +79,10 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public @NotNull CoResult<StudentDto, PersistenceException> getStudentInfoById(final Long id) {
+	public @NotNull CoResult<StudentDto, Exception> getStudentInfoById(final Long id) {
 		final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);
-		final CoResult<StudentDto, PersistenceException> result = CoResult.getInstance();
+		final CoResult<StudentDto, Exception> result = CoResult.getInstance();
 		this.studentRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final StudentDto studentDto = new StudentDto(val.getId().toString(), val.getLoginAccount(),
 					val.getUsername(), val.getPassword(), val.getEmail(), FORMATTER.format(val.getDateOfBirth()), null);
@@ -93,7 +92,7 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public @NotNull CoResult<String, PersistenceException> infoUpdation(final StudentDto studentDto) {
+	public @NotNull CoResult<String, Exception> infoUpdation(final StudentDto studentDto) {
 		final Student student = new Student();
 		CoBeanUtils.copyNullableProperties(studentDto, student);
 		student.setId(Long.parseLong(studentDto.id()));
@@ -101,7 +100,7 @@ public final class StudentServiceImpl implements IStudentService {
 		student.setVisibleFlg(Boolean.TRUE);
 		final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), student.getId());
-		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		final CoResult<String, Exception> result = CoResult.getInstance();
 		this.studentRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final String rawPassword = student.getPassword();
 			final String password = val.getPassword();
@@ -129,7 +128,7 @@ public final class StudentServiceImpl implements IStudentService {
 					this.studentRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_UPDATED));
 				} catch (final Exception e) {
-					result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
+					result.setSelf(CoResult.err(e));
 				}
 			}
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
@@ -137,12 +136,11 @@ public final class StudentServiceImpl implements IStudentService {
 	}
 
 	@Override
-	public @NotNull CoResult<String, PersistenceException> preLoginUpdation(final String loginAccount,
-			final String password) {
+	public @NotNull CoResult<String, Exception> preLoginUpdation(final String loginAccount, final String password) {
 		final Specification<Student> specification = (root, query, criteriaBuilder) -> criteriaBuilder.or(
 				criteriaBuilder.equal(root.get(LOGIN_ACCOUNT), loginAccount),
 				criteriaBuilder.equal(root.get("email"), loginAccount));
-		final CoResult<String, PersistenceException> result = CoResult.getInstance();
+		final CoResult<String, Exception> result = CoResult.getInstance();
 		this.studentRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
 			final boolean passwordMatches = ENCODER.matches(password, val.getPassword());
 			if (!passwordMatches) {
@@ -154,7 +152,7 @@ public final class StudentServiceImpl implements IStudentService {
 					this.studentRepository.saveAndFlush(val);
 					result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_LOGIN_SUCCESS));
 				} catch (final Exception e) {
-					result.setSelf(CoResult.err(new HibernateException(e.getMessage())));
+					result.setSelf(CoResult.err(e));
 				}
 			}
 		}, () -> result

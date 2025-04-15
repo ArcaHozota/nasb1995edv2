@@ -2,7 +2,6 @@ package app.preach.gospel.service;
 
 import app.preach.gospel.dto.StudentDto;
 import app.preach.gospel.utils.CoResult;
-import jakarta.persistence.PersistenceException;
 
 /**
  * 奉仕者サービスインターフェス
@@ -17,32 +16,32 @@ public interface IStudentService {
 	 *
 	 * @param id           ID
 	 * @param loginAccount アカウント
-	 * @return CoResult<Integer, PersistenceException>
+	 * @return CoResult<Integer, Exception>
 	 */
-	CoResult<Integer, PersistenceException> checkDuplicated(String id, String loginAccount);
+	CoResult<Integer, Exception> checkDuplicated(String id, String loginAccount);
 
 	/**
 	 * IDによって奉仕者の情報を取得する
 	 *
 	 * @param id ID
-	 * @return CoResult<StudentDto, PersistenceException>
+	 * @return CoResult<StudentDto, Exception>
 	 */
-	CoResult<StudentDto, PersistenceException> getStudentInfoById(Long id);
+	CoResult<StudentDto, Exception> getStudentInfoById(Long id);
 
 	/**
 	 * 奉仕者情報を更新する
 	 *
 	 * @param studentDto 奉仕者情報転送クラス
-	 * @return CoResult<String, PersistenceException>
+	 * @return CoResult<String, Exception>
 	 */
-	CoResult<String, PersistenceException> infoUpdation(StudentDto studentDto);
+	CoResult<String, Exception> infoUpdation(StudentDto studentDto);
 
 	/**
 	 * ログイン時間記録
 	 *
 	 * @param loginAccount アカウント
 	 * @param password     パスワード
-	 * @return CoResult<String, PersistenceException>
+	 * @return CoResult<String, Exception>
 	 */
-	CoResult<String, PersistenceException> preLoginUpdation(String loginAccount, String password);
+	CoResult<String, Exception> preLoginUpdation(String loginAccount, String password);
 }
