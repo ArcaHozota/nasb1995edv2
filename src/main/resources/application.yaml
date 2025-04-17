@@ -24,7 +24,7 @@ spring:
     name: nasb1995edv2
   servlet:
     multipart:
-      max-file-size: 3MB
+      max-file-size: 2MB
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://52.199.163.241:5432/nasb1995
