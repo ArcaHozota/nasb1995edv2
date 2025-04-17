@@ -5,7 +5,7 @@ $(document).ready(function() {
 });
 $("#toHymnPages").on("click", function(e) {
 	e.preventDefault();
-	let url = '/hymns/toPages?pageNum=' + pageNum;
+	let url = '/hymns/toPages.action?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
 $("#nameJpInput").on("change", function() {
@@ -70,12 +70,12 @@ $("#infoUpdationBtn").on("click", function() {
 });
 function hymnsPostSuccessFunction(response) {
 	localStorage.setItem('redirectMessage', inputedString);
-	window.location.replace('/hymns/toPages?pageNum=' + response);
+	window.location.replace('/hymns/toPages.action?pageNum=' + response);
 }
 function hymnsPutSuccessFunction(response) {
 	let message = response.replace(/^"|"$/g, emptyString);
 	localStorage.setItem('redirectMessage', message);
-	window.location.replace('/hymns/toPages?pageNum=' + pageNum);
+	window.location.replace('/hymns/toPages.action?pageNum=' + pageNum);
 }
 $("#resetBtn").on("click", function() {
 	formReset("#inputForm");
@@ -89,7 +89,7 @@ function checkHymnName(hymnName, idVal) {
 		showValidationMsg(hymnName, responseFailure, showVadMsgError);
 	} else {
 		$.ajax({
-			url: '/hymns/checkDuplicated',
+			url: '/hymns/checkDuplicated.action',
 			data: {
 				'id': idVal,
 				'nameJp': nameVal
@@ -109,7 +109,7 @@ function checkHymnName2(hymnName, idVal) {
 		showValidationMsg(hymnName, responseFailure, showVadMsgError);
 	} else {
 		$.ajax({
-			url: '/hymns/checkDuplicated2',
+			url: '/hymns/checkDuplicated2.action',
 			data: {
 				'id': idVal,
 				'nameKr': nameVal

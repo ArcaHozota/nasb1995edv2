@@ -97,7 +97,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	private String updatedTime;
 
 	/**
-	 * アカウント重複チェック
+	 * 歌の名称の重複性をチェックする
 	 *
 	 * @return String
 	 * @throws Exception
@@ -105,6 +105,28 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	public String checkDuplicated() throws Exception {
 		final CoResult<Integer, Exception> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
 				this.getNameJp());
+		if (!checkDuplicated.isOk()) {
+			throw checkDuplicated.getErr();
+		}
+		final Integer checkDuplicatedOk = checkDuplicated.getOk();
+		if (checkDuplicatedOk >= 1) {
+			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
+			this.setResponseError(ProjectConstants.MESSAGE_HYMN_NAME_DUPLICATED);
+			return ERROR;
+		}
+		this.setResponseJsonData(CoProjectUtils.EMPTY_STRING);
+		return NONE;
+	}
+
+	/**
+	 * 歌の名称の重複性をチェックする
+	 *
+	 * @return String
+	 * @throws Exception
+	 */
+	public String checkDuplicated2() throws Exception {
+		final CoResult<Integer, Exception> checkDuplicated = this.iHymnService.checkDuplicated2(this.getId(),
+				this.getNameKr());
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}

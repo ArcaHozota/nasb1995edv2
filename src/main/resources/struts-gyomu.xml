@@ -103,7 +103,7 @@
 				<param name="contentType">${contentType}</param>
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
-				<param name="bufferSize">1024</param>
+				<param name="bufferSize">3072</param>
 			</result>
 		</action>
 		<action name="infoDeletion"
@@ -123,6 +123,26 @@
 		<action name="infoUpdation"
 			class="app.preach.gospel.handler.HymnsHandler" method="infoUpdation">
 			<interceptor-ref name="json" />
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="checkDuplicated"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="checkDuplicated">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
+		<action name="checkDuplicated2"
+			class="app.preach.gospel.handler.HymnsHandler"
+			method="checkDuplicated2">
+			<result name="error" type="json">
+				<param name="root">responseError</param>
+			</result>
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>

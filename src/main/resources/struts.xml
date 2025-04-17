@@ -27,8 +27,8 @@
 		value="false" />
 	<!-- devモードが無効にする -->
 	<constant name="struts.devMode" value="false" />
-	<!-- アップロードファイルのサイズは最大10MBにする -->
-	<constant name="struts.multipart.maxSize" value="10485760" />
+	<!-- アップロードファイルのサイズは最大3MBにする -->
+	<constant name="struts.multipart.maxSize" value="3145728" />
 	<!-- アップロードファイルの一時保存するフォルダ -->
 	<constant name="struts.multipart.saveDir" value="/static/file" />
 	<!-- 例外処理ハンドラ -->

@@ -50,11 +50,7 @@
 		  <button id="backBtn" style="width: 300px;" class="btn btn-lg btn-warning btn-block">戻る</button>
 		</div>
 	</div>
-	<script type="text/javascript">
-		$("#backBtn").on('click', function () {
-			$("#logoutForm").submit();
-		});
-	</script>
+	<script type="text/javascript" src="/static/customizes/error.js"></script>
 </body>
 
 </html>
