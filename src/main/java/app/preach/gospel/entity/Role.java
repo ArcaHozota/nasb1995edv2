@@ -2,11 +2,14 @@ package app.preach.gospel.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,6 +48,12 @@ public final class Role implements Serializable {
 	 */
 	@Column(nullable = false)
 	private Boolean visibleFlg;
+
+	/**
+	 * 外部キー1
+	 */
+	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+	private List<Student> students;
 
 	@Override
 	public boolean equals(final Object obj) {

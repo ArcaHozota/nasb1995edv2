@@ -8,7 +8,10 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -67,6 +70,12 @@ public final class Student implements Serializable {
 	private String email;
 
 	/**
+	 * 役割ID
+	 */
+	@Column(nullable = false)
+	private Long roleId;
+
+	/**
 	 * 作成時間
 	 */
 	@Column
@@ -78,6 +87,13 @@ public final class Student implements Serializable {
 	@Column(nullable = false)
 	private Boolean visibleFlg;
 
+	/**
+	 * 外部キー
+	 */
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "roleId", nullable = false, insertable = false, updatable = false)
+	private Role role;
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -87,23 +103,24 @@ public final class Student implements Serializable {
 			return false;
 		}
 		final Student other = (Student) obj;
-		return Objects.equals(this.dateOfBirth, other.dateOfBirth) && Objects.equals(this.email, other.email)
-				&& Objects.equals(this.id, other.id) && Objects.equals(this.loginAccount, other.loginAccount)
-				&& Objects.equals(this.password, other.password) && Objects.equals(this.updatedTime, other.updatedTime)
-				&& Objects.equals(this.username, other.username) && Objects.equals(this.visibleFlg, other.visibleFlg);
+		return Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(email, other.email)
+				&& Objects.equals(id, other.id) && Objects.equals(loginAccount, other.loginAccount)
+				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
+				&& Objects.equals(roleId, other.roleId) && Objects.equals(updatedTime, other.updatedTime)
+				&& Objects.equals(username, other.username) && Objects.equals(visibleFlg, other.visibleFlg);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.dateOfBirth, this.email, this.id, this.loginAccount, this.password, this.updatedTime,
-				this.username, this.visibleFlg);
+		return Objects.hash(dateOfBirth, email, id, loginAccount, password, role, roleId, updatedTime, username,
+				visibleFlg);
 	}
 
 	@Override
 	public String toString() {
-		return "Student [id=" + this.id + ", loginAccount=" + this.loginAccount + ", username=" + this.username
-				+ ", password=" + this.password + ", dateOfBirth=" + this.dateOfBirth + ", email=" + this.email
-				+ ", updatedTime=" + this.updatedTime + ", visibleFlg=" + this.visibleFlg + "]";
+		return "Student [id=" + id + ", loginAccount=" + loginAccount + ", username=" + username + ", password="
+				+ password + ", dateOfBirth=" + dateOfBirth + ", email=" + email + ", roleId=" + roleId
+				+ ", updatedTime=" + updatedTime + ", visibleFlg=" + visibleFlg + ", role=" + role + "]";
 	}
 
 }
