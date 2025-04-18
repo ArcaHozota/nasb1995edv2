@@ -38,6 +38,12 @@ public final class HymnsWork implements Serializable {
 	 * ID
 	 */
 	@Id
+	private Long id;
+
+	/**
+	 * ワークID
+	 */
+	@Column(nullable = false)
 	private Long workId;
 
 	/**
@@ -81,24 +87,24 @@ public final class HymnsWork implements Serializable {
 			return false;
 		}
 		final HymnsWork other = (HymnsWork) obj;
-		return Objects.equals(this.biko, other.biko) && Objects.equals(this.hymn, other.hymn)
-				&& Objects.equals(this.nameJpRa, other.nameJpRa) && Arrays.equals(this.score, other.score)
-				&& Objects.equals(this.updatedTime, other.updatedTime) && Objects.equals(this.workId, other.workId);
+		return Objects.equals(biko, other.biko) && Objects.equals(hymn, other.hymn) && Objects.equals(id, other.id)
+				&& Objects.equals(nameJpRa, other.nameJpRa) && Arrays.equals(score, other.score)
+				&& Objects.equals(updatedTime, other.updatedTime) && Objects.equals(workId, other.workId);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = (prime * result) + Arrays.hashCode(this.score);
-		return (prime * result) + Objects.hash(this.biko, this.hymn, this.nameJpRa, this.updatedTime, this.workId);
+		result = prime * result + Arrays.hashCode(score);
+		result = prime * result + Objects.hash(biko, hymn, id, nameJpRa, updatedTime, workId);
+		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "HymnsWork [workId=" + this.workId + ", score=" + Arrays.toString(this.score) + ", updatedTime="
-				+ this.updatedTime + ", nameJpRa=" + this.nameJpRa + ", biko=" + this.biko + ", hymn=" + this.hymn
-				+ "]";
+		return "HymnsWork [id=" + id + ", workId=" + workId + ", score=" + Arrays.toString(score) + ", updatedTime="
+				+ updatedTime + ", nameJpRa=" + nameJpRa + ", biko=" + biko + ", hymn=" + hymn + "]";
 	}
 
 }
