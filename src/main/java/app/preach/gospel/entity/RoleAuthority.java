@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "role_auth")
+@Table(name = "role_auths")
 @IdClass(RoleAuthIds.class)
 public final class RoleAuthority implements Serializable {
 
