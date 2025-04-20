@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 権限エンティティ
@@ -56,10 +58,9 @@ public final class Authority implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Authority)) {
+		if (!(obj instanceof Authority other)) {
 			return false;
 		}
-		final Authority other = (Authority) obj;
 		return Objects.equals(this.categoryId, other.categoryId) && Objects.equals(this.id, other.id)
 				&& Objects.equals(this.name, other.name) && Objects.equals(this.title, other.title);
 	}
@@ -69,8 +70,9 @@ public final class Authority implements Serializable {
 		return Objects.hash(this.categoryId, this.id, this.name, this.title);
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "Authority [id=" + this.id + ", name=" + this.name + ", title=" + this.title + ", categoryId="
 				+ this.categoryId + "]";
 	}

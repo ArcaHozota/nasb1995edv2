@@ -16,6 +16,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 章節エンティティ
@@ -75,11 +77,10 @@ public final class Chapter implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Chapter)) {
+		if (!(obj instanceof Chapter other)) {
 			return false;
 		}
-		final Chapter other = (Chapter) obj;
-		return Objects.equals(this.book, other.book) && Objects.equals(this.bookId, other.bookId)
+        return Objects.equals(this.book, other.book) && Objects.equals(this.bookId, other.bookId)
 				&& Objects.equals(this.id, other.id) && Objects.equals(this.name, other.name)
 				&& Objects.equals(this.nameJp, other.nameJp) && Objects.equals(this.phrases, other.phrases);
 	}
@@ -89,8 +90,9 @@ public final class Chapter implements Serializable {
 		return Objects.hash(this.book, this.bookId, this.id, this.name, this.nameJp, this.phrases);
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "Chapter [id=" + this.id + ", name=" + this.name + ", nameJp=" + this.nameJp + ", bookId=" + this.bookId
 				+ ", book=" + this.book + ", phrases=" + this.phrases + "]";
 	}

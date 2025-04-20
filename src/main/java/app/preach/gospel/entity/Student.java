@@ -16,6 +16,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 奉仕者エンティティ
@@ -99,28 +101,29 @@ public final class Student implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Student)) {
+		if (!(obj instanceof Student other)) {
 			return false;
 		}
-		final Student other = (Student) obj;
-		return Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(loginAccount, other.loginAccount)
-				&& Objects.equals(password, other.password) && Objects.equals(role, other.role)
-				&& Objects.equals(roleId, other.roleId) && Objects.equals(updatedTime, other.updatedTime)
-				&& Objects.equals(username, other.username) && Objects.equals(visibleFlg, other.visibleFlg);
+		return Objects.equals(this.dateOfBirth, other.dateOfBirth) && Objects.equals(this.email, other.email)
+				&& Objects.equals(this.id, other.id) && Objects.equals(this.loginAccount, other.loginAccount)
+				&& Objects.equals(this.password, other.password) && Objects.equals(this.role, other.role)
+				&& Objects.equals(this.roleId, other.roleId) && Objects.equals(this.updatedTime, other.updatedTime)
+				&& Objects.equals(this.username, other.username) && Objects.equals(this.visibleFlg, other.visibleFlg);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dateOfBirth, email, id, loginAccount, password, role, roleId, updatedTime, username,
-				visibleFlg);
+		return Objects.hash(this.dateOfBirth, this.email, this.id, this.loginAccount, this.password, this.role,
+				this.roleId, this.updatedTime, this.username, this.visibleFlg);
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
-		return "Student [id=" + id + ", loginAccount=" + loginAccount + ", username=" + username + ", password="
-				+ password + ", dateOfBirth=" + dateOfBirth + ", email=" + email + ", roleId=" + roleId
-				+ ", updatedTime=" + updatedTime + ", visibleFlg=" + visibleFlg + ", role=" + role + "]";
+	public @NotNull String toString() {
+		return "Student [id=" + this.id + ", loginAccount=" + this.loginAccount + ", username=" + this.username
+				+ ", password=" + this.password + ", dateOfBirth=" + this.dateOfBirth + ", email=" + this.email
+				+ ", roleId=" + this.roleId + ", updatedTime=" + this.updatedTime + ", visibleFlg=" + this.visibleFlg
+				+ ", role=" + this.role + "]";
 	}
 
 }

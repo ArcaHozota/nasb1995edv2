@@ -15,6 +15,8 @@ import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 賛美歌エンティティ
@@ -92,10 +94,9 @@ public final class Hymn implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Hymn)) {
+		if (!(obj instanceof Hymn other)) {
 			return false;
 		}
-		final Hymn other = (Hymn) obj;
 		return Objects.equals(this.hymnsWork, other.hymnsWork) && Objects.equals(this.id, other.id)
 				&& Objects.equals(this.link, other.link) && Objects.equals(this.nameJp, other.nameJp)
 				&& Objects.equals(this.nameKr, other.nameKr) && Objects.equals(this.serif, other.serif)
@@ -110,8 +111,9 @@ public final class Hymn implements Serializable {
 				this.updatedUser, this.visibleFlg);
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "Hymn [id=" + this.id + ", nameJp=" + this.nameJp + ", nameKr=" + this.nameKr + ", link=" + this.link
 				+ ", updatedTime=" + this.updatedTime + ", updatedUser=" + this.updatedUser + ", serif=" + this.serif
 				+ ", visibleFlg=" + this.visibleFlg + ", hymnsWork=" + this.hymnsWork + "]";

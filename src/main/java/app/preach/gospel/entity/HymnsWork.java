@@ -17,6 +17,8 @@ import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 賛美歌セリフエンティティ
@@ -83,28 +85,31 @@ public final class HymnsWork implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof HymnsWork)) {
+		if (!(obj instanceof HymnsWork other)) {
 			return false;
 		}
-		final HymnsWork other = (HymnsWork) obj;
-		return Objects.equals(biko, other.biko) && Objects.equals(hymn, other.hymn) && Objects.equals(id, other.id)
-				&& Objects.equals(nameJpRa, other.nameJpRa) && Arrays.equals(score, other.score)
-				&& Objects.equals(updatedTime, other.updatedTime) && Objects.equals(workId, other.workId);
+		return Objects.equals(this.biko, other.biko) && Objects.equals(this.hymn, other.hymn)
+				&& Objects.equals(this.id, other.id) && Objects.equals(this.nameJpRa, other.nameJpRa)
+				&& Arrays.equals(this.score, other.score) && Objects.equals(this.updatedTime, other.updatedTime)
+				&& Objects.equals(this.workId, other.workId);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(score);
-		result = prime * result + Objects.hash(biko, hymn, id, nameJpRa, updatedTime, workId);
+		result = prime * result + Arrays.hashCode(this.score);
+		result = prime * result
+				+ Objects.hash(this.biko, this.hymn, this.id, this.nameJpRa, this.updatedTime, this.workId);
 		return result;
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
-		return "HymnsWork [id=" + id + ", workId=" + workId + ", score=" + Arrays.toString(score) + ", updatedTime="
-				+ updatedTime + ", nameJpRa=" + nameJpRa + ", biko=" + biko + ", hymn=" + hymn + "]";
+	public @NotNull String toString() {
+		return "HymnsWork [id=" + this.id + ", workId=" + this.workId + ", score=" + Arrays.toString(this.score)
+				+ ", updatedTime=" + this.updatedTime + ", nameJpRa=" + this.nameJpRa + ", biko=" + this.biko
+				+ ", hymn=" + this.hymn + "]";
 	}
 
 }

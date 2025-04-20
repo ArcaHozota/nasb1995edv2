@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 役割権限連携エンティティ
@@ -46,11 +48,10 @@ public final class RoleAuthority implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof RoleAuthority)) {
+		if (!(obj instanceof RoleAuthority other)) {
 			return false;
 		}
-		final RoleAuthority other = (RoleAuthority) obj;
-		return Objects.equals(this.authId, other.authId) && Objects.equals(this.roleId, other.roleId);
+        return Objects.equals(this.authId, other.authId) && Objects.equals(this.roleId, other.roleId);
 	}
 
 	@Override
@@ -58,8 +59,9 @@ public final class RoleAuthority implements Serializable {
 		return Objects.hash(this.authId, this.roleId);
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "RoleAuthority [authId=" + this.authId + ", roleId=" + this.roleId + "]";
 	}
 

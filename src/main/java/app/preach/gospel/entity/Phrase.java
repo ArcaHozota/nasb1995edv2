@@ -14,6 +14,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 節別エンティティ
@@ -79,11 +81,10 @@ public final class Phrase implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Phrase)) {
+		if (!(obj instanceof Phrase other)) {
 			return false;
 		}
-		final Phrase other = (Phrase) obj;
-		return Objects.equals(this.changeLine, other.changeLine) && Objects.equals(this.chapter, other.chapter)
+        return Objects.equals(this.changeLine, other.changeLine) && Objects.equals(this.chapter, other.chapter)
 				&& Objects.equals(this.chapterId, other.chapterId) && Objects.equals(this.id, other.id)
 				&& Objects.equals(this.name, other.name) && Objects.equals(this.textEn, other.textEn)
 				&& Objects.equals(this.textJp, other.textJp);
@@ -95,8 +96,9 @@ public final class Phrase implements Serializable {
 				this.textJp);
 	}
 
+	@Contract(pure = true)
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "Phrase [id=" + this.id + ", name=" + this.name + ", textEn=" + this.textEn + ", textJp=" + this.textJp
 				+ ", chapterId=" + this.chapterId + ", changeLine=" + this.changeLine + ", chapter=" + this.chapter
 				+ "]";
