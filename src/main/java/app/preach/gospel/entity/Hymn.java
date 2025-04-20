@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -86,7 +85,7 @@ public final class Hymn implements Serializable {
 	/**
 	 * 外部キー
 	 */
-	@OneToOne(mappedBy = "hymn", fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "hymn")
 	private HymnsWork hymnsWork;
 
 	@Override
