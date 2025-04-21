@@ -104,7 +104,7 @@ public final class Pagination<T> {
 	/**
 	 * 前のページはあるか
 	 */
-	private boolean hasPreviousPage = false;
+	private boolean hasPrevPage = false;
 
 	/**
 	 * 次のページはあるか
@@ -114,7 +114,7 @@ public final class Pagination<T> {
 	/**
 	 * 前のページ
 	 */
-	private int previousPage;
+	private int prevPage;
 
 	/**
 	 * 次のページ
@@ -139,7 +139,7 @@ public final class Pagination<T> {
 	/**
 	 * ナビゲーションページの数の集合
 	 */
-	private int[] navigatePageNums;
+	private int[] navigateNums;
 
 	/**
 	 * コンストラクタ
@@ -152,13 +152,13 @@ public final class Pagination<T> {
 	 */
 	private Pagination(final List<T> records, final long totalRecords, final int pageNum, final int pageSize,
 			final int navigatePages) {
-		if ((records != null) && !records.isEmpty()) {
+		if (records != null && !records.isEmpty()) {
 			this.pageNum = pageNum;
 			this.records = records;
 			this.pageSize = records.size();
 			this.totalRecords = totalRecords;
 			final long ape = this.totalRecords / pageSize;
-			this.totalPages = (this.totalRecords % pageSize) == 0 ? ape : ape + 1;
+			this.totalPages = this.totalRecords % pageSize == 0 ? ape : ape + 1;
 		} else if (records != null) {
 			this.pageNum = 1;
 			this.records = new ArrayList<>();
@@ -180,7 +180,7 @@ public final class Pagination<T> {
 		// ナビゲーションのページ数を設定する
 		this.setNavigatePages(navigatePages);
 		// ナビゲーションページの数の集合を取得する
-		this.calcNavigatePageNums();
+		this.calcnavigateNums();
 		// 前のページ、次のページ、最初及び最後のページを取得する
 		this.calcPage();
 		// ページングエッジを判断する
@@ -190,22 +190,22 @@ public final class Pagination<T> {
 	/**
 	 * ナビゲーションページの数の集合を取得する
 	 */
-	private void calcNavigatePageNums() {
+	private void calcnavigateNums() {
 		if (this.totalPages <= this.navigatePages) {
-			this.navigatePageNums = new int[(int) this.totalPages];
+			this.navigateNums = new int[(int) this.totalPages];
 			for (int i = 0; i < this.totalPages; i++) {
-				this.navigatePageNums[i] = i + 1;
+				this.navigateNums[i] = i + 1;
 			}
 			return;
 		}
-		this.navigatePageNums = new int[this.navigatePages];
-		int startNum = this.pageNum - (this.navigatePages / 2);
-		int endNum = this.pageNum + (this.navigatePages / 2);
-		if ((endNum > this.totalPages) && (startNum >= 1)) {
+		this.navigateNums = new int[this.navigatePages];
+		int startNum = this.pageNum - this.navigatePages / 2;
+		int endNum = this.pageNum + this.navigatePages / 2;
+		if (endNum > this.totalPages && startNum >= 1) {
 			endNum = (int) this.totalPages;
 			// 最後のナビゲーションページ
 			for (int i = this.navigatePages - 1; i >= 0; i--) {
-				this.navigatePageNums[i] = endNum;
+				this.navigateNums[i] = endNum;
 				endNum--;
 			}
 		} else {
@@ -214,7 +214,7 @@ public final class Pagination<T> {
 			}
 			// 他のナビゲーションページ
 			for (int i = 0; i < this.navigatePages; i++) {
-				this.navigatePageNums[i] = startNum;
+				this.navigateNums[i] = startNum;
 				startNum++;
 			}
 		}
@@ -224,11 +224,11 @@ public final class Pagination<T> {
 	 * 前のページ、次のページ、最初及び最後のページを取得する
 	 */
 	private void calcPage() {
-		if ((this.navigatePageNums != null) && (this.navigatePageNums.length > 0)) {
-			this.naviFirstPage = this.navigatePageNums[0];
-			this.naviLastPage = this.navigatePageNums[this.navigatePageNums.length - 1];
+		if (this.navigateNums != null && this.navigateNums.length > 0) {
+			this.naviFirstPage = this.navigateNums[0];
+			this.naviLastPage = this.navigateNums[this.navigateNums.length - 1];
 			if (this.pageNum > 1) {
-				this.previousPage = this.pageNum - 1;
+				this.prevPage = this.pageNum - 1;
 			}
 			if (this.pageNum < this.totalPages) {
 				this.nextPage = this.pageNum + 1;
@@ -240,7 +240,7 @@ public final class Pagination<T> {
 	 * ページングエッジを判断する
 	 */
 	private void discernPageBoundary() {
-		this.hasPreviousPage = this.pageNum > 1;
+		this.hasPrevPage = this.pageNum > 1;
 		this.hasNextPage = this.pageNum < this.totalPages;
 	}
 
@@ -259,10 +259,9 @@ public final class Pagination<T> {
 	public @NotNull String toString() {
 		return "Pagination [records=" + this.records + ", pageNum=" + this.pageNum + ", pageSize=" + this.pageSize
 				+ ", totalPages=" + this.totalPages + ", totalRecords=" + this.totalRecords + ", hasPrePage="
-				+ this.hasPreviousPage + ", hasNextPage=" + this.hasNextPage + ", previousPage=" + this.previousPage
-				+ ", nextPage=" + this.nextPage + ", navigatePages=" + this.navigatePages + ", naviFirstPage="
-				+ this.naviFirstPage + ", naviLastPage=" + this.naviLastPage + ", navigatePageNums="
-				+ Arrays.toString(this.navigatePageNums) + "]";
+				+ this.hasPrevPage + ", hasNextPage=" + this.hasNextPage + ", prevPage=" + this.prevPage + ", nextPage="
+				+ this.nextPage + ", navigatePages=" + this.navigatePages + ", naviFirstPage=" + this.naviFirstPage
+				+ ", naviLastPage=" + this.naviLastPage + ", navigateNums=" + Arrays.toString(this.navigateNums) + "]";
 	}
 
 }

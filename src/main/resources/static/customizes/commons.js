@@ -133,16 +133,16 @@ function buildPageNavi(result) {
 	let ul = $("<ul></ul>").addClass('pagination');
 	let firstPageLi = $("<li class='page-item'></li>").append(
 		$("<a class='page-link'></a>").append("最初へ").attr("href", "#"));
-	let previousPageLi = $("<li class='page-item'></li>").append(
+	let prevPageLi = $("<li class='page-item'></li>").append(
 		$("<a class='page-link'></a>").append("&laquo;").attr("href", "#"));
-	if (!result.hasPreviousPage) {
+	if (!result.hasPrevPage) {
 		firstPageLi.addClass('disabled');
-		previousPageLi.addClass('disabled');
+		prevPageLi.addClass('disabled');
 	} else {
 		firstPageLi.click(function() {
 			toSelectedPg(1, keyword);
 		});
-		previousPageLi.click(function() {
+		prevPageLi.click(function() {
 			toSelectedPg(pageNum - 1, keyword);
 		});
 	}
@@ -162,8 +162,8 @@ function buildPageNavi(result) {
 			toSelectedPg(totalPages, keyword);
 		});
 	}
-	ul.append(firstPageLi).append(previousPageLi);
-	$.each(result.navigatePageNums, (index, item) => {
+	ul.append(firstPageLi).append(prevPageLi);
+	$.each(result.navigateNums, (index, item) => {
 		let numsLi = $("<li class='page-item'></li>").append(
 			$("<a class='page-link'></a>").append(item).attr("href", "#"));
 		if (pageNum === item) {
