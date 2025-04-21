@@ -54,40 +54,40 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="retrieveRandomFive"
+		<action name="retrieve-random-five"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="commonRetrieve">
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="toPages"
+		<action name="to-pages"
 			class="app.preach.gospel.handler.HymnsHandler" method="toPages">
 			<result name="success" type="freemarker">/templates/hymns-pagination.ftlh
 			</result>
 		</action>
-		<action name="toAddition"
+		<action name="to-addition"
 			class="app.preach.gospel.handler.HymnsHandler" method="toAddition">
 			<result name="success" type="freemarker">/templates/hymns-addition.ftlh
 			</result>
 		</action>
-		<action name="toEdition"
+		<action name="to-edition"
 			class="app.preach.gospel.handler.HymnsHandler" method="toEdition">
 			<result name="success" type="freemarker">/templates/hymns-edition.ftlh
 			</result>
 		</action>
-		<action name="toRandomFive"
+		<action name="to-random-five"
 			class="app.preach.gospel.handler.HymnsHandler" method="toRandomFive">
 			<result name="success" type="freemarker">/templates/hymns-random-five.ftlh
 			</result>
 		</action>
-		<action name="toScoreUpload"
+		<action name="to-score-upload"
 			class="app.preach.gospel.handler.ScoreUploadHandler"
 			method="toScoreUpload">
 			<result name="success" type="freemarker">/templates/hymns-score-upload.ftlh
 			</result>
 		</action>
-		<action name="scoreUpload"
+		<action name="score-upload"
 			class="app.preach.gospel.handler.ScoreUploadHandler" method="execute">
 			<result name="error" type="json">
 				<param name="root">responseError</param>
@@ -96,7 +96,7 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="scoreDownload"
+		<action name="score-download"
 			class="app.preach.gospel.handler.ScoreUploadHandler"
 			method="scoreDownload">
 			<result name="success" type="stream">
@@ -106,28 +106,28 @@
 				<param name="bufferSize">3072</param>
 			</result>
 		</action>
-		<action name="infoDeletion"
+		<action name="info-deletion"
 			class="app.preach.gospel.handler.HymnsHandler" method="infoDeletion">
 			<interceptor-ref name="json" />
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="infoStorage"
+		<action name="info-storage"
 			class="app.preach.gospel.handler.HymnsHandler" method="infoStorage">
 			<interceptor-ref name="json" />
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="infoUpdation"
+		<action name="info-updation"
 			class="app.preach.gospel.handler.HymnsHandler" method="infoUpdation">
 			<interceptor-ref name="json" />
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="checkDuplicated"
+		<action name="check-duplicated"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="checkDuplicated">
 			<result name="error" type="json">
@@ -137,7 +137,7 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="checkDuplicated2"
+		<action name="check-duplicated2"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="checkDuplicated2">
 			<result name="error" type="json">

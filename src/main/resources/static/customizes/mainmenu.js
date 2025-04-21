@@ -15,10 +15,10 @@ $("#booksKanriMainmenu").on("click", function() {
 	// checkPermissionAndTransfer(url);
 });
 $("#hymnsKanriMainmenu").on("click", function() {
-	let url = '/hymns/toPages.action?pageNum=1';
+	let url = '/hymns/to-pages?pageNum=1';
 	checkPermissionAndTransfer(url);
 });
 $("#randomKanriMainmenu").on("click", function() {
-	let url = '/hymns/toRandomFive.action';
+	let url = '/hymns/to-random-five';
 	checkPermissionAndTransfer(url);
 });

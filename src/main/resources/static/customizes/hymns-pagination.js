@@ -19,7 +19,7 @@ $("#searchBtn2").on("click", function() {
 });
 function toSelectedPg(pageNum, keyword) {
 	$.ajax({
-		url: '/hymns/pagination.action',
+		url: '/hymns/pagination',
 		data: {
 			'pageNum': pageNum,
 			'keyword': keyword
@@ -66,17 +66,17 @@ $("#tableBody").on("click", '.delete-btn', function() {
 });
 $("#infoAdditionBtn").on("click", function(e) {
 	e.preventDefault();
-	let url = '/hymns/toAddition.action?pageNum=' + pageNum;
+	let url = '/hymns/to-addition?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
 $("#tableBody").on("click", '.edit-btn', function() {
 	let editId = $(this).attr("editId");
-	let url = '/hymns/toEdition.action?editId=' + editId + '&pageNum=' + pageNum;
+	let url = '/hymns/to-edition?editId=' + editId + '&pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
 $("#tableBody").on("click", '.score-btn', function() {
 	let scoreId = $(this).attr('scoreId');
-	let url = '/hymns/toScoreUpload.action?scoreId=' + scoreId + '&pageNum=' + pageNum;
+	let url = '/hymns/to-score-upload?scoreId=' + scoreId + '&pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
 $("#tableBody").on("click", '.link-btn', function(e) {
@@ -87,5 +87,5 @@ $("#tableBody").on("click", '.link-btn', function(e) {
 $("#tableBody").on("click", '.score-download-btn', function(e) {
 	e.preventDefault();
 	let scoreId = $(this).attr('scoreId');
-	window.location.href = '/hymns/scoreDownload.action?scoreId=' + scoreId;
+	window.location.href = '/hymns/score-download?scoreId=' + scoreId;
 });

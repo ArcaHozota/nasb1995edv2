@@ -71,16 +71,16 @@ $(document).ready(function() {
 	});
 	$("#toMainmenu").on("click", function(e) {
 		e.preventDefault();
-		window.location.replace('/category/toMainmenu.action');
+		window.location.replace('/category/to-mainmenu');
 	});
 	$("#toMainmenu2").on("click", function(e) {
 		e.preventDefault();
-		window.location.replace('/category/toMainmenu.action');
+		window.location.replace('/category/to-mainmenu');
 	});
 	$("#toPersonal").on("click", function(e) {
 		e.preventDefault();
 		let userId = $(this).find("input").val().replace(/,/g, emptyString);
-		let url = '/students/toEdition.action?editId=' + userId;
+		let url = '/students/to-edition?editId=' + userId;
 		checkPermissionAndTransfer(url);
 	});
 	$("#toMessage").on("click", function(e) {
@@ -99,12 +99,12 @@ $(document).ready(function() {
 	});
 	$("#toCollection").on("click", function(e) {
 		e.preventDefault();
-		let url = '/hymns/toPages.action?pageNum=1';
+		let url = '/hymns/to-pages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toRandomFive").on("click", function(e) {
 		e.preventDefault();
-		let url = '/hymns/toRandomFive.action';
+		let url = '/hymns/to-random-five';
 		checkPermissionAndTransfer(url);
 	});
 });
@@ -259,7 +259,7 @@ function normalAddbtnFunction(checkUrl, modalName) {
 }
 function normalDeletebtnFunction(url, message, deleteId) {
 	$.ajax({
-		url: url + 'deletionCheck',
+		url: url + 'deletion-check',
 		type: 'GET',
 		success: function() {
 			swal.fire({
@@ -271,7 +271,7 @@ function normalDeletebtnFunction(url, message, deleteId) {
 				confirmButtonColor: '#7F0020'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					projectAjaxModify(url + 'infoDelete?id=' + deleteId, 'DELETE', null, normalDeleteSuccessFunction);
+					projectAjaxModify(url + 'info-delete?id=' + deleteId, 'DELETE', null, normalDeleteSuccessFunction);
 				} else {
 					$(this).close();
 				}
