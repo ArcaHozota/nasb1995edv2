@@ -48,7 +48,7 @@ $("#tableBody").on("click", '.form-check-input', function() {
 	if ($(this).prop('checked')) {
 		let idVal = $(this).val();
 		$.ajax({
-			url: '/hymns/getInfoById.action',
+			url: '/hymns/get-info-id',
 			data: 'hymnId=' + idVal,
 			success: function(response) {
 				$("#nameDisplay").text(response.nameJp);
@@ -64,7 +64,7 @@ $("#tableBody").on("click", '.form-check-input', function() {
 		for (const element of checkBoxArray) {
 			if ($(element).prop('checked')) {
 				$.ajax({
-					url: '/hymns/getInfoById.action',
+					url: '/hymns/get-info-id',
 					data: 'hymnId=' + $(element).val(),
 					success: function(response) {
 						$("#nameDisplay").text(response.nameJp);
@@ -87,7 +87,7 @@ $("#tableBody").on("click", '.link-btn', function(e) {
 });
 function initialPagination(pageNum, keyword) {
 	$.ajax({
-		url: '/hymns/pagination.action',
+		url: '/hymns/pagination',
 		data: 'pageNum=' + pageNum,
 		success: function(response) {
 			buildTableBody1(response);
@@ -173,7 +173,7 @@ function buildPageNavi(result) {
 }
 function kanumiRetrieve(hymnId) {
 	$.ajax({
-		url: '/hymns/kanumiRetrieve.action',
+		url: '/hymns/kanumi-retrieve',
 		data: 'hymnId=' + hymnId,
 		success: function(response) {
 			buildTableBody2(response);

@@ -40,12 +40,12 @@
 		<div class="container-fluid">
 			<div class="d-flex justify-content-start">
 				<img src="/static/image/cross.svg" alt="img01" width="60" height="60">
-				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="/home/index.action">
+				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="/home/index">
 					NASB1995
 				</a>
 			</div>
 			<div class="d-flex justify-content-end">
-				<a href="/category/login.action" type="button" class="btn btn-primary me-2" style="font-weight: 600;">
+				<a href="/category/login" type="button" class="btn btn-primary me-2" style="font-weight: 600;">
 					<i class="fa-solid fa-right-to-bracket"></i> ログイン
 				</a>
 			</div>

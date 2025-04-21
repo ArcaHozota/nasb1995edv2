@@ -28,21 +28,21 @@
 	<!-- 賛美歌管理ハンドラ -->
 	<package name="hymnsHandler" extends="projectPackage"
 		namespace="/hymns">
-		<action name="commonRetrieve"
+		<action name="common-retrieve"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="commonRetrieve">
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="kanumiRetrieve"
+		<action name="kanumi-retrieve"
 			class="app.preach.gospel.handler.HymnsHandler"
 			method="kanumiRetrieve">
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="getInfoById"
+		<action name="get-info-id"
 			class="app.preach.gospel.handler.HymnsHandler" method="getInfoById">
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
@@ -151,7 +151,7 @@
 	<!-- 奉仕者管理ハンドラ -->
 	<package name="studentsHandler" extends="projectPackage"
 		namespace="/students">
-		<action name="preLogin"
+		<action name="pre-login"
 			class="app.preach.gospel.handler.StudentsHandler" method="preLogin">
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>

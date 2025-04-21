@@ -35,7 +35,7 @@ $("#toIchiranHyoBtn").on("click", function() {
 		confirmButtonColor: '#7F0020'
 	}).then((result) => {
 		if (result.isConfirmed) {
-			window.location.href = '/home/toIchiranhyo.action';
+			window.location.href = '/home/to-list';
 		} else if (result.isDenied) {
 			$(this).close();
 		}
@@ -43,7 +43,7 @@ $("#toIchiranHyoBtn").on("click", function() {
 });
 function commonRetrieve(keyword) {
 	$.ajax({
-		url: '/hymns/commonRetrieve.action',
+		url: '/hymns/common-retrieve',
 		data: 'keyword=' + keyword,
 		success: function(response) {
 			buildTableBody(response);

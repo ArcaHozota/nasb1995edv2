@@ -6,7 +6,11 @@
 	<!-- インデクスハンドラ -->
 	<package name="indexHandler" extends="projectPackage"
 		namespace="/">
-		<action name="index"
+		<action name="index.action"
+			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
+			<result name="success" type="freemarker">/templates/index.ftlh</result>
+		</action>
+		<action name=""
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
 		</action>
@@ -15,7 +19,7 @@
 	<package name="homeHandler" extends="projectPackage"
 		namespace="/home">
 		<!-- 显式定义 home Action -->
-		<action name="toHomePage"
+		<action name="to-home-page"
 			class="app.preach.gospel.handler.HomePageHandler" method="toHomePage">
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
 		</action>
@@ -28,7 +32,7 @@
 			<result name="success" type="freemarker">/templates/index.ftlh</result>
 		</action>
 		<!-- 其他 Action 显式添加 -->
-		<action name="toIchiranhyo"
+		<action name="to-list"
 			class="app.preach.gospel.handler.HomePageHandler"
 			method="toIchiranhyo">
 			<result name="success" type="freemarker">/templates/index2.ftlh</result>
@@ -41,7 +45,7 @@
 			class="app.preach.gospel.handler.CategoryHandler" method="login">
 			<result name="login" type="freemarker">/templates/logintoroku.ftlh</result>
 		</action>
-		<action name="loginWithError"
+		<action name="login-with-error"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="loginWithError">
 			<result name="login" type="freemarker">/templates/index.ftlh</result>

@@ -48,7 +48,7 @@ $("#loginBtn").on('click', function() {
 		layer.msg('パスワードを入力してください。');
 	} else {
 		$.ajax({
-			url: '/students/preLogin.action',
+			url: '/students/pre-login',
 			data: {
 				'loginAccount': account,
 				'password': password

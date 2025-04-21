@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+import jakarta.servlet.Filter;
 import lombok.extern.log4j.Log4j2;
 
 /**
@@ -25,11 +26,11 @@ public class ServletFilterConfiguration {
 	 */
 	@Order(10)
 	@Bean
-	protected FilterRegistrationBean<StrutsPrepareAndExecuteFilter> struts2Filter() {
-		final FilterRegistrationBean<StrutsPrepareAndExecuteFilter> filter = new FilterRegistrationBean<>();
+	protected FilterRegistrationBean<Filter> struts2Filter() {
+		final FilterRegistrationBean<Filter> filter = new FilterRegistrationBean<>();
 		filter.setFilter(new StrutsPrepareAndExecuteFilter());
 		filter.setName("struts2");
-		filter.addUrlPatterns("*.action");
+		filter.addUrlPatterns("/*");
 		log.info("Struts2フレームワーク配置成功！");
 		return filter;
 	}

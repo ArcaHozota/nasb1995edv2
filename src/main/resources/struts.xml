@@ -27,6 +27,11 @@
 		value="false" />
 	<!-- devモードが無効にする -->
 	<constant name="struts.devMode" value="false" />
+	<!-- 除外すべきURLs -->
+	<constant name="struts.action.excludePattern"
+		value="/static/.*" />
+	<!-- リクエストのsuffix -->
+	<constant name="struts.action.extension" value="" />
 	<!-- アップロードファイルのサイズは最大2MBにする -->
 	<constant name="struts.multipart.maxSize" value="2097152" />
 	<!-- アップロードファイルの一時保存するフォルダ -->

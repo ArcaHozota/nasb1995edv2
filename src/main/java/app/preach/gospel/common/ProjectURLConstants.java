@@ -24,9 +24,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_CHECK_DELETE = "deletionCheck";
 
-	public static final String URL_TO_LOGIN = "login.action";
+	public static final String URL_TO_LOGIN = "login";
 
-	public static final String URL_TO_LOGIN_WITH_ERROR = "loginWithError.action";
+	public static final String URL_TO_LOGIN_WITH_ERROR = "login-with-error";
 
 	public static final String URL_PRE_LOGIN = "preLogin.action";
 
