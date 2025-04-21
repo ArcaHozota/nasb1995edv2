@@ -5,7 +5,7 @@ $(document).ready(function() {
 });
 $("#toHymnPages").on("click", function(e) {
 	e.preventDefault();
-	let url = '/hymns/toPages.action?pageNum=' + pageNum;
+	let url = '/hymns/to-pages?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
 $("#nameJpInput").on("change", function() {
@@ -34,7 +34,7 @@ $("#infoStorageBtn").on("click", function() {
 			'serif': $("#serifInput").val(),
 			'updatedUser': $("#toPersonal").find("input").val().replace(/,/g, emptyString)
 		});
-		projectAjaxModify('/hymns/infoStorage', 'POST', postData, hymnsPostSuccessFunction);
+		projectAjaxModify('/hymns/infs-storage', 'POST', postData, hymnsPostSuccessFunction);
 	}
 });
 $("#nameJpEdit").on("change", function() {
@@ -65,17 +65,17 @@ $("#infoUpdationBtn").on("click", function() {
 			'updatedTime': $("#datestampContainer").val(),
 			'updatedUser': $("#toPersonal").find("input").val().replace(/,/g, emptyString)
 		});
-		projectAjaxModify('/hymns/infoUpdation', 'PUT', putData, hymnsPutSuccessFunction);
+		projectAjaxModify('/hymns/info-updation', 'PUT', putData, hymnsPutSuccessFunction);
 	}
 });
 function hymnsPostSuccessFunction(response) {
 	localStorage.setItem('redirectMessage', inputedString);
-	window.location.replace('/hymns/toPages.action?pageNum=' + response);
+	window.location.replace('/hymns/to-pages?pageNum=' + response);
 }
 function hymnsPutSuccessFunction(response) {
 	let message = response.replace(/^"|"$/g, emptyString);
 	localStorage.setItem('redirectMessage', message);
-	window.location.replace('/hymns/toPages.action?pageNum=' + pageNum);
+	window.location.replace('/hymns/to-pages?pageNum=' + pageNum);
 }
 $("#resetBtn").on("click", function() {
 	formReset("#inputForm");
@@ -89,7 +89,7 @@ function checkHymnName(hymnName, idVal) {
 		showValidationMsg(hymnName, responseFailure, showVadMsgError);
 	} else {
 		$.ajax({
-			url: '/hymns/checkDuplicated.action',
+			url: '/hymns/check-duplicated',
 			data: {
 				'id': idVal,
 				'nameJp': nameVal
@@ -109,7 +109,7 @@ function checkHymnName2(hymnName, idVal) {
 		showValidationMsg(hymnName, responseFailure, showVadMsgError);
 	} else {
 		$.ajax({
-			url: '/hymns/checkDuplicated2.action',
+			url: '/hymns/check-duplicated2',
 			data: {
 				'id': idVal,
 				'nameKr': nameVal

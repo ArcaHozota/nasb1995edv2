@@ -33,13 +33,13 @@ $("#infoUpdationBtn").on("click", function() {
 			'email': $("#emailEdit").val(),
 			'dateOfBirth': $("#birthdayEdit").val()
 		});
-		projectAjaxModify('/students/infoUpdation.action', 'PUT', putData, studentsPutSuccessFunction);
+		projectAjaxModify('/students/info-updation', 'PUT', putData, studentsPutSuccessFunction);
 	}
 });
 function studentsPutSuccessFunction(response) {
 	let message = response.replace(/^"|"$/g, emptyString);
 	localStorage.setItem('redirectMessage', message);
-	window.location.replace('/category/toMainmenu.action');
+	window.location.replace('/category/to-mainmenu');
 }
 $("#restoreBtn").on("click", function() {
 	formReset("#editForm");
@@ -50,7 +50,7 @@ function checkStudentName(studentName, idVal) {
 		showValidationMsg(studentName, responseFailure, "名称を空になってはいけません。");
 	} else {
 		$.ajax({
-			url: '/students/checkDuplicated.action',
+			url: '/students/check-duplicated',
 			data: {
 				'id': idVal,
 				'loginAccount': nameVal

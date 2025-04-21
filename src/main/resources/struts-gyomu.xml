@@ -157,7 +157,7 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="checkDuplicated"
+		<action name="check-duplicated"
 			class="app.preach.gospel.handler.StudentsHandler"
 			method="checkDuplicated">
 			<result name="error" type="json">
@@ -167,7 +167,7 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="infoUpdation"
+		<action name="info-updation"
 			class="app.preach.gospel.handler.StudentsHandler"
 			method="infoUpdation">
 			<interceptor-ref name="json" />
@@ -175,7 +175,7 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="toEdition"
+		<action name="to-edition"
 			class="app.preach.gospel.handler.StudentsHandler" method="toEdition">
 			<result name="success" type="freemarker">/templates/students-edition.ftlh
 			</result>
