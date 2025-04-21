@@ -34,7 +34,7 @@ $("#infoStorageBtn").on("click", function() {
 			'serif': $("#serifInput").val(),
 			'updatedUser': $("#toPersonal").find("input").val().replace(/,/g, emptyString)
 		});
-		projectAjaxModify('/hymns/infs-storage', 'POST', postData, hymnsPostSuccessFunction);
+		projectAjaxModify('/hymns/info-storage', 'POST', postData, hymnsPostSuccessFunction);
 	}
 });
 $("#nameJpEdit").on("change", function() {

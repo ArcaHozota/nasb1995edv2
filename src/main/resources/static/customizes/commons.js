@@ -90,7 +90,7 @@ $(document).ready(function() {
 	$("#toBookSearch").on("click", function(e) {
 		e.preventDefault();
 		layer.msg(delayApology);
-		// let url = '/books/toPages?pageNum=1';
+		// let url = '/books/to-pages?pageNum=1';
 		// checkPermissionAndTransfer(url);
 	});
 	$("#toTemporary").on("click", function(e) {
