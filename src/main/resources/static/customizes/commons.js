@@ -94,7 +94,7 @@ $(document).ready(function() {
 		// checkPermissionAndTransfer(url);
 	});
 	$("#toTemporary").on("click", function(e) {
-		let url = '/books/toAddition.action';
+		let url = '/books/to-addition';
 		checkPermissionAndTransfer(url);
 	});
 	$("#toCollection").on("click", function(e) {

@@ -7,7 +7,7 @@
 		<div class="container-fluid">
 			<div class="d-flex justify-content-start">
 				<img src="/static/image/cross.svg" alt="img01" width="60" height="60">
-				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="/category/toMainmenu.action">
+				<a class="navbar-brand effect-shine" style="font-size: 33px;" href="/category/to-mainmenu">
 					NASB1995
 				</a>
 			</div>
@@ -37,7 +37,7 @@
 									<i class="fa-solid fa-comments"></i> メッセージ
 								</a>
 							</li>
-							<form id="logoutForm" method="post" action="/category/logout"
+							<form id="logoutForm" method="post" action="/category/do-logout"
 								style="display: none;">
 							</form>
 							<#assign authNames = principalAdmin.getAuthorities()>

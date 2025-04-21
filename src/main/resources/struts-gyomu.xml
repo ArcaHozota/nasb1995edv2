@@ -6,20 +6,20 @@
 	<!-- 聖書章節入力ハンドラ -->
 	<package name="booksHandler" extends="projectPackage"
 		namespace="/books">
-		<action name="infoStorage"
+		<action name="info-storage"
 			class="app.preach.gospel.handler.BooksHandler" method="infoStorage">
 			<interceptor-ref name="json" />
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="getChapters"
+		<action name="get-chapters"
 			class="app.preach.gospel.handler.BooksHandler" method="getChapters">
 			<result name="none" type="json">
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
-		<action name="toAddition"
+		<action name="to-addition"
 			class="app.preach.gospel.handler.BooksHandler" method="toAddition">
 			<result name="success" type="freemarker">/templates/books-addition.ftlh
 			</result>

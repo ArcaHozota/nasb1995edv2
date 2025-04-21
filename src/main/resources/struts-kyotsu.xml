@@ -50,16 +50,16 @@
 			method="loginWithError">
 			<result name="login" type="freemarker">/templates/index.ftlh</result>
 		</action>
-		<action name="toMainmenu"
+		<action name="to-mainmenu"
 			class="app.preach.gospel.handler.CategoryHandler" method="toMainmenu">
 			<result name="success" type="freemarker">/templates/mainmenu.ftlh</result>
 		</action>
-		<action name="toMainmenuWithLogin"
+		<action name="to-mainmenu-with-login"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="toMainmenuWithLogin">
 			<result name="success" type="freemarker">/templates/mainmenu.ftlh</result>
 		</action>
-		<action name="toSystemError"
+		<action name="to-system-error"
 			class="app.preach.gospel.handler.CategoryHandler"
 			method="toSystemError">
 			<result name="success" type="freemarker">/templates/error.ftlh</result>

@@ -50,7 +50,7 @@
 			<h2 class="login-title">
 				<span>すでにアカウント持ち？</span>ログイン
 			</h2>
-			<form class="input-box" action="/category/doLogin" method="post" id="loginForm">
+			<form class="input-box" action="/category/do-login" method="post" id="loginForm">
 				<#if registeredEmail?exists>
 					<input type="text" value="${registeredEmail}" name="loginAcct" id="accountIpt" placeholder="アカウント">
 				<#else>

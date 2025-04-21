@@ -6,7 +6,7 @@ $("#bookInput").on('change', function() {
 	$("#chapterInput").empty();
 	let bookId = $(this).val();
 	$.ajax({
-		url: '/books/getChapters.action',
+		url: '/books/get-chapters',
 		data: 'bookId=' + bookId,
 		success: function(response) {
 			$.each(response, (response, item) => {
@@ -35,7 +35,7 @@ $("#infoStorageBtn").on('click', function() {
 			'textEn': $("#phraseTextEnInput").val().trim(),
 			'textJp': $("#phraseTextJpInput").val().trim()
 		});
-		projectAjaxModify('/books/infoStorage.action', 'POST', postData, booksPostSuccessFunction);
+		projectAjaxModify('/books/info-storage', 'POST', postData, booksPostSuccessFunction);
 	}
 });
 function booksPostSuccessFunction(response) {

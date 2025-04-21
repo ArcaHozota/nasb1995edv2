@@ -86,7 +86,7 @@ public class SpringSecurityConfiguration {
 								ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 										.concat(ProjectURLConstants.URL_LOGIN),
 								ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
-										.concat(ProjectURLConstants.URL_LOG_OUT))
+										.concat(ProjectURLConstants.URL_LOGOUT))
 						.csrfTokenRepository(new CookieCsrfTokenRepository()))
 				.exceptionHandling(handling -> {
 					handling.authenticationEntryPoint(this.projectAuthenticationEntryPoint);
@@ -106,7 +106,7 @@ public class SpringSecurityConfiguration {
 						.permitAll().usernameParameter("loginAcct").passwordParameter("userPswd"))
 				.logout(logout -> logout
 						.logoutUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
-								.concat(ProjectURLConstants.URL_LOG_OUT))
+								.concat(ProjectURLConstants.URL_LOGOUT))
 						.logoutSuccessUrl(ProjectURLConstants.URL_CATEGORY_NAMESPACE.concat(CoProjectUtils.SLASH)
 								.concat(ProjectURLConstants.URL_TO_LOGIN)));
 		log.info(ProjectConstants.MESSAGE_SPRING_SECURITY);

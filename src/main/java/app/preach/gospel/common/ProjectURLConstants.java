@@ -28,19 +28,19 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_LOGIN_WITH_ERROR = "login-with-error";
 
-	public static final String URL_PRE_LOGIN = "preLogin.action";
+	public static final String URL_PRE_LOGIN = "pre-login";
 
-	public static final String URL_LOG_OUT = "logout";
+	public static final String URL_LOGOUT = "do-logout";
 
-	public static final String URL_LOGIN = "doLogin";
+	public static final String URL_LOGIN = "do-login";
 
 	public static final String URL_REGISTER = "toroku.action";
 
-	public static final String URL_TO_ERROR = "toSystemError.action";
+	public static final String URL_TO_ERROR = "to-system-error";
 
-	public static final String URL_TO_MAINMENU_WITH_LOGIN = "toMainmenuWithLogin.action";
+	public static final String URL_TO_MAINMENU_WITH_LOGIN = "to-mainmenu-with-login";
 
-	public static final String URL_TO_ADDITION = "toAddition.action";
+	public static final String URL_TO_ADDITION = "to-addition";
 
 	public static final String URL_TO_EDITION = "toEdition.action";
 
