@@ -11,9 +11,9 @@ import lombok.Getter;
 @Getter
 public enum LineNumber {
 
-	BUNRGUNDY(2),
+	BURGUNDY(2),
 
-	CADIMIUM(1),
+	CADMIUM(1),
 
 	NAPLES(3),
 
