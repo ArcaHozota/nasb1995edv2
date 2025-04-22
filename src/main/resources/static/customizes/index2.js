@@ -192,11 +192,11 @@ function buildTableBody2(response) {
 			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
 		let scoreTd = $("<td class='text-center' style='width: 20%;vertical-align: middle;'></td>")
 			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
-		if (item.linenumber === 'BURGUNDY') {
+		if (item.lineNumber === 'BURGUNDY') {
 			$("<tr class='table-danger'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
-		} else if (item.linenumber === 'NAPLES') {
+		} else if (item.lineNumber === 'NAPLES') {
 			$("<tr class='table-warning'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
-		} else if (item.linenumber === 'CADMIUM') {
+		} else if (item.lineNumber === 'CADMIUM') {
 			$("<tr class='table-success'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 		} else {
 			$("<tr class='table-light'></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");

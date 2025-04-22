@@ -62,14 +62,14 @@ public record HymnDto(
 		/*
 		 * LINENUMBER
 		 */
-		LineNumber linenumber) implements Serializable {
+		LineNumber lineNumber) implements Serializable {
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = (prime * result) + Arrays.hashCode(this.score);
-		return (prime * result) + Objects.hash(this.biko, this.id, this.linenumber, this.link, this.nameJp, this.nameKr,
+		return (prime * result) + Objects.hash(this.biko, this.id, this.lineNumber, this.link, this.nameJp, this.nameKr,
 				this.serif, this.updatedTime, this.updatedUser);
 	}
 
@@ -83,7 +83,7 @@ public record HymnDto(
 		}
 		final HymnDto other = (HymnDto) obj;
 		return Objects.equals(this.biko, other.biko) && Objects.equals(this.id, other.id)
-				&& (this.linenumber == other.linenumber) && Objects.equals(this.link, other.link)
+				&& (this.lineNumber == other.lineNumber) && Objects.equals(this.link, other.link)
 				&& Objects.equals(this.nameJp, other.nameJp) && Objects.equals(this.nameKr, other.nameKr)
 				&& Arrays.equals(this.score, other.score) && Objects.equals(this.serif, other.serif)
 				&& Objects.equals(this.updatedTime, other.updatedTime)
@@ -94,8 +94,8 @@ public record HymnDto(
 	public String toString() {
 		return "HymnDto [id=" + this.id + ", nameJp=" + this.nameJp + ", nameKr=" + this.nameKr + ", serif="
 				+ this.serif + ", link=" + this.link + ", score=" + Arrays.toString(this.score) + ", biko=" + this.biko
-				+ ", updatedUser=" + this.updatedUser + ", updatedTime=" + this.updatedTime + ", linenumber="
-				+ this.linenumber + "]";
+				+ ", updatedUser=" + this.updatedUser + ", updatedTime=" + this.updatedTime + ", lineNumber="
+				+ this.lineNumber + "]";
 	}
 
 }

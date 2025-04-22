@@ -58,11 +58,11 @@ function buildTableBody(response) {
 	$.each(response, (response, item) => {
 		let nameMixTd = $("<td class='text-center' style='vertical-align: middle;'></td>")
 			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>" + item.nameJp + "/" + item.nameKr + "</a>"));
-		if (item.linenumber === 'BURGUNDY') {
+		if (item.lineNumber === 'BURGUNDY') {
 			$("<tr class='table-danger'></tr>").append(nameMixTd).appendTo("#tableBody");
-		} else if (item.linenumber === 'NAPLES') {
+		} else if (item.lineNumber === 'NAPLES') {
 			$("<tr class='table-warning'></tr>").append(nameMixTd).appendTo("#tableBody");
-		} else if (item.linenumber === 'CADMIUM') {
+		} else if (item.lineNumber === 'CADMIUM') {
 			$("<tr class='table-success'></tr>").append(nameMixTd).appendTo("#tableBody");
 		} else {
 			$("<tr class='table-light'></tr>").append(nameMixTd).appendTo("#tableBody");

@@ -109,7 +109,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * 怪しいキーワードリスト
 	 */
 	private static final String[] STRANGE_ARRAY = { "insert", "delete", "update", "create", "drop", "#", "$", "%", "&",
-			"(", ")", "\"", "\'", "@", ":", "select" };
+			"(", ")", "\"", "'", "@", ":", "select" };
 
 	/**
 	 * コサイン類似度を計算する
@@ -334,7 +334,7 @@ public final class HymnServiceImpl implements IHymnService {
 			if (hymnDtos.stream().distinct().toList().size() >= ProjectConstants.DEFAULT_PAGE_SIZE) {
 				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(withName, withNameLike);
 				return CoResult.ok(randomFiveLoop.stream()
-						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
+						.sorted(Comparator.comparingInt(item -> item.lineNumber().getLineNo())).toList());
 			}
 			final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
 			final List<HymnDto> withRandomFive = this
@@ -351,13 +351,13 @@ public final class HymnServiceImpl implements IHymnService {
 				hymnDtos2.addAll(withNameLike);
 				final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos2, withRandomFive);
 				return CoResult.ok(randomFiveLoop.stream()
-						.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
+						.sorted(Comparator.comparingInt(item -> item.lineNumber().getLineNo())).toList());
 			}
 			final List<HymnDto> totalRecords = this.mapToDtos(this.hymnRepository.findAll(COMMON_CONDITION),
 					LineNumber.SNOWY);
 			final List<HymnDto> randomFiveLoop = this.randomFiveLoop(hymnDtos, totalRecords);
 			return CoResult.ok(randomFiveLoop.stream()
-					.sorted(Comparator.comparingInt(item -> item.linenumber().getLineNo())).toList());
+					.sorted(Comparator.comparingInt(item -> item.lineNumber().getLineNo())).toList());
 		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
@@ -474,7 +474,7 @@ public final class HymnServiceImpl implements IHymnService {
 	 * @param lineNumber 行番号
 	 * @return List<HymnDto>
 	 */
-	private List<HymnDto> mapToDtos(final List<Hymn> hymns, final LineNumber lineNumber) {
+	private List<HymnDto> mapToDtos(final @NotNull List<Hymn> hymns, final LineNumber lineNumber) {
 		return hymns.stream()
 				.map(hymnsRecord -> new HymnDto(hymnsRecord.getId().toString(), hymnsRecord.getNameJp(),
 						hymnsRecord.getNameKr(), hymnsRecord.getSerif(), hymnsRecord.getLink(), null, null, null, null,
