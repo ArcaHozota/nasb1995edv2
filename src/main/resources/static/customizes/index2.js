@@ -85,6 +85,7 @@ $("#tableBody").on("click", '.link-btn', function(e) {
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
 });
+
 function initialPagination(pageNum, keyword) {
 	$.ajax({
 		url: '/hymns/pagination',
@@ -100,6 +101,7 @@ function initialPagination(pageNum, keyword) {
 		}
 	});
 }
+
 function buildTableBody1(response) {
 	$("#tableBody").empty();
 	let index = response.records;
@@ -113,6 +115,7 @@ function buildTableBody1(response) {
 		$("<tr></tr>").append(checkBoxTd).append(nameMixTd).append(scoreTd).appendTo("#tableBody");
 	});
 }
+
 function buildPageInfos(response) {
 	let pageInfos = $("#pageInfos");
 	pageInfos.empty();
@@ -121,6 +124,7 @@ function buildPageInfos(response) {
 	totalRecords = response.totalRecords;
 	pageInfos.append(totalPages + "ページ中の" + pageNum + "ページ、" + totalRecords + "件のレコードが見つかりました。");
 }
+
 function buildPageNavi(result) {
 	let keyword = null;
 	$("#pageNavi").empty();
@@ -171,6 +175,7 @@ function buildPageNavi(result) {
 	ul.append(nextPageLi).append(lastPageLi);
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
+
 function kanumiRetrieve(hymnId) {
 	$.ajax({
 		url: '/hymns/kanumi-retrieve',
@@ -183,6 +188,7 @@ function kanumiRetrieve(hymnId) {
 		}
 	});
 }
+
 function buildTableBody2(response) {
 	$("#tableBody").empty();
 	$.each(response, (index, item) => {
@@ -203,6 +209,7 @@ function buildTableBody2(response) {
 		}
 	});
 }
+
 function adjustWidth() {
 	const $indexTable = $("#indexTable");
 	if ($indexTable.length) {

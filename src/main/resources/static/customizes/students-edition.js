@@ -36,14 +36,16 @@ $("#infoUpdationBtn").on("click", function() {
 		projectAjaxModify('/students/info-updation', 'PUT', putData, studentsPutSuccessFunction);
 	}
 });
+$("#restoreBtn").on("click", function() {
+	formReset("#editForm");
+});
+
 function studentsPutSuccessFunction(response) {
 	let message = response.replace(/^"|"$/g, emptyString);
 	localStorage.setItem('redirectMessage', message);
 	window.location.replace('/category/to-mainmenu');
 }
-$("#restoreBtn").on("click", function() {
-	formReset("#editForm");
-});
+
 function checkStudentName(studentName, idVal) {
 	let nameVal = $(studentName).val().trim();
 	if (nameVal === emptyString) {

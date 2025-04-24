@@ -108,6 +108,7 @@ $(document).ready(function() {
 		checkPermissionAndTransfer(url);
 	});
 });
+
 function checkPermissionAndTransfer(stringUrl) {
 	let ajaxResponse = $.ajax({
 		url: stringUrl,
@@ -120,6 +121,7 @@ function checkPermissionAndTransfer(stringUrl) {
 		layer.msg(ajaxResponse.message);
 	}
 }
+
 function buildPageInfos(response) {
 	let pageInfos = $("#pageInfos");
 	pageInfos.empty();
@@ -128,6 +130,7 @@ function buildPageInfos(response) {
 	totalRecords = response.totalRecords;
 	pageInfos.append(totalPages + "ページ中の" + pageNum + "ページ、" + totalRecords + "件のレコードが見つかりました。");
 }
+
 function buildPageNavi(result) {
 	$("#pageNavi").empty();
 	let ul = $("<ul></ul>").addClass('pagination');
@@ -177,6 +180,7 @@ function buildPageNavi(result) {
 	ul.append(nextPageLi).append(lastPageLi);
 	$("<nav></nav>").append(ul).appendTo("#pageNavi");
 }
+
 function formReset(element) {
 	$(element)[0].reset();
 	$(element).find(".form-control").removeClass('is-valid is-invalid');
@@ -184,6 +188,7 @@ function formReset(element) {
 	$(element).find(".form-text").removeClass('valid-feedback invalid-feedback');
 	$(element).find(".form-text").text(emptyString);
 }
+
 function showValidationMsg(element, status, msg) {
 	$(element).removeClass('is-valid is-invalid');
 	$(element).next("span").removeClass('valid-feedback invalid-feedback');
@@ -196,6 +201,7 @@ function showValidationMsg(element, status, msg) {
 		$(element).next("span").addClass('invalid-feedback').text(msg);
 	}
 }
+
 function projectAjaxModify(url, type, data, successFunction) {
 	let header = $("meta[name=_csrf_header]").attr("content");
 	let token = $("meta[name=_csrf_token]").attr("content");
@@ -215,6 +221,7 @@ function projectAjaxModify(url, type, data, successFunction) {
 		}
 	});
 }
+
 function projectNullInputboxDiscern(inputArrays) {
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === emptyString) {
@@ -222,6 +229,7 @@ function projectNullInputboxDiscern(inputArrays) {
 		}
 	}
 }
+
 function projectInputContextGet(inputArrays) {
 	let listArray = [];
 	for (const element of inputArrays) {
@@ -233,6 +241,7 @@ function projectInputContextGet(inputArrays) {
 	}
 	return listArray;
 }
+
 function normalDeleteSuccessFunction(result) {
 	if (result.status === responseSuccess) {
 		layer.msg(result.message);
@@ -241,6 +250,7 @@ function normalDeleteSuccessFunction(result) {
 		layer.msg(result.message);
 	}
 }
+
 function normalAddbtnFunction(checkUrl, modalName) {
 	let ajaxResult = $.ajax({
 		url: checkUrl,
@@ -257,6 +267,7 @@ function normalAddbtnFunction(checkUrl, modalName) {
 		backdrop: 'static'
 	});
 }
+
 function normalDeletebtnFunction(url, message, deleteId) {
 	$.ajax({
 		url: url + 'deletion-check',

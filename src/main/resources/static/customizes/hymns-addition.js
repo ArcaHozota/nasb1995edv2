@@ -68,21 +68,24 @@ $("#infoUpdationBtn").on("click", function() {
 		projectAjaxModify('/hymns/info-updation', 'PUT', putData, hymnsPutSuccessFunction);
 	}
 });
-function hymnsPostSuccessFunction(response) {
-	localStorage.setItem('redirectMessage', inputedString);
-	window.location.replace('/hymns/to-pages?pageNum=' + response);
-}
-function hymnsPutSuccessFunction(response) {
-	let message = response.replace(/^"|"$/g, emptyString);
-	localStorage.setItem('redirectMessage', message);
-	window.location.replace('/hymns/to-pages?pageNum=' + pageNum);
-}
 $("#resetBtn").on("click", function() {
 	formReset("#inputForm");
 });
 $("#restoreBtn").on("click", function() {
 	formReset("#editForm");
 });
+
+function hymnsPostSuccessFunction(response) {
+	localStorage.setItem('redirectMessage', inputedString);
+	window.location.replace('/hymns/to-pages?pageNum=' + response);
+}
+
+function hymnsPutSuccessFunction(response) {
+	let message = response.replace(/^"|"$/g, emptyString);
+	localStorage.setItem('redirectMessage', message);
+	window.location.replace('/hymns/to-pages?pageNum=' + pageNum);
+}
+
 function checkHymnName(hymnName, idVal) {
 	let nameVal = $(hymnName).val().trim();
 	if (nameVal === emptyString) {
@@ -103,6 +106,7 @@ function checkHymnName(hymnName, idVal) {
 		});
 	}
 }
+
 function checkHymnName2(hymnName, idVal) {
 	let nameVal = $(hymnName).val().trim();
 	if (nameVal === emptyString) {

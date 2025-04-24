@@ -17,48 +17,6 @@ $("#searchBtn2").on("click", function() {
 	keyword = $("#keywordInput").val();
 	toSelectedPg(1, keyword);
 });
-function toSelectedPg(pageNum, keyword) {
-	$.ajax({
-		url: '/hymns/pagination',
-		data: {
-			'pageNum': pageNum,
-			'keyword': keyword
-		},
-		success: function(response) {
-			buildTableBody(response);
-			buildPageInfos(response);
-			buildPageNavi(response);
-		},
-		error: function(xhr) {
-			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
-			layer.msg(message);
-		}
-	});
-}
-function buildTableBody(response) {
-	$("#tableBody").empty();
-	let index = response.records;
-	$.each(index, (index, item) => {
-		let nameJpTd = $("<th class='text-left' style='width: 130px;vertical-align: middle;'></th>").append(item.nameJp);
-		let nameKrTd = $("<td class='text-left' style='width: 100px;vertical-align: middle;'></td>").append(item.nameKr);
-		let linkTd = $("<td class='text-center' style='width: 20px;vertical-align: middle;'></td>")
-			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>Link</a>"));
-		let scoreTd = $("<td class='text-center' style='width: 20px;vertical-align: middle;'></td>")
-			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
-		let scoreBtn = $("<button></button>").addClass("btn btn-success btn-sm score-btn")
-			.append($("<i class='fa-solid fa-music'></i>")).append("楽譜");
-		scoreBtn.attr("scoreId", item.id);
-		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn")
-			.append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
-		editBtn.attr("editId", item.id);
-		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
-			.append($("<i class='fa-solid fa-trash'></i>")).append("削除");
-		deleteBtn.attr("deleteId", item.id);
-		let btnTd = $("<td class='text-center' style='width: 80px;vertical-align: middle;'></td>")
-			.append(scoreBtn).append(" ").append(editBtn).append(" ").append(deleteBtn);
-		$("<tr></tr>").append(nameJpTd).append(nameKrTd).append(linkTd).append(scoreTd).append(btnTd).appendTo("#tableBody");
-	});
-}
 $("#tableBody").on("click", '.delete-btn', function() {
 	let deleteId = $(this).attr("deleteId");
 	let nameJp = $(this).parents("tr").find("th").text().trim();
@@ -89,3 +47,47 @@ $("#tableBody").on("click", '.score-download-btn', function(e) {
 	let scoreId = $(this).attr('scoreId');
 	window.location.href = '/hymns/score-download?scoreId=' + scoreId;
 });
+
+function toSelectedPg(pageNum, keyword) {
+	$.ajax({
+		url: '/hymns/pagination',
+		data: {
+			'pageNum': pageNum,
+			'keyword': keyword
+		},
+		success: function(response) {
+			buildTableBody(response);
+			buildPageInfos(response);
+			buildPageNavi(response);
+		},
+		error: function(xhr) {
+			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
+			layer.msg(message);
+		}
+	});
+}
+
+function buildTableBody(response) {
+	$("#tableBody").empty();
+	let index = response.records;
+	$.each(index, (index, item) => {
+		let nameJpTd = $("<th class='text-left' style='width: 130px;vertical-align: middle;'></th>").append(item.nameJp);
+		let nameKrTd = $("<td class='text-left' style='width: 100px;vertical-align: middle;'></td>").append(item.nameKr);
+		let linkTd = $("<td class='text-center' style='width: 20px;vertical-align: middle;'></td>")
+			.append($("<a href='#' class='link-btn' transferVal='" + item.link + "'>Link</a>"));
+		let scoreTd = $("<td class='text-center' style='width: 20px;vertical-align: middle;'></td>")
+			.append($("<a href='#' class='score-download-btn' scoreId='" + item.id + "'>&#x1D11E;</a>"));
+		let scoreBtn = $("<button></button>").addClass("btn btn-success btn-sm score-btn")
+			.append($("<i class='fa-solid fa-music'></i>")).append("楽譜");
+		scoreBtn.attr("scoreId", item.id);
+		let editBtn = $("<button></button>").addClass("btn btn-primary btn-sm edit-btn")
+			.append($("<i class='fa-solid fa-pencil'></i>")).append("編集");
+		editBtn.attr("editId", item.id);
+		let deleteBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete-btn")
+			.append($("<i class='fa-solid fa-trash'></i>")).append("削除");
+		deleteBtn.attr("deleteId", item.id);
+		let btnTd = $("<td class='text-center' style='width: 80px;vertical-align: middle;'></td>")
+			.append(scoreBtn).append(" ").append(editBtn).append(" ").append(deleteBtn);
+		$("<tr></tr>").append(nameJpTd).append(nameKrTd).append(linkTd).append(scoreTd).append(btnTd).appendTo("#tableBody");
+	});
+}

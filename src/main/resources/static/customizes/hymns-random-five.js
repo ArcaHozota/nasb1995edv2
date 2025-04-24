@@ -6,6 +6,12 @@ $("#randomSearchBtn").on("click", function() {
 	keyword = $("#keywordInput").val();
 	retrieveRandomFive(keyword);
 });
+$("#tableBody").on("click", '.link-btn', function(e) {
+	e.preventDefault();
+	let transferVal = $(this).attr('transferVal');
+	window.open(transferVal);
+});
+
 function retrieveRandomFive(keyword) {
 	$.ajax({
 		url: '/hymns/retrieve-random-five',
@@ -18,6 +24,7 @@ function retrieveRandomFive(keyword) {
 		}
 	});
 }
+
 function buildTableBody(response) {
 	$("#tableBody").empty();
 	$.each(response, (response, item) => {
@@ -25,8 +32,3 @@ function buildTableBody(response) {
 		$("<tr></tr>").append(nameMixTd).appendTo("#tableBody");
 	});
 }
-$("#tableBody").on("click", '.link-btn', function(e) {
-	e.preventDefault();
-	let transferVal = $(this).attr('transferVal');
-	window.open(transferVal);
-});

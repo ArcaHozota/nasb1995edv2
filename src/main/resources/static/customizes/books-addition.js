@@ -38,6 +38,7 @@ $("#infoStorageBtn").on('click', function() {
 		projectAjaxModify('/books/info-storage', 'POST', postData, booksPostSuccessFunction);
 	}
 });
+
 function booksPostSuccessFunction(response) {
 	formReset("#inputForm");
 	formReset("#inputForm2");

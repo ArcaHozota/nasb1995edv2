@@ -41,6 +41,7 @@ $("#toIchiranHyoBtn").on("click", function() {
 		}
 	});
 });
+
 function commonRetrieve(keyword) {
 	$.ajax({
 		url: '/hymns/common-retrieve',
@@ -53,6 +54,7 @@ function commonRetrieve(keyword) {
 		}
 	});
 }
+
 function buildTableBody(response) {
 	$("#tableBody").empty();
 	$.each(response, (response, item) => {
@@ -69,6 +71,7 @@ function buildTableBody(response) {
 		}
 	});
 }
+
 function adjustWidth() {
 	const $indexTable = $("#indexTable");
 	if ($indexTable.length) {
