@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import app.preach.gospel.common.ProjectConstants;
 import app.preach.gospel.service.IHymnService;
+import app.preach.gospel.utils.CoProjectUtils;
 import app.preach.gospel.utils.CoResult;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -106,7 +107,14 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 	 */
 	public String toSystemError() {
 		final String errorMsg = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_EXCEPTION);
-		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION, errorMsg);
+		if (CoProjectUtils.isEmpty(errorMsg)) {
+			ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION,
+					ProjectConstants.MESSAGE_STRING_UNEXPECTED_ERROR);
+		} else if (errorMsg.length() > 120) {
+			ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION, errorMsg.substring(0, 120));
+		} else {
+			ActionContext.getContext().put(ProjectConstants.ATTRNAME_EXCEPTION, errorMsg);
+		}
 		ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		return SUCCESS;
 	}

@@ -47,7 +47,7 @@ public final class ProjectConstants {
 	public static final String MESSAGE_STRING_DELETION_ERROR = "削除できません";
 
 	public static final String MESSAGE_STRING_INSERTED = "追加済み";
-	
+
 	public static final String MESSAGE_STRING_BOOKS = "更新或いは追加済み";
 
 	public static final String MESSAGE_STRING_STORAGE_ERROR = "追加処理エラー";
@@ -61,6 +61,8 @@ public final class ProjectConstants {
 	public static final String MESSAGE_STUDENT_NAME_DUPLICATED = "ユーザ名称がすでに存在します。";
 
 	public static final String MESSAGE_STRING_FATAL_ERROR = "システムエラーが発生しました。";
+
+	public static final String MESSAGE_STRING_UNEXPECTED_ERROR = "想定外のエラーが発生しました。管理員へご連絡ください。";
 
 	public static final String MESSAGE_SPRINGSECURITY_REQUIRED_AUTH = "リクエスト拒否";
 
