@@ -262,14 +262,14 @@ public final class HymnServiceImpl implements IHymnService {
 				final Specification<HymnsWork> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
 						.equal(root.get("workId"), val.getId());
 				final HymnsWork hymnsWork = this.hymnsWorkRepository.findOne(specification2)
-						.orElseThrow(() -> new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR));
+						.orElseThrow(() -> new HibernateException(ProjectConstants.MESSAGE_HYMNSWORK_NOT_FOUND));
 				final ZonedDateTime zonedDateTime = val.getUpdatedTime().atZoneSameInstant(ZoneOffset.ofHours(9));
 				final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
 						val.getSerif(), val.getLink(), hymnsWork.getScore(), hymnsWork.getBiko(), subVal.getUsername(),
 						FORMATTER.format(zonedDateTime.toLocalDateTime()), null);
 				result.setSelf(CoResult.ok(hymnDto));
-			}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+			}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STUDENT_NOT_FOUND))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_HYMN_NOT_FOUND))));
 		return result;
 	}
 
@@ -382,7 +382,7 @@ public final class HymnServiceImpl implements IHymnService {
 			final List<HymnDto> list = this.mapToDtos(topTwoMatches, LineNumber.NAPLES);
 			hymnDtos.addAll(list);
 			result.setSelf(CoResult.ok(hymnDtos));
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_HYMN_NOT_FOUND))));
 		return result;
 	}
 
@@ -409,7 +409,7 @@ public final class HymnServiceImpl implements IHymnService {
 			} catch (final Exception e) {
 				result.setSelf(CoResult.err(e));
 			}
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_HYMN_NOT_FOUND))));
 		return result;
 	}
 
@@ -466,7 +466,7 @@ public final class HymnServiceImpl implements IHymnService {
 					result.setSelf(CoResult.err(e));
 				}
 			}
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_HYMN_NOT_FOUND))));
 		return result;
 	}
 
@@ -575,7 +575,7 @@ public final class HymnServiceImpl implements IHymnService {
 					result.setSelf(CoResult.err(e));
 				}
 			}
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_HYMNSWORK_NOT_FOUND))));
 		return result;
 	}
 

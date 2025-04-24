@@ -75,8 +75,8 @@ public final class BookServiceImpl implements IBookService {
 										item.getBookId().toString()))
 								.toList();
 						result.setSelf(CoResult.ok(chapterDtos));
-					}, () -> result.setSelf(
-							CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+					}, () -> result
+							.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_BOOK_NOT_FOUND))));
 			return result;
 		} catch (final Exception e) {
 			return CoResult.err(e);
@@ -106,7 +106,7 @@ public final class BookServiceImpl implements IBookService {
 			} catch (final Exception e) {
 				result.setSelf(CoResult.err(e));
 			}
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_CHAPTER_NOT_FOUND))));
 		return result;
 	}
 

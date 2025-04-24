@@ -16,8 +16,6 @@ public final class ProjectConstants {
 
 	public static final Integer DEFAULT_TOKEN_EXPIRED = 1320;
 
-	public static final String DEFAULT_PASSWORD = "00000000";
-
 	public static final String MESSAGE_SPRING_MAPPER = "静的リソースのマッピングが開始しました。";
 
 	public static final String MESSAGE_SPRING_APPLICATION = "アプリは正常に起動されました。";
@@ -48,7 +46,7 @@ public final class ProjectConstants {
 
 	public static final String MESSAGE_STRING_INSERTED = "追加済み";
 
-	public static final String MESSAGE_STRING_BOOKS = "更新或いは追加済み";
+	public static final String MESSAGE_STRING_BOOKS = "更新または追加済み";
 
 	public static final String MESSAGE_STRING_STORAGE_ERROR = "追加処理エラー";
 
@@ -73,6 +71,16 @@ public final class ProjectConstants {
 	public static final String MESSAGE_SPRINGSECURITY_LOGINERROR3 = "当ユーザの役割がありますが、役割権限がないのでログイン拒否";
 
 	public static final String MESSAGE_SPRINGSECURITY_LOGINERROR4 = "入力したパスワードが正しくありません";
+
+	public static final String MESSAGE_STUDENT_NOT_FOUND = "勉強者情報が見つかりませんでした";
+
+	public static final String MESSAGE_HYMN_NOT_FOUND = "賛美歌情報が見つかりませんでした";
+
+	public static final String MESSAGE_HYMNSWORK_NOT_FOUND = "賛美歌ワーク情報が見つかりませんでした";
+
+	public static final String MESSAGE_BOOK_NOT_FOUND = "書別情報が見つかりませんでした";
+
+	public static final String MESSAGE_CHAPTER_NOT_FOUND = "章節情報が見つかりませんでした";
 
 	public static final String MESSAGE_SPRING_SECURITY = "スプリングセキュリティ作動中。";
 

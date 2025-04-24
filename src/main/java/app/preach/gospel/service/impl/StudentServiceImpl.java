@@ -87,7 +87,7 @@ public final class StudentServiceImpl implements IStudentService {
 			final StudentDto studentDto = new StudentDto(val.getId().toString(), val.getLoginAccount(),
 					val.getUsername(), val.getPassword(), val.getEmail(), FORMATTER.format(val.getDateOfBirth()), null);
 			result.setSelf(CoResult.ok(studentDto));
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STUDENT_NOT_FOUND))));
 		return result;
 	}
 
@@ -131,7 +131,7 @@ public final class StudentServiceImpl implements IStudentService {
 					result.setSelf(CoResult.err(e));
 				}
 			}
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR))));
+		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_STUDENT_NOT_FOUND))));
 		return result;
 	}
 
