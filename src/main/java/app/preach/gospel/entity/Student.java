@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,8 +19,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 奉仕者エンティティ
@@ -78,7 +79,7 @@ public final class Student implements Serializable {
 	private Long roleId;
 
 	/**
-	 * 作成時間
+	 * 最新登録時間
 	 */
 	@Column
 	private OffsetDateTime updatedTime;
@@ -101,7 +102,7 @@ public final class Student implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Student other)) {
+		if (!(obj instanceof final Student other)) {
 			return false;
 		}
 		return Objects.equals(this.dateOfBirth, other.dateOfBirth) && Objects.equals(this.email, other.email)
