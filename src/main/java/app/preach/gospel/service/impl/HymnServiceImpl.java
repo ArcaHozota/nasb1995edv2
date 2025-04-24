@@ -254,12 +254,15 @@ public final class HymnServiceImpl implements IHymnService {
 				.equal(root.get("id"), id);
 		final CoResult<HymnDto, Exception> result = CoResult.getInstance();
 		this.hymnRepository.findOne(COMMON_CONDITION.and(specification)).ifPresentOrElse(val -> {
-			final Specification<Student> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.equal(root.get("id"), val.getUpdatedUser());
-			final Specification<Student> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
-					.equal(root.get("visibleFlg"), Boolean.TRUE);
-			this.studentRepository.findOne(specification1.and(specification2)).ifPresentOrElse(subVal -> {
-				final HymnsWork hymnsWork = this.hymnsWorkRepository.findById(val.getId()).orElseGet(HymnsWork::new);
+			final Specification<Student> specification1 = (root, query, criteriaBuilder) -> {
+				criteriaBuilder.equal(root.get("visibleFlg"), Boolean.TRUE);
+				return criteriaBuilder.and(criteriaBuilder.equal(root.get("id"), val.getUpdatedUser()));
+			};
+			this.studentRepository.findOne(specification1).ifPresentOrElse(subVal -> {
+				final Specification<HymnsWork> specification2 = (root, query, criteriaBuilder) -> criteriaBuilder
+						.equal(root.get("workId"), val.getId());
+				final HymnsWork hymnsWork = this.hymnsWorkRepository.findOne(specification2)
+						.orElseThrow(() -> new HibernateException(ProjectConstants.MESSAGE_STRING_FATAL_ERROR));
 				final ZonedDateTime zonedDateTime = val.getUpdatedTime().atZoneSameInstant(ZoneOffset.ofHours(9));
 				final HymnDto hymnDto = new HymnDto(val.getId().toString(), val.getNameJp(), val.getNameKr(),
 						val.getSerif(), val.getLink(), hymnsWork.getScore(), hymnsWork.getBiko(), subVal.getUsername(),
