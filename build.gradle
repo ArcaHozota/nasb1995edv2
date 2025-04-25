@@ -14,10 +14,10 @@ description = 'nasb1995edv2'
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
-    mavenCentral();
+    mavenCentral()
     maven {
-        url = uri('https://repo.maven.apache.org/maven2/');
-        url = uri('https://repository.liferay.com/nexus/content/repositories/public/');
+        url = uri('https://repo.maven.apache.org/maven2/')
+        url = uri('https://repository.liferay.com/nexus/content/repositories/public/')
     }
 }
 
