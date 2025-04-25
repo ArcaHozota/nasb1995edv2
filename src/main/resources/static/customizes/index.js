@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(() => {
 	adjustWidth();
 	$("#tableBody").hide();
 	let message2 = $("#torokuMsgContainer").val();
@@ -6,7 +6,7 @@ $(document).ready(function() {
 		layer.msg(message2);
 	}
 });
-$("#randomSearchBtn").on("click", function() {
+$("#randomSearchBtn").on("click", () => {
 	adjustWidth();
 	$("#loadingBackground").show();
 	$("#loadingContainer").show();
@@ -14,18 +14,18 @@ $("#randomSearchBtn").on("click", function() {
 	$("#randomSearchBtn").prop("disabled", true);
 	let keyword = $("#keywordInput").val();
 	commonRetrieve(keyword);
-	setTimeout(function() {
+	setTimeout(() => {
 		$("#loadingContainer").hide();
 		$("#loadingBackground").hide();
 		$("#randomSearchBtn").prop("disabled", false);
 	}, 3300);
 });
-$("#tableBody").on("click", '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', (e) => {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
 });
-$("#toIchiranHyoBtn").on("click", function() {
+$("#toIchiranHyoBtn").on("click", () => {
 	swal.fire({
 		title: 'メッセージ',
 		text: '賛美歌一覧表画面へ移動してよろしいでしょうか。',
@@ -46,10 +46,10 @@ function commonRetrieve(keyword) {
 	$.ajax({
 		url: '/hymns/common-retrieve',
 		data: 'keyword=' + keyword,
-		success: function(response) {
+		success: (response) => {
 			buildTableBody(response);
 		},
-		error: function(result) {
+		error: (result) => {
 			layer.msg(result.responseJSON.message);
 		}
 	});

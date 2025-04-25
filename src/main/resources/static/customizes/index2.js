@@ -1,14 +1,14 @@
-$(document).ready(function() {
+$(document).ready(() => {
 	adjustWidth();
 	initialPagination(1, null);
-	$("#saraniSearchBtn").on("mousemove", function(e) {
+	$("#saraniSearchBtn").on("mousemove", (e) => {
 		let x = e.pageX - $(this).offset().left;
 		let y = e.pageY - $(this).offset().top;
 		$(this).css("--x", x + "px");
 		$(this).css("--y", y + "px");
 	});
 });
-$("#saraniSearchBtn").on("click", function(e) {
+$("#saraniSearchBtn").on("click", (e) => {
 	e.preventDefault();
 	let hymnId = $("#nameDisplay").attr('idVal');
 	if (hymnId === "0" || hymnId === 0 || hymnId === null || hymnId === undefined) {
@@ -30,7 +30,7 @@ $("#saraniSearchBtn").on("click", function(e) {
 				$("#loadingBackground2").show();
 				$("#saraniSearchBtn").css("pointer-events", "none");
 				kanumiRetrieve(hymnId);
-				setTimeout(function() {
+				setTimeout(() => {
 					$("#loadingBackground2").hide();
 					$("#saraniSearchBtn").css("pointer-events", "auto");
 					let nameJp = $('.table-danger').find("td:eq(1)").children("a").text();
@@ -44,17 +44,17 @@ $("#saraniSearchBtn").on("click", function(e) {
 		});
 	}
 });
-$("#tableBody").on("click", '.form-check-input', function() {
+$("#tableBody").on("click", '.form-check-input', () => {
 	if ($(this).prop('checked')) {
 		let idVal = $(this).val();
 		$.ajax({
 			url: '/hymns/get-info-id',
 			data: 'hymnId=' + idVal,
-			success: function(response) {
+			success: (response) => {
 				$("#nameDisplay").text(response.nameJp);
 				$("#nameDisplay").attr('idVal', response.id);
 			},
-			error: function(xhr) {
+			error: (xhr) => {
 				let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 				layer.msg(message);
 			}
@@ -66,11 +66,11 @@ $("#tableBody").on("click", '.form-check-input', function() {
 				$.ajax({
 					url: '/hymns/get-info-id',
 					data: 'hymnId=' + $(element).val(),
-					success: function(response) {
+					success: (response) => {
 						$("#nameDisplay").text(response.nameJp);
 						$("#nameDisplay").attr('idVal', response.id);
 					},
-					error: function(xhr) {
+					error: (xhr) => {
 						let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 						layer.msg(message);
 					}
@@ -80,7 +80,7 @@ $("#tableBody").on("click", '.form-check-input', function() {
 		}
 	}
 });
-$("#tableBody").on("click", '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', (e) => {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
@@ -90,12 +90,12 @@ function initialPagination(pageNum, keyword) {
 	$.ajax({
 		url: '/hymns/pagination',
 		data: 'pageNum=' + pageNum,
-		success: function(response) {
+		success: (response) => {
 			buildTableBody1(response);
 			buildPageInfos(response);
 			buildPageNavi(response);
 		},
-		error: function(xhr) {
+		error: (xhr) => {
 			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 			layer.msg(message);
 		}
@@ -137,10 +137,10 @@ function buildPageNavi(result) {
 		firstPageLi.addClass('disabled');
 		prevPageLi.addClass('disabled');
 	} else {
-		firstPageLi.click(function() {
+		firstPageLi.click(() => {
 			initialPagination(1, keyword);
 		});
-		prevPageLi.click(function() {
+		prevPageLi.click(() => {
 			initialPagination(pageNum - 1, keyword);
 		});
 	}
@@ -153,10 +153,10 @@ function buildPageNavi(result) {
 		lastPageLi.addClass('disabled');
 	} else {
 		lastPageLi.addClass('success');
-		nextPageLi.click(function() {
+		nextPageLi.click(() => {
 			initialPagination(pageNum + 1, keyword);
 		});
-		lastPageLi.click(function() {
+		lastPageLi.click(() => {
 			initialPagination(totalPages, keyword);
 		});
 	}
@@ -167,7 +167,7 @@ function buildPageNavi(result) {
 		if (pageNum === item) {
 			numsLi.attr("href", "#").addClass("active");
 		}
-		numsLi.click(function() {
+		numsLi.click(() => {
 			initialPagination(item, keyword);
 		});
 		ul.append(numsLi);
@@ -180,10 +180,10 @@ function kanumiRetrieve(hymnId) {
 	$.ajax({
 		url: '/hymns/kanumi-retrieve',
 		data: 'hymnId=' + hymnId,
-		success: function(response) {
+		success: (response) => {
 			buildTableBody2(response);
 		},
-		error: function(result) {
+		error: (result) => {
 			layer.msg(result.responseJSON.message);
 		}
 	});
