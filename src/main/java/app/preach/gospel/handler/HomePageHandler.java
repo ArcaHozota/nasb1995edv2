@@ -51,7 +51,7 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * インデクスへ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String toHomePage() throws Exception {
 		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();
@@ -66,7 +66,7 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * 一覧表へ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String toIchiranhyo() throws Exception {
 		return toHomePage();

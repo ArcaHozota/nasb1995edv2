@@ -88,7 +88,7 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	 * 章節情報を取得する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String getChapters() throws Exception {
 		final String bookId = this.getServletRequest().getParameter("bookId");
@@ -113,7 +113,7 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	 * 聖書節別情報を保存する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String infoStorage() throws Exception {
 		final CoResult<String, Exception> infoStorage = this.iBookService.infoStorage(this.getPhraseDto());
@@ -128,7 +128,7 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	 * 情報追加画面へ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String toAddition() throws Exception {
 		final CoResult<List<BookDto>, Exception> books = this.iBookService.getBooks();

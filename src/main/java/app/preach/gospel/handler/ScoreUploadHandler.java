@@ -83,7 +83,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * 賛美歌楽譜の情報を保存する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	@Override
 	public String execute() throws Exception {
@@ -124,8 +124,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * 賛美歌楽譜をダウンロードする
 	 *
 	 * @return String
-	 * @throws Exception
-	 * @throws IOException
+	 * @throws Exception 例外
 	 */
 	public String scoreDownload() throws Exception {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
@@ -156,7 +155,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 	 * 楽譜アプロード画面へ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String toScoreUpload() throws Exception {
 		final String scoreId = this.getServletRequest().getParameter("scoreId");
