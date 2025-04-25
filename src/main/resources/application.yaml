@@ -27,7 +27,7 @@ spring:
       max-file-size: 2MB
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://52.199.163.241:5432/nasb1995
+    url: jdbc:postgresql://52.198.76.7:5432/nasb1995
     username: postgres
     password: postgres
     hikari:
