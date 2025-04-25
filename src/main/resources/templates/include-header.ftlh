@@ -19,7 +19,6 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Corinthia:wght@700&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap">
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js" nonce="${nonce}"></script>
-	<script type="text/javascript" src="/static/ztree/jquery.ztree.all.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/bstreeview/js/bstreeview.min.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/layer/layer.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/customizes/commons.js" nonce="${nonce}"></script>
