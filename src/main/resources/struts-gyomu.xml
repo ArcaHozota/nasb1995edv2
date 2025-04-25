@@ -147,6 +147,12 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
+		<action name="deletion-check"
+			class="app.preach.gospel.handler.HymnsHandler" method="deletionCheck">
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
 	</package>
 	<!-- 奉仕者管理ハンドラ -->
 	<package name="studentsHandler" extends="projectPackage"

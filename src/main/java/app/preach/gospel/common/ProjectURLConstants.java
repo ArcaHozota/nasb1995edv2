@@ -20,9 +20,9 @@ public final class ProjectURLConstants {
 
 	public static final String URL_STUDENTS_NAMESPACE = "/students";
 
-	public static final String URL_CHECK_EDITION = "editionCheck";
+	public static final String URL_CHECK_EDITION = "edition-check";
 
-	public static final String URL_CHECK_DELETE = "deletionCheck";
+	public static final String URL_CHECK_DELETE = "deletion-check";
 
 	public static final String URL_TO_LOGIN = "login";
 
