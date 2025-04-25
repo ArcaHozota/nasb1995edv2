@@ -69,12 +69,7 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 	 * @throws Exception
 	 */
 	public String toIchiranhyo() throws Exception {
-		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();
-		if (!totalCounts.isOk()) {
-			throw totalCounts.getErr();
-		}
-		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getOk());
-		return SUCCESS;
+		return toHomePage();
 	}
 
 	@Override

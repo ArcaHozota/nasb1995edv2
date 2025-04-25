@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.struts2.ActionContext;
 import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.dispatcher.DefaultActionSupport;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
@@ -102,7 +104,8 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 	/**
 	 * 節別情報転送クラス
 	 */
-	private PhraseDto getPhraseDto() {
+	@Contract(" -> new")
+	private @NotNull PhraseDto getPhraseDto() {
 		return new PhraseDto(this.getId(), this.getName(), this.getTextEn(), this.getTextJp(), this.getChapterId());
 	}
 

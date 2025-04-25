@@ -94,9 +94,9 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			final Map<String, String> data = mapper.readValue(this.getServletRequest().getReader(), Map.class);
 			// 获取参数
 			final String editId = data.get("id");
-			final String fileData = data.get("score");
+			final String fileDataStr = data.get("score");
 			// 将 base64 文件数据解码并保存
-			final byte[] fileBytes = Base64.getDecoder().decode(fileData);
+			final byte[] fileBytes = Base64.getDecoder().decode(fileDataStr);
 			final CoResult<String, Exception> scoreStorage = this.iHymnService.scoreStorage(fileBytes,
 					Long.parseLong(editId));
 			if (!scoreStorage.isOk()) {
