@@ -425,8 +425,8 @@ public final class HymnServiceImpl implements IHymnService {
 		hymnsRecord.setUpdatedUser(Long.parseLong(hymnDto.updatedUser()));
 		hymnsWork.setWorkId(hymnsRecord.getId());
 		try {
-			this.hymnsWorkRepository.saveAndFlush(hymnsWork);
 			this.hymnRepository.saveAndFlush(hymnsRecord);
+			this.hymnsWorkRepository.saveAndFlush(hymnsWork);
 			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION);
 			final int discernedLargestPage = CoProjectUtils.discernLargestPage(totalRecords);
 			return CoResult.ok(discernedLargestPage);

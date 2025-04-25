@@ -6,9 +6,14 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.Objects;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -17,8 +22,6 @@ import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 賛美歌セリフエンティティ
@@ -40,6 +43,7 @@ public final class HymnsWork implements Serializable {
 	 * ID
 	 */
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	/**
@@ -85,7 +89,7 @@ public final class HymnsWork implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof HymnsWork other)) {
+		if (!(obj instanceof final HymnsWork other)) {
 			return false;
 		}
 		return Objects.equals(this.biko, other.biko) && Objects.equals(this.hymn, other.hymn)
