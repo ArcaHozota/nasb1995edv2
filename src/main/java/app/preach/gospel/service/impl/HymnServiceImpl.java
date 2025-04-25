@@ -610,7 +610,7 @@ public final class HymnServiceImpl implements IHymnService {
 	private @NotNull String trimSerif(final @NotNull String serif) {
 		final String zenkakuSpace = "\u3000";
 		final String replace = serif.replace(zenkakuSpace, CoProjectUtils.EMPTY_STRING);
-		return replace.replace(CoProjectUtils.HANKAKU_SPACE, CoProjectUtils.EMPTY_STRING);
+		return replace.trim();
 	}
 
 }
