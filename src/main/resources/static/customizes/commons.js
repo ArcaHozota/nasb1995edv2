@@ -6,7 +6,7 @@ const inputedString = '追加済み';
 const delimiter = '　/　';
 const delayApology = 'すみませんが、当機能はまだ実装されていません';
 const showVadMsgError = '名称を空になってはいけません。';
-$(document).ready(function() {
+$(document).ready(() => {
 	let treeData = [
 		{
 			text: "聖書奉読",
@@ -51,7 +51,7 @@ $(document).ready(function() {
 		parentsMarginLeft: '1.25rem',
 		openNodeLinkOnNewTab: true
 	});
-	$("#logoutBtn").on("click", function() {
+	$("#logoutBtn").on("click", () => {
 		swal.fire({
 			title: '警告',
 			text: 'ログアウトしてよろしいでしょうか。',
@@ -69,40 +69,40 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$("#toMainmenu").on("click", function(e) {
+	$("#toMainmenu").on("click", (e) => {
 		e.preventDefault();
 		window.location.replace('/category/to-mainmenu');
 	});
-	$("#toMainmenu2").on("click", function(e) {
+	$("#toMainmenu2").on("click", (e) => {
 		e.preventDefault();
 		window.location.replace('/category/to-mainmenu');
 	});
-	$("#toPersonal").on("click", function(e) {
+	$("#toPersonal").on("click", (e) => {
 		e.preventDefault();
 		let userId = $(this).find("input").val().replace(/,/g, emptyString);
 		let url = '/students/to-edition?editId=' + userId;
 		checkPermissionAndTransfer(url);
 	});
-	$("#toMessage").on("click", function(e) {
+	$("#toMessage").on("click", (e) => {
 		e.preventDefault();
 		layer.msg(delayApology);
 	});
-	$("#toBookSearch").on("click", function(e) {
+	$("#toBookSearch").on("click", (e) => {
 		e.preventDefault();
 		layer.msg(delayApology);
 		// let url = '/books/to-pages?pageNum=1';
 		// checkPermissionAndTransfer(url);
 	});
-	$("#toTemporary").on("click", function(e) {
+	$("#toTemporary").on("click", (e) => {
 		let url = '/books/to-addition';
 		checkPermissionAndTransfer(url);
 	});
-	$("#toCollection").on("click", function(e) {
+	$("#toCollection").on("click", (e) => {
 		e.preventDefault();
 		let url = '/hymns/to-pages?pageNum=1';
 		checkPermissionAndTransfer(url);
 	});
-	$("#toRandomFive").on("click", function(e) {
+	$("#toRandomFive").on("click", (e) => {
 		e.preventDefault();
 		let url = '/hymns/to-random-five';
 		checkPermissionAndTransfer(url);
@@ -142,10 +142,10 @@ function buildPageNavi(result) {
 		firstPageLi.addClass('disabled');
 		prevPageLi.addClass('disabled');
 	} else {
-		firstPageLi.click(function() {
+		firstPageLi.click(() => {
 			toSelectedPg(1, keyword);
 		});
-		prevPageLi.click(function() {
+		prevPageLi.click(() => {
 			toSelectedPg(pageNum - 1, keyword);
 		});
 	}
@@ -158,10 +158,10 @@ function buildPageNavi(result) {
 		lastPageLi.addClass('disabled');
 	} else {
 		lastPageLi.addClass('success');
-		nextPageLi.click(function() {
+		nextPageLi.click(() => {
 			toSelectedPg(pageNum + 1, keyword);
 		});
-		lastPageLi.click(function() {
+		lastPageLi.click(() => {
 			toSelectedPg(totalPages, keyword);
 		});
 	}
@@ -172,7 +172,7 @@ function buildPageNavi(result) {
 		if (pageNum === item) {
 			numsLi.attr("href", "#").addClass("active");
 		}
-		numsLi.click(function() {
+		numsLi.click(() => {
 			toSelectedPg(item, keyword);
 		});
 		ul.append(numsLi);
@@ -215,7 +215,7 @@ function projectAjaxModify(url, type, data, successFunction) {
 		dataType: 'json',
 		contentType: 'application/json;charset=UTF-8',
 		success: successFunction,
-		error: function(xhr) {
+		error: (xhr) => {
 			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 			layer.msg(message);
 		}
@@ -272,7 +272,7 @@ function normalDeletebtnFunction(url, message, deleteId) {
 	$.ajax({
 		url: url + 'deletion-check',
 		type: 'GET',
-		success: function() {
+		success: () => {
 			swal.fire({
 				title: 'メッセージ',
 				text: message,
@@ -288,7 +288,7 @@ function normalDeletebtnFunction(url, message, deleteId) {
 				}
 			});
 		},
-		error: function(response) {
+		error: (response) => {
 			layer.msg(response.responseJSON.message);
 		}
 	});
