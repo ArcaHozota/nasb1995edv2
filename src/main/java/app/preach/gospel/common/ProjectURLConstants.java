@@ -34,7 +34,7 @@ public final class ProjectURLConstants {
 
 	public static final String URL_LOGIN = "do-login";
 
-	public static final String URL_REGISTER = "toroku.action";
+	public static final String URL_REGISTER = "toroku";
 
 	public static final String URL_TO_ERROR = "to-system-error";
 
@@ -42,7 +42,7 @@ public final class ProjectURLConstants {
 
 	public static final String URL_TO_ADDITION = "to-addition";
 
-	public static final String URL_TO_EDITION = "toEdition.action";
+	public static final String URL_TO_EDITION = "to-edition";
 
 	public static final String URL_STATIC_RESOURCE = "/static/**";
 }

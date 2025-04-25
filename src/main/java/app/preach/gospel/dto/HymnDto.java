@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import app.preach.gospel.utils.LineNumber;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 賛美情報転送クラス
@@ -78,11 +79,10 @@ public record HymnDto(
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof HymnDto)) {
+		if (!(obj instanceof HymnDto other)) {
 			return false;
 		}
-		final HymnDto other = (HymnDto) obj;
-		return Objects.equals(this.biko, other.biko) && Objects.equals(this.id, other.id)
+        return Objects.equals(this.biko, other.biko) && Objects.equals(this.id, other.id)
 				&& (this.lineNumber == other.lineNumber) && Objects.equals(this.link, other.link)
 				&& Objects.equals(this.nameJp, other.nameJp) && Objects.equals(this.nameKr, other.nameKr)
 				&& Arrays.equals(this.score, other.score) && Objects.equals(this.serif, other.serif)
@@ -91,7 +91,7 @@ public record HymnDto(
 	}
 
 	@Override
-	public String toString() {
+	public @NotNull String toString() {
 		return "HymnDto [id=" + this.id + ", nameJp=" + this.nameJp + ", nameKr=" + this.nameKr + ", serif="
 				+ this.serif + ", link=" + this.link + ", score=" + Arrays.toString(this.score) + ", biko=" + this.biko
 				+ ", updatedUser=" + this.updatedUser + ", updatedTime=" + this.updatedTime + ", lineNumber="
