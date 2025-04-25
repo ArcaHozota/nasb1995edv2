@@ -1,14 +1,14 @@
-$(document).ready(function() {
+$(document).ready(() => {
 	$("#toTemporary").css('color', '#006b3c');
 	$("#toTemporary").addClass('animate__animated animate__flipInY');
 });
-$("#bookInput").on('change', function() {
+$("#bookInput").on('change', () => {
 	$("#chapterInput").empty();
 	let bookId = $(this).val();
 	$.ajax({
 		url: '/books/get-chapters',
 		data: 'bookId=' + bookId,
-		success: function(response) {
+		success: (response) => {
 			$.each(response, (response, item) => {
 				let optionElement = $("<option></option>").val(item.id).text(item.name);
 				optionElement.appendTo("#chapterInput");
@@ -16,7 +16,7 @@ $("#bookInput").on('change', function() {
 		}
 	});
 });
-$("#infoStorageBtn").on('click', function() {
+$("#infoStorageBtn").on('click', () => {
 	let inputArrays = ["#phraseIdInput", "#phraseTextEnInput", "#phraseTextJpInput"];
 	for (const array of inputArrays) {
 		$(array).removeClass("is-valid is-invalid");

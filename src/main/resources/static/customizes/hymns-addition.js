@@ -1,20 +1,20 @@
 let pageNum = $("#pageNumContainer").val();
-$(document).ready(function() {
+$(document).ready(() => {
 	$("#toCollection").css('color', '#006b3c');
 	$("#toCollection").addClass('animate__animated animate__flipInY');
 });
-$("#toHymnPages").on("click", function(e) {
+$("#toHymnPages").on("click", (e) => {
 	e.preventDefault();
 	let url = '/hymns/to-pages?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#nameJpInput").on("change", function() {
+$("#nameJpInput").on("change", () => {
 	checkHymnName(this, null);
 });
-$("#nameKrInput").on("change", function() {
+$("#nameKrInput").on("change", () => {
 	checkHymnName2(this, null);
 });
-$("#infoStorageBtn").on("click", function() {
+$("#infoStorageBtn").on("click", () => {
 	let inputArrays = ["#nameJpInput", "#nameKrInput", "#linkInput", "#serifInput"];
 	for (const array of inputArrays) {
 		$(array).removeClass('is-valid is-invalid');
@@ -37,13 +37,13 @@ $("#infoStorageBtn").on("click", function() {
 		projectAjaxModify('/hymns/info-storage', 'POST', postData, hymnsPostSuccessFunction);
 	}
 });
-$("#nameJpEdit").on("change", function() {
+$("#nameJpEdit").on("change", () => {
 	checkHymnName(this, $("#idContainer").val());
 });
-$("#nameKrEdit").on("change", function() {
+$("#nameKrEdit").on("change", () => {
 	checkHymnName2(this, $("#idContainer").val());
 });
-$("#infoUpdationBtn").on("click", function() {
+$("#infoUpdationBtn").on("click", () => {
 	let inputArrays = ["#nameJpEdit", "#nameKrEdit", "#linkEdit", "#serifEdit"];
 	for (const array of inputArrays) {
 		$(array).removeClass('is-valid is-invalid');
@@ -68,10 +68,10 @@ $("#infoUpdationBtn").on("click", function() {
 		projectAjaxModify('/hymns/info-updation', 'PUT', putData, hymnsPutSuccessFunction);
 	}
 });
-$("#resetBtn").on("click", function() {
+$("#resetBtn").on("click", () => {
 	formReset("#inputForm");
 });
-$("#restoreBtn").on("click", function() {
+$("#restoreBtn").on("click", () => {
 	formReset("#editForm");
 });
 
@@ -97,10 +97,10 @@ function checkHymnName(hymnName, idVal) {
 				'id': idVal,
 				'nameJp': nameVal
 			},
-			success: function(response) {
+			success: (response) => {
 				showValidationMsg(hymnName, responseSuccess, response);
 			},
-			error: function(xhr) {
+			error: (xhr) => {
 				showValidationMsg(hymnName, responseFailure, xhr.responseText);
 			}
 		});
@@ -118,10 +118,10 @@ function checkHymnName2(hymnName, idVal) {
 				'id': idVal,
 				'nameKr': nameVal
 			},
-			success: function(response) {
+			success: (response) => {
 				showValidationMsg(hymnName, responseSuccess, response);
 			},
-			error: function(xhr) {
+			error: (xhr) => {
 				showValidationMsg(hymnName, responseFailure, xhr.responseText);
 			}
 		});
