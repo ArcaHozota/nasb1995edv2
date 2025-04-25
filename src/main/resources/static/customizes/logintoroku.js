@@ -1,18 +1,18 @@
-$(document).ready(function() {
-	$("#torokuBox").on('click', '.toroku-title', function() {
+$(document).ready(() => {
+	$("#torokuBox").on("click", '.toroku-title', () => {
 		if ($("#torokuBox").hasClass('slide-up')) {
 			$("#loginBox").addClass('slide-up');
 			$("#torokuBox").removeClass('slide-up');
 		}
 	});
-	$("#loginBox").on('click', '.login-title', function() {
+	$("#loginBox").on("click", '.login-title', () => {
 		if ($("#loginBox").hasClass('slide-up')) {
 			$("#torokuBox").addClass('slide-up');
 			$("#loginBox").removeClass('slide-up');
 		}
 	});
 	let flag = 0;
-	$("#eyeIcons").on('click', function() {
+	$("#eyeIcons").on("click", () => {
 		if (flag === 0) {
 			$("#passwordIpt").attr('type', 'text');
 			$(this).attr('name', 'eye-off-outline');
@@ -28,7 +28,7 @@ $(document).ready(function() {
 		layer.msg(message1);
 	}
 });
-$("#emailIpt").on("change", function() {
+$("#emailIpt").on("change", () => {
 	let inputEmail = this.value;
 	let regularEmail = /^^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
 	if (inputEmail.includes("@")) {
@@ -37,7 +37,7 @@ $("#emailIpt").on("change", function() {
 		}
 	}
 });
-$("#loginBtn").on('click', function() {
+$("#loginBtn").on("click", () => {
 	let account = $("#accountIpt").val().trim();
 	let password = $("#passwordIpt").val().trim();
 	if (account === '' && password === '') {
@@ -53,7 +53,7 @@ $("#loginBtn").on('click', function() {
 				'loginAccount': account,
 				'password': password
 			},
-			error: function(xhr) {
+			error: (xhr) => {
 				let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 				layer.msg(message);
 			}
@@ -61,7 +61,7 @@ $("#loginBtn").on('click', function() {
 		$("#loginForm").submit();
 	}
 });
-$("#torokuBtn").on('click', function() {
+$("#torokuBtn").on("click", () => {
 	let inputArrays = ["#emailIpt", "#passwordIpt1", "#passwordIpt2"];
 	for (const element of inputArrays) {
 		if ($(element).val().trim() === '') {

@@ -1,6 +1,6 @@
 let pageNum = $("#pageNumContainer").val();
 let totalRecords, totalPages, keyword;
-$(document).ready(function() {
+$(document).ready(() => {
 	$("#toCollection").css('color', '#006b3c');
 	$("#toCollection").addClass('animate__animated animate__flipInY');
 	if (keyword === undefined) {
@@ -13,36 +13,36 @@ $(document).ready(function() {
 	}
 	toSelectedPg(pageNum, keyword);
 });
-$("#searchBtn2").on("click", function() {
+$("#searchBtn2").on("click", () => {
 	keyword = $("#keywordInput").val();
 	toSelectedPg(1, keyword);
 });
-$("#tableBody").on("click", '.delete-btn', function() {
+$("#tableBody").on("click", '.delete-btn', () => {
 	let deleteId = $(this).attr("deleteId");
 	let nameJp = $(this).parents("tr").find("th").text().trim();
 	normalDeletebtnFunction('/hymns/', 'この「' + nameJp + '」という歌の情報を削除するとよろしいでしょうか。', deleteId);
 });
-$("#infoAdditionBtn").on("click", function(e) {
+$("#infoAdditionBtn").on("click", (e) => {
 	e.preventDefault();
 	let url = '/hymns/to-addition?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#tableBody").on("click", '.edit-btn', function() {
+$("#tableBody").on("click", '.edit-btn', () => {
 	let editId = $(this).attr("editId");
 	let url = '/hymns/to-edition?editId=' + editId + '&pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#tableBody").on("click", '.score-btn', function() {
+$("#tableBody").on("click", '.score-btn', () => {
 	let scoreId = $(this).attr('scoreId');
 	let url = '/hymns/to-score-upload?scoreId=' + scoreId + '&pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#tableBody").on("click", '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', (e) => {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
 });
-$("#tableBody").on("click", '.score-download-btn', function(e) {
+$("#tableBody").on("click", '.score-download-btn', (e) => {
 	e.preventDefault();
 	let scoreId = $(this).attr('scoreId');
 	window.location.href = '/hymns/score-download?scoreId=' + scoreId;
@@ -55,12 +55,12 @@ function toSelectedPg(pageNum, keyword) {
 			'pageNum': pageNum,
 			'keyword': keyword
 		},
-		success: function(response) {
+		success: (response) => {
 			buildTableBody(response);
 			buildPageInfos(response);
 			buildPageNavi(response);
 		},
-		error: function(xhr) {
+		error: (xhr) => {
 			let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 			layer.msg(message);
 		}

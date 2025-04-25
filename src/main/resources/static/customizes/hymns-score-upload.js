@@ -1,14 +1,14 @@
 let pageNum = $("#pageNumContainer").val();
-$(document).ready(function() {
+$(document).ready(() => {
 	$("#toCollection").css('color', '#006b3c');
 	$("#toCollection").addClass('animate__animated animate__flipInY');
 });
-$("#toHymnPages").on("click", function(e) {
+$("#toHymnPages").on("click", (e) => {
 	e.preventDefault();
 	let url = '/hymns/to-pages?pageNum=' + pageNum;
 	checkPermissionAndTransfer(url);
 });
-$("#scoreUploadBtn").on("click", function() {
+$("#scoreUploadBtn").on("click", () => {
 	let inputArrays = ["#scoreEdit"];
 	for (const array of inputArrays) {
 		$(array).removeClass("is-valid is-invalid");
@@ -26,7 +26,7 @@ $("#scoreUploadBtn").on("click", function() {
 	let fileInput = document.getElementById("scoreEdit");
 	let file = fileInput.files[0];
 	let reader = new FileReader();
-	reader.onload = function(e) {
+	reader.onload = (e) => {
 		// 将文件内容转换为 base64 字符串
 		let base64File = e.target.result.split(",")[1]; // 只取 base64 数据部分
 		// 创建 JSON 数据
@@ -43,12 +43,12 @@ $("#scoreUploadBtn").on("click", function() {
 				[header]: token
 			},
 			contentType: 'application/json',
-			success: function(response) {
+			success: (response) => {
 				let message = response.replace(/^"|"$/g, emptyString);
 				localStorage.setItem('redirectMessage', message);
 				window.location.replace('/hymns/to-pages?pageNum=' + pageNum);
 			},
-			error: function(xhr) {
+			error: (xhr) => {
 				let message = xhr.responseText.replace(/^"|"$/g, emptyString);
 				layer.msg(message);
 			}

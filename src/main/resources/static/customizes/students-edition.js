@@ -1,12 +1,12 @@
 let pageNum = $("#pageNumContainer").val();
-$("#toStudentsPages").on("click", function(e) {
+$("#toStudentsPages").on("click", (e) => {
 	e.preventDefault();
 	layer.msg(delayApology);
 });
-$("#accountEdit").on("change", function() {
+$("#accountEdit").on("change", () => {
 	checkStudentName(this, $("#idContainer").val());
 });
-$("#infoUpdationBtn").on("click", function() {
+$("#infoUpdationBtn").on("click", () => {
 	let inputArrays = ["#accountEdit", "#nameEdit", "#passwordEdit", "#birthdayEdit", "#emailEdit"];
 	for (const array of inputArrays) {
 		$(array).removeClass("is-valid is-invalid");
@@ -36,7 +36,7 @@ $("#infoUpdationBtn").on("click", function() {
 		projectAjaxModify('/students/info-updation', 'PUT', putData, studentsPutSuccessFunction);
 	}
 });
-$("#restoreBtn").on("click", function() {
+$("#restoreBtn").on("click", () => {
 	formReset("#editForm");
 });
 
@@ -57,10 +57,10 @@ function checkStudentName(studentName, idVal) {
 				'id': idVal,
 				'loginAccount': nameVal
 			},
-			success: function(xhr) {
+			success: (xhr) => {
 				showValidationMsg(studentName, responseSuccess, xhr.responseText);
 			},
-			error: function(xhr) {
+			error: (xhr) => {
 				showValidationMsg(studentName, responseFailure, xhr.responseText);
 			}
 		});

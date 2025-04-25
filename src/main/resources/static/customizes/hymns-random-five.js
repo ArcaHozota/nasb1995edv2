@@ -1,12 +1,12 @@
-$(document).ready(function() {
+$(document).ready(() => {
 	$("#toRandomFive").css('color', '#006b3c');
 	$("#toRandomFive").addClass('animate__animated animate__flipInY');
 });
-$("#randomSearchBtn").on("click", function() {
+$("#randomSearchBtn").on("click", () => {
 	keyword = $("#keywordInput").val();
 	retrieveRandomFive(keyword);
 });
-$("#tableBody").on("click", '.link-btn', function(e) {
+$("#tableBody").on("click", '.link-btn', (e) => {
 	e.preventDefault();
 	let transferVal = $(this).attr('transferVal');
 	window.open(transferVal);
@@ -16,10 +16,10 @@ function retrieveRandomFive(keyword) {
 	$.ajax({
 		url: '/hymns/retrieve-random-five',
 		data: 'keyword=' + keyword,
-		success: function(response) {
+		success: (response) => {
 			buildTableBody(response);
 		},
-		error: function(result) {
+		error: (result) => {
 			layer.msg(result.responseJSON.message);
 		}
 	});
