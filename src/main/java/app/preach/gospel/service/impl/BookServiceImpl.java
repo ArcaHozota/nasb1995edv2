@@ -97,6 +97,7 @@ public final class BookServiceImpl implements IBookService {
 			final String textEn = phrase.getTextEn();
 			if (textEn.endsWith(CoProjectUtils.HANKAKU_SHARP)) {
 				phrase.setChangeLine(Boolean.TRUE);
+				phrase.setTextEn(textEn.replace(CoProjectUtils.HANKAKU_SHARP, CoProjectUtils.EMPTY_STRING));
 			} else {
 				phrase.setChangeLine(Boolean.FALSE);
 			}

@@ -31,7 +31,7 @@
 					            </select>
 					        </div>
 					        <div class="col-md-3">
-					            <input id="phraseIdInput" class="form-control">
+					            <input id="phraseIdInput" class="form-control" placeholder="節の数を入力しましょう">
 					        </div>
 					        <div class="col-md-2">
 					            <button type="button" class="btn btn-danger my-2 my-sm-0" id="infoStorageBtn">
