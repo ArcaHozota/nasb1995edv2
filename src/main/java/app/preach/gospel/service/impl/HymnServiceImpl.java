@@ -134,6 +134,23 @@ public final class HymnServiceImpl implements IHymnService {
 	}
 
 	/**
+	 * 通常検索条件を取得する
+	 *
+	 * @param keyword キーワード
+	 * @return Specification<Hymn>
+	 */
+	private static @NotNull Specification<Hymn> getHymnSpecification(final String keyword) {
+		final String searchStr = CoProjectUtils.isEmpty(keyword) ? CoProjectUtils.HANKAKU_PERCENTSIGN
+				: CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword).concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
+		return (root, query, criteriaBuilder) -> {
+			final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
+			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
+					criteriaBuilder.like(root.get(NAME_KR), searchStr),
+					criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), searchStr));
+		};
+	}
+
+	/**
 	 * 賛美歌情報管理リポジトリ
 	 */
 	private final HymnRepository hymnRepository;
@@ -351,23 +368,6 @@ public final class HymnServiceImpl implements IHymnService {
 		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
-	}
-
-	/**
-	 * 通常検索条件を取得する
-	 *
-	 * @param keyword キーワード
-	 * @return Specification<Hymn>
-	 */
-	private static @NotNull Specification<Hymn> getHymnSpecification(final String keyword) {
-		final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
-				.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-		return (root, query, criteriaBuilder) -> {
-			final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
-			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
-					criteriaBuilder.like(root.get(NAME_KR), searchStr),
-					criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), searchStr));
-		};
 	}
 
 	@Override
