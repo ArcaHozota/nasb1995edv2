@@ -69,7 +69,7 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 	 * ログイン画面へ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String loginWithError() throws Exception {
 		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();

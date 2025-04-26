@@ -63,7 +63,8 @@ public final class CoResult<T, E> {
 	private E err;
 
 	/**
-	 * 正常系あるかどうか
+	 * 正常系あるかどうか -- GETTER -- 正常系あるかどうかを判断する。
+	 * 
 	 */
 	private boolean isOk;
 
@@ -81,16 +82,9 @@ public final class CoResult<T, E> {
 	}
 
 	/**
-	 * 正常系あるかどうかを判断する。
-	 */
-	public boolean isOk() {
-		return this.isOk;
-	}
-
-	/**
 	 * setter of err
 	 *
-	 * @param err
+	 * @param err エラー
 	 */
 	private void setErr(final E err) {
 		this.err = err;
@@ -99,7 +93,7 @@ public final class CoResult<T, E> {
 	/**
 	 * setter of isOk
 	 *
-	 * @param isOk
+	 * @param isOk 正常
 	 */
 	private void setHandan(final boolean isOk) {
 		this.isOk = isOk;
@@ -108,7 +102,7 @@ public final class CoResult<T, E> {
 	/**
 	 * setter of ok
 	 *
-	 * @param ok
+	 * @param ok 正常
 	 */
 	private void setOk(final T ok) {
 		this.ok = ok;

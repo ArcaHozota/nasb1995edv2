@@ -1,5 +1,6 @@
 package app.preach.gospel.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -24,7 +25,7 @@ public class SpringWebMvcConfiguration implements WebMvcConfigurer {
 	 * @param registry レジストリ
 	 */
 	@Override
-	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(final @NotNull ResourceHandlerRegistry registry) {
 		log.info(ProjectConstants.MESSAGE_SPRING_MAPPER);
 		registry.addResourceHandler(ProjectURLConstants.URL_STATIC_RESOURCE).addResourceLocations("classpath:/static/");
 	}

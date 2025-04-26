@@ -1,5 +1,6 @@
 package app.preach.gospel.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -53,7 +54,7 @@ public class SpringSecurityConfiguration {
 
 	@Bean
 	@Order(1)
-	protected AuthenticationManager authenticationManager(final AuthenticationManagerBuilder authBuilder) {
+	protected AuthenticationManager authenticationManager(final @NotNull AuthenticationManagerBuilder authBuilder) {
 		return authBuilder.authenticationProvider(this.daoAuthenticationProvider()).getObject();
 	}
 
@@ -68,7 +69,7 @@ public class SpringSecurityConfiguration {
 
 	@Bean
 	@Order(2)
-	protected SecurityFilterChain filterChain(final HttpSecurity httpSecurity) throws Exception {
+	protected SecurityFilterChain filterChain(final @NotNull HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 				.authorizeHttpRequests(
 						authorize -> authorize.requestMatchers(IGNORANCE_PATHS).permitAll()

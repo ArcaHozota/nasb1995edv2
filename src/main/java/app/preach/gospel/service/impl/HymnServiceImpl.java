@@ -275,13 +275,7 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public CoResult<Pagination<HymnDto>, Exception> getHymnsByKeyword(final Integer pageNum, final String keyword) {
-		final String detailKeyword = CoProjectUtils.getDetailKeyword(keyword);
-		final Specification<Hymn> specification = (root, query, criteriaBuilder) -> {
-			final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
-			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), detailKeyword),
-					criteriaBuilder.like(root.get(NAME_KR), detailKeyword),
-					criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), detailKeyword));
-		};
+		final Specification<Hymn> specification = getHymnSpecification(keyword);
 		try {
 			final long totalRecords = this.hymnRepository.count(COMMON_CONDITION.and(specification));
 			final PageRequest pageRequest = PageRequest.of(pageNum - 1, ProjectConstants.DEFAULT_PAGE_SIZE,
@@ -302,7 +296,7 @@ public final class HymnServiceImpl implements IHymnService {
 				if (keyword.toLowerCase().contains(starngement) || keyword.length() >= 100) {
 					final List<HymnDto> hymnDtos = this.mapToDtos(this.hymnRepository.findForStrangement(),
 							LineNumber.SNOWY);
-					log.error("怪しいキーワード： " + keyword);
+					log.error("怪しいキーワード： {}", keyword);
 					return CoResult.ok(hymnDtos);
 				}
 			}
@@ -322,14 +316,7 @@ public final class HymnServiceImpl implements IHymnService {
 					LineNumber.CADMIUM);
 			final List<HymnDto> hymnDtos = new ArrayList<>(withName);
 			final List<String> withNameIds = withName.stream().map(HymnDto::id).toList();
-			final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
-					.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
-			final Specification<Hymn> specification2 = (root, query, criteriaBuilder) -> {
-				final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
-				return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
-						criteriaBuilder.like(root.get(NAME_KR), searchStr),
-						criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), searchStr));
-			};
+			final Specification<Hymn> specification2 = getHymnSpecification(keyword);
 			final List<HymnDto> withNameLike = this.mapToDtos(this.hymnRepository.findAll(specification2).stream()
 					.filter(a -> !withNameIds.contains(a.getId().toString())).toList(), LineNumber.BURGUNDY);
 			hymnDtos.addAll(withNameLike);
@@ -364,6 +351,23 @@ public final class HymnServiceImpl implements IHymnService {
 		} catch (final Exception e) {
 			return CoResult.err(e);
 		}
+	}
+
+	/**
+	 * 通常検索条件を取得する
+	 *
+	 * @param keyword キーワード
+	 * @return Specification<Hymn>
+	 */
+	private static @NotNull Specification<Hymn> getHymnSpecification(final String keyword) {
+		final String searchStr = CoProjectUtils.HANKAKU_PERCENTSIGN.concat(keyword)
+				.concat(CoProjectUtils.HANKAKU_PERCENTSIGN);
+		return (root, query, criteriaBuilder) -> {
+			final Join<Hymn, HymnsWork> hymnsJoin = root.join(HYMNS_WORK, JoinType.INNER);
+			return criteriaBuilder.or(criteriaBuilder.like(root.get(NAME_JP), searchStr),
+					criteriaBuilder.like(root.get(NAME_KR), searchStr),
+					criteriaBuilder.like(hymnsJoin.get(NAME_JP_RA), searchStr));
+		};
 	}
 
 	@Override

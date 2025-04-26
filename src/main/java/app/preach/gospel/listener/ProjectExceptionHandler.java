@@ -1,5 +1,6 @@
 package app.preach.gospel.listener;
 
+import jakarta.persistence.PersistenceException;
 import org.apache.struts2.dispatcher.DefaultDispatcherErrorHandler;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.DataAccessException;
@@ -37,7 +38,7 @@ public final class ProjectExceptionHandler extends DefaultDispatcherErrorHandler
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 				response.getWriter().print(JSON.toJSON(ProjectConstants.MESSAGE_SPRINGSECURITY_REQUIRED_AUTH));
 				response.getWriter().close();
-			} else if (exception instanceof DataAccessException) {
+			} else if (exception instanceof DataAccessException || exception instanceof PersistenceException) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.getWriter().print(JSON.toJSON(errorMessage));
 				response.getWriter().close();

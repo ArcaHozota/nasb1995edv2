@@ -139,7 +139,7 @@ public final class Pagination<T> {
 	/**
 	 * ナビゲーションページの数の集合
 	 */
-	private int[] navigateNums;
+	private int[] navigateNos;
 
 	/**
 	 * コンストラクタ
@@ -192,20 +192,20 @@ public final class Pagination<T> {
 	 */
 	private void calcnavigateNums() {
 		if (this.totalPages <= this.navigatePages) {
-			this.navigateNums = new int[(int) this.totalPages];
+			this.navigateNos = new int[(int) this.totalPages];
 			for (int i = 0; i < this.totalPages; i++) {
-				this.navigateNums[i] = i + 1;
+				this.navigateNos[i] = i + 1;
 			}
 			return;
 		}
-		this.navigateNums = new int[this.navigatePages];
+		this.navigateNos = new int[this.navigatePages];
 		int startNum = this.pageNum - this.navigatePages / 2;
 		int endNum = this.pageNum + this.navigatePages / 2;
 		if (endNum > this.totalPages && startNum >= 1) {
 			endNum = (int) this.totalPages;
 			// 最後のナビゲーションページ
 			for (int i = this.navigatePages - 1; i >= 0; i--) {
-				this.navigateNums[i] = endNum;
+				this.navigateNos[i] = endNum;
 				endNum--;
 			}
 		} else {
@@ -214,7 +214,7 @@ public final class Pagination<T> {
 			}
 			// 他のナビゲーションページ
 			for (int i = 0; i < this.navigatePages; i++) {
-				this.navigateNums[i] = startNum;
+				this.navigateNos[i] = startNum;
 				startNum++;
 			}
 		}
@@ -224,9 +224,9 @@ public final class Pagination<T> {
 	 * 前のページ、次のページ、最初及び最後のページを取得する
 	 */
 	private void calcPage() {
-		if (this.navigateNums != null && this.navigateNums.length > 0) {
-			this.naviFirstPage = this.navigateNums[0];
-			this.naviLastPage = this.navigateNums[this.navigateNums.length - 1];
+		if (this.navigateNos != null && this.navigateNos.length > 0) {
+			this.naviFirstPage = this.navigateNos[0];
+			this.naviLastPage = this.navigateNos[this.navigateNos.length - 1];
 			if (this.pageNum > 1) {
 				this.prevPage = this.pageNum - 1;
 			}
@@ -261,7 +261,7 @@ public final class Pagination<T> {
 				+ ", totalPages=" + this.totalPages + ", totalRecords=" + this.totalRecords + ", hasPrePage="
 				+ this.hasPrevPage + ", hasNextPage=" + this.hasNextPage + ", prevPage=" + this.prevPage + ", nextPage="
 				+ this.nextPage + ", navigatePages=" + this.navigatePages + ", naviFirstPage=" + this.naviFirstPage
-				+ ", naviLastPage=" + this.naviLastPage + ", navigateNums=" + Arrays.toString(this.navigateNums) + "]";
+				+ ", naviLastPage=" + this.naviLastPage + ", navigateNums=" + Arrays.toString(this.navigateNos) + "]";
 	}
 
 }

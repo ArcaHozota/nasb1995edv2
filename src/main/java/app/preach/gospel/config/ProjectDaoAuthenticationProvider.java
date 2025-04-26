@@ -1,5 +1,6 @@
 package app.preach.gospel.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,7 +22,7 @@ public final class ProjectDaoAuthenticationProvider extends DaoAuthenticationPro
 
 	@Override
 	protected void additionalAuthenticationChecks(final UserDetails userDetails,
-			final UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+			final @NotNull UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		if (authentication.getCredentials() == null) {
 			this.logger.warn("Failed to authenticate since no credentials provided");
 			throw new BadCredentialsException(

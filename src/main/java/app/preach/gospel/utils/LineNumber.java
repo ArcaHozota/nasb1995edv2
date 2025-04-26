@@ -3,7 +3,7 @@ package app.preach.gospel.utils;
 import lombok.Getter;
 
 /**
- * LINENUMBER表示クラス
+ * LINE_NUMBER表示クラス
  *
  * @author ArkamaHozota
  * @since 1.00beta
