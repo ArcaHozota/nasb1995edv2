@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/bstreeview/js/bstreeview.min.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/layer/layer.js" nonce="${nonce}"></script>
+	<script type="text/javascript" src="/static/customizes/constants.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="/static/customizes/commons.js" nonce="${nonce}"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sweetalert2@11" nonce="${nonce}"></script>
 </head>

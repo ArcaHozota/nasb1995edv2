@@ -24,7 +24,7 @@ $(document).ready(() => {
 		}
 	});
 	let message1 = $("#errorMsgContainer").val();
-	if (message1 !== '' && message1 !== null && message1 !== undefined) {
+	if (message1 !== emptyString && message1 !== null && message1 !== undefined) {
 		layer.msg(message1);
 	}
 });
