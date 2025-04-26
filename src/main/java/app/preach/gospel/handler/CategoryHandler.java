@@ -76,7 +76,7 @@ public class CategoryHandler extends DefaultActionSupport implements ServletRequ
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
 		}
-		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getSeijo());
+		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getData());
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_TOROKU_MSG, ProjectConstants.MESSAGE_STRING_NOT_LOGIN);
 		return LOGIN;
 	}

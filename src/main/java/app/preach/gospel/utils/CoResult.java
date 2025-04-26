@@ -4,8 +4,6 @@ import lombok.Data;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import lombok.Getter;
-
 /**
  * 共通返却クラス
  *
@@ -56,7 +54,7 @@ public final class CoResult<T, E> {
 	/**
 	 * 正常的なデータ
 	 */
-	private T seijo;
+	private T data;
 
 	/**
 	 * エラー
@@ -72,12 +70,12 @@ public final class CoResult<T, E> {
 	/**
 	 * コンストラクタ
 	 *
-	 * @param seijo 正常
-	 * @param err   エラー
-	 * @param ok    正常系あるかどうか
+	 * @param data 正常
+	 * @param err  エラー
+	 * @param ok   正常系あるかどうか
 	 */
-	private CoResult(final T seijo, final E err, final boolean ok) {
-		this.seijo = seijo;
+	private CoResult(final T data, final E err, final boolean ok) {
+		this.data = data;
 		this.err = err;
 		this.ok = ok;
 	}
@@ -88,7 +86,7 @@ public final class CoResult<T, E> {
 	 * @param self 自分
 	 */
 	public void setSelf(final @NotNull CoResult<T, E> self) {
-		this.setSeijo(self.getSeijo());
+		this.setData(self.getData());
 		this.setErr(self.getErr());
 		this.setOk(self.isOk());
 	}

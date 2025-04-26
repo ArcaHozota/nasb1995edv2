@@ -96,7 +96,7 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 		if (!chaptersByBookId.isOk()) {
 			throw chaptersByBookId.getErr();
 		}
-		final List<ChapterDto> chapterDtos = chaptersByBookId.getSeijo();
+		final List<ChapterDto> chapterDtos = chaptersByBookId.getData();
 		this.setResponseJsonData(JSON.toJSON(chapterDtos));
 		return NONE;
 	}
@@ -120,7 +120,7 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
-		this.setResponseJsonData(infoStorage.getSeijo());
+		this.setResponseJsonData(infoStorage.getData());
 		return NONE;
 	}
 
@@ -139,8 +139,8 @@ public class BooksHandler extends DefaultActionSupport implements ServletRequest
 		if (!chaptersByBookId.isOk()) {
 			throw chaptersByBookId.getErr();
 		}
-		ActionContext.getContext().put("bookDtos", books.getSeijo());
-		ActionContext.getContext().put("chapterDtos", chaptersByBookId.getSeijo());
+		ActionContext.getContext().put("bookDtos", books.getData());
+		ActionContext.getContext().put("chapterDtos", chaptersByBookId.getData());
 		return SUCCESS;
 	}
 

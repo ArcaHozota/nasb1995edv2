@@ -99,7 +99,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
-		final Integer checkDuplicatedOk = checkDuplicated.getSeijo();
+		final Integer checkDuplicatedOk = checkDuplicated.getData();
 		if (checkDuplicatedOk >= 1) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
 			this.setResponseError(ProjectConstants.MESSAGE_STUDENT_NAME_DUPLICATED);
@@ -129,7 +129,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
-		this.setResponseJsonData(infoUpdation.getSeijo());
+		this.setResponseJsonData(infoUpdation.getData());
 		return NONE;
 	}
 
@@ -146,7 +146,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!preLoginUpdation.isOk()) {
 			throw preLoginUpdation.getErr();
 		}
-		this.setResponseJsonData(preLoginUpdation.getSeijo());
+		this.setResponseJsonData(preLoginUpdation.getData());
 		return NONE;
 	}
 
@@ -163,7 +163,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!studentInfoById.isOk()) {
 			throw studentInfoById.getErr();
 		}
-		final StudentDto studentDto = studentInfoById.getSeijo();
+		final StudentDto studentDto = studentInfoById.getData();
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EDITED_INFO, studentDto);
 		return SUCCESS;
 	}

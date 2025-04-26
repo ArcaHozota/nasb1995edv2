@@ -108,7 +108,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
-		final Integer checkDuplicatedOk = checkDuplicated.getSeijo();
+		final Integer checkDuplicatedOk = checkDuplicated.getData();
 		if (checkDuplicatedOk >= 1) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
 			this.setResponseError(ProjectConstants.MESSAGE_HYMN_NAME_DUPLICATED);
@@ -130,7 +130,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
-		final Integer checkDuplicatedOk = checkDuplicated.getSeijo();
+		final Integer checkDuplicatedOk = checkDuplicated.getData();
 		if (checkDuplicatedOk >= 1) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
 			this.setResponseError(ProjectConstants.MESSAGE_HYMN_NAME_DUPLICATED);
@@ -152,7 +152,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnsRandomFive.isOk()) {
 			throw hymnsRandomFive.getErr();
 		}
-		final List<HymnDto> hymnDtos = hymnsRandomFive.getSeijo();
+		final List<HymnDto> hymnDtos = hymnsRandomFive.getData();
 		this.setResponseJsonData(JSON.toJSON(hymnDtos));
 		return NONE;
 	}
@@ -187,7 +187,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		this.setResponseJsonData(JSON.toJSON(hymnInfoById.getSeijo()));
+		this.setResponseJsonData(JSON.toJSON(hymnInfoById.getData()));
 		return NONE;
 	}
 
@@ -203,7 +203,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!infoDeletion.isOk()) {
 			throw infoDeletion.getErr();
 		}
-		this.setResponseJsonData(infoDeletion.getSeijo());
+		this.setResponseJsonData(infoDeletion.getData());
 		return NONE;
 	}
 
@@ -218,7 +218,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
-		final Integer pageNum = infoStorage.getSeijo();
+		final Integer pageNum = infoStorage.getData();
 		this.setResponseJsonData(pageNum);
 		return NONE;
 	}
@@ -234,7 +234,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
-		this.setResponseJsonData(infoUpdation.getSeijo());
+		this.setResponseJsonData(infoUpdation.getData());
 		return NONE;
 	}
 
@@ -250,7 +250,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!kanumiList.isOk()) {
 			throw kanumiList.getErr();
 		}
-		final List<HymnDto> hymnDtos = kanumiList.getSeijo();
+		final List<HymnDto> hymnDtos = kanumiList.getData();
 		this.setResponseJsonData(JSON.toJSON(hymnDtos));
 		return NONE;
 	}
@@ -269,7 +269,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnsByKeyword.isOk()) {
 			throw hymnsByKeyword.getErr();
 		}
-		final Pagination<HymnDto> pagination = hymnsByKeyword.getSeijo();
+		final Pagination<HymnDto> pagination = hymnsByKeyword.getData();
 		this.setResponseJsonData(JSON.toJSON(pagination));
 		return NONE;
 	}
@@ -299,7 +299,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		final HymnDto hymnInfoByIdOk = hymnInfoById.getSeijo();
+		final HymnDto hymnInfoByIdOk = hymnInfoById.getData();
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EDITED_INFO, hymnInfoByIdOk);
 		return SUCCESS;
 	}

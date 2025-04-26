@@ -34,7 +34,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class SpringSecurityConfiguration {
 
 	/**
