@@ -1,6 +1,9 @@
 package app.preach.gospel.config;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -31,6 +34,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpringSecurityConfiguration {
 
 	/**
@@ -43,14 +47,12 @@ public class SpringSecurityConfiguration {
 	/**
 	 * ログインサービス
 	 */
-	@Resource
-	private ProjectUserDetailsService projectUserDetailsService;
+	private final ProjectUserDetailsService projectUserDetailsService;
 
 	/**
 	 * ログインエラー処理
 	 */
-	@Resource
-	private ProjectAuthenticationEntryPoint projectAuthenticationEntryPoint;
+	private final ProjectAuthenticationEntryPoint projectAuthenticationEntryPoint;
 
 	@Bean
 	@Order(1)
