@@ -40,19 +40,21 @@
 					        </div>
 						</form>
 						<form id="inputForm2">
-							<div class="form-group row">
-								<label for="phraseTextEnInput" class="col-md-1 col-form-label text-end">内容</label>
-								<div class="col-md-11" style="height: 12vh;">
-									<textarea class="form-control" style="height: 100%" id="phraseTextEnInput"></textarea>
-								</div>
-							</div>
-							<div class="form-group row">
-								<label for="phraseTextJpInput" class="col-md-1 col-form-label text-end">内容(日本語)</label>
-								<div class="col-md-11" style="height: 12vh;">
-									<textarea class="form-control" style="height: 100%" id="phraseTextJpInput"></textarea>
-								</div>
-							</div>
-						</form>
+                            <div class="form-group row" style="margin-top: 2.2rem;">
+                                <label for="phraseTextEnInput" class="col-md-1 col-form-label text-end">英語文書</label>
+                                <div class="col-md-11" style="height: 12vh;">
+                                    <textarea class="form-control" style="height: 100%"
+                                        id="phraseTextEnInput"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-top: 0.4rem;">
+                                <label for="phraseTextJpInput" class="col-md-1 col-form-label text-end">日本語文書</label>
+                                <div class="col-md-11" style="height: 12vh;">
+                                    <textarea class="form-control" style="height: 100%"
+                                        id="phraseTextJpInput"></textarea>
+                                </div>
+                            </div>
+                        </form>
 					</div>
 				</div>
 			</div>

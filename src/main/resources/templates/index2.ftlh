@@ -53,7 +53,7 @@
 		</div>
 	</nav>
 	<div class="col-sm-6 offset-sm-3 col-md-8 offset-md-2 main">
-		<div class="card border-burgundy" style="margin-top: 2rem;">
+		<div class="card border-burgundy" style="margin-top: 2.2rem;">
 			<div class="card-header text-bg-burgundy mb-3">
 				<h5 class="card-title" style="padding-top: 8px;font-weight: 500;">
 					<i class="fa-solid fa-cross"></i> 賛美歌一覧表
