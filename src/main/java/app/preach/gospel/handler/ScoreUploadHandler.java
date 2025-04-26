@@ -102,7 +102,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 			if (!scoreStorage.isOk()) {
 				throw scoreStorage.getErr();
 			}
-			this.setResponseJsonData(scoreStorage.getOk());
+			this.setResponseJsonData(scoreStorage.getSeijo());
 			return NONE;
 		} catch (final IOException e) {
 			this.setResponseError(e.getMessage());
@@ -132,7 +132,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		final HymnDto hymnDto = hymnInfoById.getOk();
+		final HymnDto hymnDto = hymnInfoById.getSeijo();
 		if (CoProjectUtils.isEqual(ProjectConstants.ATTRNAME_PDF, hymnDto.biko())) {
 			this.setContentType(MediaType.APPLICATION_PDF_VALUE);
 			this.setFileName(hymnDto.id() + CoProjectUtils.DOT.concat(hymnDto.biko()));
@@ -165,7 +165,7 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		final HymnDto hymnDto = hymnInfoById.getOk();
+		final HymnDto hymnDto = hymnInfoById.getSeijo();
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EDITED_INFO, hymnDto);
 		return SUCCESS;
 	}

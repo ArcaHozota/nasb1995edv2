@@ -1,5 +1,6 @@
 package app.preach.gospel.utils;
 
+import lombok.Data;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ import lombok.Getter;
  * @param <T> データ
  * @param <E> エラー
  */
-@Getter
+@Data
 public final class CoResult<T, E> {
 
 	/**
@@ -55,7 +56,7 @@ public final class CoResult<T, E> {
 	/**
 	 * 正常的なデータ
 	 */
-	private T ok;
+	private T seijo;
 
 	/**
 	 * エラー
@@ -66,45 +67,18 @@ public final class CoResult<T, E> {
 	 * 正常系あるかどうか -- GETTER -- 正常系あるかどうかを判断する。
 	 * 
 	 */
-	private boolean isOk;
+	private boolean ok;
 
 	/**
 	 * コンストラクタ
 	 *
-	 * @param ok   正常
-	 * @param err  エラー
-	 * @param isOk 正常系あるかどうか
+	 * @param seijo 正常
+	 * @param err   エラー
+	 * @param ok    正常系あるかどうか
 	 */
-	private CoResult(final T ok, final E err, final boolean isOk) {
-		this.ok = ok;
+	private CoResult(final T seijo, final E err, final boolean ok) {
+		this.seijo = seijo;
 		this.err = err;
-		this.isOk = isOk;
-	}
-
-	/**
-	 * setter of err
-	 *
-	 * @param err エラー
-	 */
-	private void setErr(final E err) {
-		this.err = err;
-	}
-
-	/**
-	 * setter of isOk
-	 *
-	 * @param isOk 正常
-	 */
-	private void setHandan(final boolean isOk) {
-		this.isOk = isOk;
-	}
-
-	/**
-	 * setter of ok
-	 *
-	 * @param ok 正常
-	 */
-	private void setOk(final T ok) {
 		this.ok = ok;
 	}
 
@@ -114,9 +88,9 @@ public final class CoResult<T, E> {
 	 * @param self 自分
 	 */
 	public void setSelf(final @NotNull CoResult<T, E> self) {
-		this.setOk(self.getOk());
+		this.setSeijo(self.getSeijo());
 		this.setErr(self.getErr());
-		this.setHandan(self.isOk());
+		this.setOk(self.isOk());
 	}
 
 }

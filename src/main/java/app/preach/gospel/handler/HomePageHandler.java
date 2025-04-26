@@ -58,7 +58,7 @@ public class HomePageHandler extends DefaultActionSupport implements ServletRequ
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
 		}
-		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getOk());
+		ActionContext.getContext().put(ProjectConstants.ATTRNAME_RECORDS, totalCounts.getSeijo());
 		return SUCCESS;
 	}
 

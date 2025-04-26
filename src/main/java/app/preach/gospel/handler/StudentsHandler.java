@@ -91,7 +91,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * アカウント重複チェック
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String checkDuplicated() throws Exception {
 		final CoResult<Integer, Exception> checkDuplicated = this.iStudentService.checkDuplicated(this.getId(),
@@ -99,7 +99,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
-		final Integer checkDuplicatedOk = checkDuplicated.getOk();
+		final Integer checkDuplicatedOk = checkDuplicated.getSeijo();
 		if (checkDuplicatedOk >= 1) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
 			this.setResponseError(ProjectConstants.MESSAGE_STUDENT_NAME_DUPLICATED);
@@ -122,14 +122,14 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * 奉仕者情報を更新する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String infoUpdation() throws Exception {
 		final CoResult<String, Exception> infoUpdation = this.iStudentService.infoUpdation(this.getStudentDto());
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
-		this.setResponseJsonData(infoUpdation.getOk());
+		this.setResponseJsonData(infoUpdation.getSeijo());
 		return NONE;
 	}
 
@@ -137,7 +137,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * ログイン時間記録
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String preLogin() throws Exception {
 		final CoResult<String, Exception> preLoginUpdation = this.iStudentService.preLoginUpdation(
@@ -146,7 +146,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!preLoginUpdation.isOk()) {
 			throw preLoginUpdation.getErr();
 		}
-		this.setResponseJsonData(preLoginUpdation.getOk());
+		this.setResponseJsonData(preLoginUpdation.getSeijo());
 		return NONE;
 	}
 
@@ -163,7 +163,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 		if (!studentInfoById.isOk()) {
 			throw studentInfoById.getErr();
 		}
-		final StudentDto studentDto = studentInfoById.getOk();
+		final StudentDto studentDto = studentInfoById.getSeijo();
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EDITED_INFO, studentDto);
 		return SUCCESS;
 	}

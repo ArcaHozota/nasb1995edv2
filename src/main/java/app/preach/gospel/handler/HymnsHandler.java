@@ -100,7 +100,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 歌の名称の重複性をチェックする
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String checkDuplicated() throws Exception {
 		final CoResult<Integer, Exception> checkDuplicated = this.iHymnService.checkDuplicated(this.getId(),
@@ -108,7 +108,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
-		final Integer checkDuplicatedOk = checkDuplicated.getOk();
+		final Integer checkDuplicatedOk = checkDuplicated.getSeijo();
 		if (checkDuplicatedOk >= 1) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
 			this.setResponseError(ProjectConstants.MESSAGE_HYMN_NAME_DUPLICATED);
@@ -122,7 +122,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 歌の名称の重複性をチェックする
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String checkDuplicated2() throws Exception {
 		final CoResult<Integer, Exception> checkDuplicated = this.iHymnService.checkDuplicated2(this.getId(),
@@ -130,7 +130,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!checkDuplicated.isOk()) {
 			throw checkDuplicated.getErr();
 		}
-		final Integer checkDuplicatedOk = checkDuplicated.getOk();
+		final Integer checkDuplicatedOk = checkDuplicated.getSeijo();
 		if (checkDuplicatedOk >= 1) {
 			ActionContext.getContext().getServletResponse().setStatus(HttpServletResponse.SC_FORBIDDEN);
 			this.setResponseError(ProjectConstants.MESSAGE_HYMN_NAME_DUPLICATED);
@@ -144,7 +144,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * ランダム五つを検索する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String commonRetrieve() throws Exception {
 		final String keyword = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_KEYWORD);
@@ -152,7 +152,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnsRandomFive.isOk()) {
 			throw hymnsRandomFive.getErr();
 		}
-		final List<HymnDto> hymnDtos = hymnsRandomFive.getOk();
+		final List<HymnDto> hymnDtos = hymnsRandomFive.getSeijo();
 		this.setResponseJsonData(JSON.toJSON(hymnDtos));
 		return NONE;
 	}
@@ -179,7 +179,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を取得する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String getInfoById() throws Exception {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
@@ -187,7 +187,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		this.setResponseJsonData(JSON.toJSON(hymnInfoById.getOk()));
+		this.setResponseJsonData(JSON.toJSON(hymnInfoById.getSeijo()));
 		return NONE;
 	}
 
@@ -195,7 +195,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を削除する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String infoDeletion() throws Exception {
 		final String deleteId = this.getServletRequest().getParameter("deleteId");
@@ -203,7 +203,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!infoDeletion.isOk()) {
 			throw infoDeletion.getErr();
 		}
-		this.setResponseJsonData(infoDeletion.getOk());
+		this.setResponseJsonData(infoDeletion.getSeijo());
 		return NONE;
 	}
 
@@ -211,14 +211,14 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を保存する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String infoStorage() throws Exception {
 		final CoResult<Integer, Exception> infoStorage = this.iHymnService.infoStorage(this.getHymnDto());
 		if (!infoStorage.isOk()) {
 			throw infoStorage.getErr();
 		}
-		final Integer pageNum = infoStorage.getOk();
+		final Integer pageNum = infoStorage.getSeijo();
 		this.setResponseJsonData(pageNum);
 		return NONE;
 	}
@@ -227,14 +227,14 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 賛美歌情報を更新する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String infoUpdation() throws Exception {
 		final CoResult<String, Exception> infoUpdation = this.iHymnService.infoUpdation(this.getHymnDto());
 		if (!infoUpdation.isOk()) {
 			throw infoUpdation.getErr();
 		}
-		this.setResponseJsonData(infoUpdation.getOk());
+		this.setResponseJsonData(infoUpdation.getSeijo());
 		return NONE;
 	}
 
@@ -242,7 +242,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 金海氏の検索を行う
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String kanumiRetrieve() throws Exception {
 		final String hymnId = this.getServletRequest().getParameter("hymnId");
@@ -250,7 +250,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!kanumiList.isOk()) {
 			throw kanumiList.getErr();
 		}
-		final List<HymnDto> hymnDtos = kanumiList.getOk();
+		final List<HymnDto> hymnDtos = kanumiList.getSeijo();
 		this.setResponseJsonData(JSON.toJSON(hymnDtos));
 		return NONE;
 	}
@@ -259,7 +259,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 情報一覧画面初期表示する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String pagination() throws Exception {
 		final String pageNum = this.getServletRequest().getParameter(ProjectConstants.ATTRNAME_PAGE_NUMBER);
@@ -269,7 +269,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnsByKeyword.isOk()) {
 			throw hymnsByKeyword.getErr();
 		}
-		final Pagination<HymnDto> pagination = hymnsByKeyword.getOk();
+		final Pagination<HymnDto> pagination = hymnsByKeyword.getSeijo();
 		this.setResponseJsonData(JSON.toJSON(pagination));
 		return NONE;
 	}
@@ -289,7 +289,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	 * 情報更新画面へ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String toEdition() throws Exception {
 		final String editId = this.getServletRequest().getParameter("editId");
@@ -299,7 +299,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!hymnInfoById.isOk()) {
 			throw hymnInfoById.getErr();
 		}
-		final HymnDto hymnInfoByIdOk = hymnInfoById.getOk();
+		final HymnDto hymnInfoByIdOk = hymnInfoById.getSeijo();
 		ActionContext.getContext().put(ProjectConstants.ATTRNAME_EDITED_INFO, hymnInfoByIdOk);
 		return SUCCESS;
 	}
