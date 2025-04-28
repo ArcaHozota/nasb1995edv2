@@ -154,7 +154,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * 情報更新画面へ移動する
 	 *
 	 * @return String
-	 * @throws Exception
+	 * @throws Exception 例外
 	 */
 	public String toEdition() throws Exception {
 		final String editId = this.getServletRequest().getParameter("editId");
