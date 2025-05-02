@@ -1,5 +1,5 @@
 $(document).ready(() => {
-    initialStudent();
+    // initialStudent();
 });
 $("#toStudentsPages").on("click", (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ $("#infoUpdateBtn").on("click", () => {
 });
 $("#restoreBtn").on("click", () => {
     formReset("#editForm");
-    initialStudent();
+    // initialStudent();
 });
 
 function studentsPutSuccessFunction(response) {

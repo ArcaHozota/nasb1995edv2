@@ -157,7 +157,7 @@ public class StudentsHandler extends DefaultActionSupport implements ServletRequ
 	 * @throws Exception 例外
 	 */
 	public String toEdition() throws Exception {
-		final String editId = this.getServletRequest().getParameter("editId");
+		final String editId = this.getServletRequest().getParameter("userId");
 		final CoResult<StudentDto, Exception> studentInfoById = this.iStudentService
 				.getStudentInfoById(Long.parseLong(editId));
 		if (!studentInfoById.isOk()) {
