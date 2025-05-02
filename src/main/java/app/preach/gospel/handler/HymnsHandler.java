@@ -192,6 +192,21 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 	}
 
 	/**
+	 * 歌のレコード数を取得する
+	 *
+	 * @return String
+	 * @throws Exception 例外
+	 */
+	public String getRecords() throws Exception {
+		final CoResult<Long, Exception> totalCounts = this.iHymnService.getTotalCounts();
+		if (!totalCounts.isOk()) {
+			throw totalCounts.getErr();
+		}
+		this.setResponseJsonData(totalCounts);
+		return NONE;
+	}
+
+	/**
 	 * 賛美歌情報を削除する
 	 *
 	 * @return String

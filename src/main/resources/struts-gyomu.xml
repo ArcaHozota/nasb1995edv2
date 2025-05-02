@@ -48,6 +48,12 @@
 				<param name="root">responseJsonData</param>
 			</result>
 		</action>
+		<action name="get-records"
+			class="app.preach.gospel.handler.HymnsHandler" method="getRecords">
+			<result name="none" type="json">
+				<param name="root">responseJsonData</param>
+			</result>
+		</action>
 		<action name="pagination"
 			class="app.preach.gospel.handler.HymnsHandler" method="pagination">
 			<result name="none" type="json">

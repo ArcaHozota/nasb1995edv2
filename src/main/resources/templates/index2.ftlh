@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Niconne&family=Noto+Sans+JP:wght@100..900&family=Noto+Serif+JP:wght@200..900&display=swap">
 	<style>
 		#indexTablehead,
-		#saraniSearchBtn,
+		#kanamiSearchBtn,
 		#tableBody {
 			font-family: "Noto Serif JP", serif;
 			font-weight: 600;
@@ -65,7 +65,7 @@
 						<p class="form-control" id="nameDisplay">賛美歌${totalRecords}曲レコード済み</p>
 			        </div>
 			        <div class="col-md-4" style="padding-left: 0px;">
-						<a id="saraniSearchBtn" class="btn btn-kanami" style="--clr: #006B3C;" type="button" href="#">
+						<a id="kanamiSearchBtn" class="btn btn-kanami" style="--clr: #006B3C;" type="button" href="#">
 							<span>&#x1D11E;海老闆の検索</span>
 						</a>
 			        </div>
