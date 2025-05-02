@@ -1,5 +1,5 @@
 $(document).ready(() => {
-	let loginMsg = $("#loginMsgContainer").val().trim();
+	let loginMsg = $("#torokuMsgContainer").val().trim();
 	if (loginMsg !== emptyString) {
 		layer.msg(loginMsg);
 	}

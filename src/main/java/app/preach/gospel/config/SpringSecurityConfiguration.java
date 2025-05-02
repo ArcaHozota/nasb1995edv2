@@ -27,7 +27,7 @@ import lombok.extern.log4j.Log4j2;
  * SpringSecurity配置クラス
  *
  * @author ArkamaHozota
- * @version 7.19
+ * @since 1.00beta
  */
 @Log4j2
 @Configuration

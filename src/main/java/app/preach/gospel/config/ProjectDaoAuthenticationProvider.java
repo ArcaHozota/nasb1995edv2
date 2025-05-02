@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
  * ログイン認証サービス
  *
  * @author ArkamaHozota
- * @version 7.19
+ * @since 1.00beta
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public final class ProjectDaoAuthenticationProvider extends DaoAuthenticationProvider {
