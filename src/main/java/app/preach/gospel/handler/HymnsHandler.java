@@ -202,7 +202,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
 		if (!totalCounts.isOk()) {
 			throw totalCounts.getErr();
 		}
-		this.setResponseJsonData(totalCounts);
+		this.setResponseJsonData(totalCounts.getData());
 		return NONE;
 	}
 
