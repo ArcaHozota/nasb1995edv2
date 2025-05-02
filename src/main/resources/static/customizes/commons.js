@@ -35,7 +35,7 @@ $(document).ready(() => {
             ]
         }
     ];
-    $('#mainmenuTree').bstreeview({
+    $("#mainmenuTree").bstreeview({
         data: treeData,
         expandIcon: 'fa fa-angle-down fa-fw',
         collapseIcon: 'fa fa-angle-right fa-fw',
@@ -210,5 +210,5 @@ function usernameInitial() {
             let message = trimQuote(xhr.responseText);
             layer.msg(message);
         }
-    })
+    });
 }

@@ -28,6 +28,10 @@
 		a.effect-shine {
 			font-family: "Niconne", serif;
 		}
+		
+		.navbar {
+			background-color: #000000 !important;
+		}
 	</style>
 	<script type="text/javascript" src="/static/jquery/jquery-3.7.1.min.js"></script>
 	<script type="text/javascript" src="/static/bootstrap/js/bootstrap.bundle.min.js"></script>

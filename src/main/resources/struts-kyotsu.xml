@@ -43,7 +43,7 @@
 		namespace="/category">
 		<action name="login"
 			class="app.preach.gospel.handler.CategoryHandler" method="login">
-			<result name="login" type="freemarker">/templates/logintoroku.ftlh</result>
+			<result name="login" type="freemarker">/templates/login-toroku.ftlh</result>
 		</action>
 		<action name="login-with-error"
 			class="app.preach.gospel.handler.CategoryHandler"

@@ -3,9 +3,9 @@ $(document).ready(() => {
     $toTemporary.css('color', '#006b3c');
     $toTemporary.addClass('animate__animated animate__flipInY');
 });
-$("#bookInput").on("change", () => {
+$("#bookInput").on("change", (e) => {
     $("#chapterInput").empty();
-    let bookId = $(this).val();
+    let bookId = $(e.currentTarget).val();
     $.ajax({
         url: '/books/get-chapters',
         data: 'bookId=' + bookId,

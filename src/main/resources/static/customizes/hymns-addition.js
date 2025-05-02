@@ -37,11 +37,11 @@ $("#infoStorageBtn").on("click", () => {
         projectAjaxModify('/hymns/info-storage', POST, postData, hymnsPostSuccessFunction);
     }
 });
-$("#nameJpEdit").on("change", () => {
-    checkHymnName(this, $("#idContainer").val());
+$("#nameJpEdit").on("change", (e) => {
+    checkHymnName(e.currentTarget, $("#idContainer").val());
 });
-$("#nameKrEdit").on("change", () => {
-    checkHymnName2(this, $("#idContainer").val());
+$("#nameKrEdit").on("change", (e) => {
+    checkHymnName2(e.currentTarget, $("#idContainer").val());
 });
 $("#infoUpdateBtn").on("click", () => {
     let inputArrays = ["#nameJpEdit", "#nameKrEdit", "#linkEdit", "#serifEdit"];

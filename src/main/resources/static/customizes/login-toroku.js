@@ -14,14 +14,14 @@ $(document).ready(() => {
         }
     });
     let flag = 0;
-    $("#eyeIcons").on("click", () => {
+    $("#eyeIcons").on("click", (e) => {
         if (flag === 0) {
             $("#passwordIpt").attr('type', 'text');
-            $(this).attr('name', 'eye-off-outline');
+            $(e.currentTarget).attr('name', 'eye-off-outline');
             flag = 1;
         } else {
             $("#passwordIpt").attr('type', 'password');
-            $(this).attr('name', 'eye-outline');
+            $(e.currentTarget).attr('name', 'eye-outline');
             flag = 0;
         }
     });
