@@ -8,7 +8,6 @@
 	<meta name="_csrf_header" content="${_csrf.headerName}">
 	<meta name="_csrf_token" content="${_csrf.token}">
 	<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/static/ztree/metroStyle.css">
 	<link rel="stylesheet" type="text/css" href="/static/bstreeview/css/bstreeview.min.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/customize.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
