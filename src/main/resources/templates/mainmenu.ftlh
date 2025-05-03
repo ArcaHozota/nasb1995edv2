@@ -22,9 +22,9 @@
 			<#include "include-sidebar.ftlh">
 			<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
 				<#if loginMsg?exists>
-					<input type="hidden" value="${loginMsg}" id="loginMsgContainer">
+					<input type="hidden" value="${loginMsg}" id="torokuMsgContainer">
 				<#else>
-					<input type="hidden" id="loginMsgContainer">
+					<input type="hidden" id="torokuMsgContainer">
 				</#if>
 				<h1 class="page-header" style="color: #7F0020; margin: 10px 0 0 0;">メインメニュー</h1>
 				<div class="row">
