@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -35,80 +36,81 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class BookServiceImpl implements IBookService {
 
-	/**
-	 * 聖書書別リポジトリ
-	 */
-	private final BookRepository bookRepository;
+    /**
+     * 聖書書別リポジトリ
+     */
+    private final BookRepository bookRepository;
 
-	/**
-	 * 聖書章節リポジトリ
-	 */
-	private final ChapterRepository chapterRepository;
+    /**
+     * 聖書章節リポジトリ
+     */
+    private final ChapterRepository chapterRepository;
 
-	/**
-	 * 聖書節別リポジトリ
-	 */
-	private final PhraseRepository phraseRepository;
+    /**
+     * 聖書節別リポジトリ
+     */
+    private final PhraseRepository phraseRepository;
 
-	@Override
-	public CoResult<List<BookDto>, Exception> getBooks() {
-		final Sort sort = Sort.by(Direction.ASC, "id");
-		try {
-			final List<BookDto> bookDtos = this.bookRepository.findAll(sort).stream()
-					.map(item -> new BookDto(item.getId().toString(), item.getName(), item.getNameJp())).toList();
-			return CoResult.ok(bookDtos);
-		} catch (final Exception e) {
-			return CoResult.err(e);
-		}
-	}
+    @Override
+    public CoResult<List<BookDto>, Exception> getBooks() {
+        final Sort sort = Sort.by(Direction.ASC, "id");
+        try {
+            final List<BookDto> bookDtos = this.bookRepository.findAll(sort).stream()
+                    .map(item -> new BookDto(item.getId().toString(), item.getName(), item.getNameJp())).toList();
+            return CoResult.ok(bookDtos);
+        } catch (final Exception e) {
+            return CoResult.err(e);
+        }
+    }
 
-	@Override
-	public CoResult<List<ChapterDto>, Exception> getChaptersByBookId(final String id) {
-		try {
-			final CoResult<List<ChapterDto>, Exception> result = CoResult.getInstance();
-			this.bookRepository
-					.findByIdWithChapters(CoProjectUtils.isDigital(id) ? Short.parseShort(id) : Short.parseShort("1"))
-					.ifPresentOrElse(val -> {
-						final List<ChapterDto> chapterDtos = val.getChapters().stream()
-								.sorted(Comparator.comparingInt(Chapter::getId))
-								.map(item -> new ChapterDto(item.getId().toString(), item.getName(), item.getNameJp(),
-										item.getBookId().toString()))
-								.toList();
-						result.setSelf(CoResult.ok(chapterDtos));
-					}, () -> result
-							.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_BOOK_NOT_FOUND))));
-			return result;
-		} catch (final Exception e) {
-			return CoResult.err(e);
-		}
-	}
+    @Override
+    public CoResult<List<ChapterDto>, Exception> getChaptersByBookId(final String id) {
+        try {
+            final CoResult<List<ChapterDto>, Exception> result = CoResult.getInstance();
+            this.bookRepository
+                    .findByIdWithChapters(CoProjectUtils.isDigital(id) ? Short.valueOf(id) : Short.valueOf("1"))
+                    .ifPresentOrElse(val -> {
+                        final List<ChapterDto> chapterDtos = val.getChapters().stream()
+                                .sorted(Comparator.comparingInt(Chapter::getId))
+                                .map(item -> new ChapterDto(item.getId().toString(), item.getName(), item.getNameJp(),
+                                item.getBookId().toString()))
+                                .toList();
+                        result.setSelf(CoResult.ok(chapterDtos));
+                    }, () -> result
+                    .setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_BOOK_NOT_FOUND))));
+            return result;
+        } catch (final NumberFormatException | DataAccessException e) {
+            return CoResult.err(e);
+        }
+    }
 
-	@Override
-	public @NotNull CoResult<String, Exception> infoStorage(final @NotNull PhraseDto phraseDto) {
-		final long id = Long.parseLong(phraseDto.id());
-		final Integer chapterId = Integer.parseInt(phraseDto.chapterId());
-		final CoResult<String, Exception> result = CoResult.getInstance();
-		this.chapterRepository.findById(chapterId).ifPresentOrElse(val -> {
-			final Phrase phrase = new Phrase();
-			CoBeanUtils.copyNullableProperties(phraseDto, phrase);
-			phrase.setId(chapterId * 1000 + id);
-			phrase.setName(val.getName().concat(CoProjectUtils.HANKAKU_COLON).concat(phraseDto.id()));
-			phrase.setChapterId(chapterId);
-			final String textEn = phrase.getTextEn();
-			if (textEn.endsWith(CoProjectUtils.HANKAKU_SHARP)) {
-				phrase.setChangeLine(Boolean.TRUE);
-				phrase.setTextEn(textEn.replace(CoProjectUtils.HANKAKU_SHARP, CoProjectUtils.EMPTY_STRING));
-			} else {
-				phrase.setChangeLine(Boolean.FALSE);
-			}
-			try {
-				this.phraseRepository.saveAndFlush(phrase);
-				result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_BOOKS));
-			} catch (final Exception e) {
-				result.setSelf(CoResult.err(e));
-			}
-		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_CHAPTER_NOT_FOUND))));
-		return result;
-	}
+    @Override
+    public @NotNull
+    CoResult<String, Exception> infoStorage(final @NotNull PhraseDto phraseDto) {
+        final long id = Long.parseLong(phraseDto.id());
+        final Integer chapterId = Integer.valueOf(phraseDto.chapterId());
+        final CoResult<String, Exception> result = CoResult.getInstance();
+        this.chapterRepository.findById(chapterId).ifPresentOrElse(val -> {
+            final Phrase phrase = new Phrase();
+            CoBeanUtils.copyNullableProperties(phraseDto, phrase);
+            phrase.setId(chapterId * 1000 + id);
+            phrase.setName(val.getName().concat(CoProjectUtils.HANKAKU_COLON).concat(phraseDto.id()));
+            phrase.setChapterId(chapterId);
+            final String textEn = phrase.getTextEn();
+            if (textEn.endsWith(CoProjectUtils.HANKAKU_SHARP)) {
+                phrase.setChangeLine(Boolean.TRUE);
+                phrase.setTextEn(textEn.replace(CoProjectUtils.HANKAKU_SHARP, CoProjectUtils.EMPTY_STRING));
+            } else {
+                phrase.setChangeLine(Boolean.FALSE);
+            }
+            try {
+                this.phraseRepository.saveAndFlush(phrase);
+                result.setSelf(CoResult.ok(ProjectConstants.MESSAGE_STRING_BOOKS));
+            } catch (final Exception e) {
+                result.setSelf(CoResult.err(e));
+            }
+        }, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_CHAPTER_NOT_FOUND))));
+        return result;
+    }
 
 }

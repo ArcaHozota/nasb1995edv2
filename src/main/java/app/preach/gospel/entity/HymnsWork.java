@@ -36,84 +36,85 @@ import lombok.Setter;
 @Table(name = "hymns_work")
 public final class HymnsWork implements Serializable {
 
-	@Serial
-	private static final long serialVersionUID = 3956143435944525913L;
+    @Serial
+    private static final long serialVersionUID = 3956143435944525913L;
 
-	/**
-	 * ID
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    /**
+     * ID
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	/**
-	 * ワークID
-	 */
-	@Column(nullable = false)
-	private Long workId;
+    /**
+     * ワークID
+     */
+    @Column(nullable = false)
+    private Long workId;
 
-	/**
-	 * 楽譜
-	 */
-	@Column(columnDefinition = "bytea")
-	private byte[] score;
+    /**
+     * 楽譜
+     */
+    @Column(columnDefinition = "bytea")
+    private byte[] score;
 
-	/**
-	 * 更新時間
-	 */
-	@Version
-	@Column(nullable = false)
-	private OffsetDateTime updatedTime;
+    /**
+     * 更新時間
+     */
+    @Version
+    @Column(nullable = false)
+    private OffsetDateTime updatedTime;
 
-	/**
-	 * 日本語名称
-	 */
-	@Column(name = "nameJpRational", length = 120)
-	private String nameJpRa;
+    /**
+     * 日本語名称
+     */
+    @Column(name = "nameJpRational", length = 120)
+    private String nameJpRa;
 
-	/**
-	 * 備考
-	 */
-	@Column(length = 10)
-	private String biko;
+    /**
+     * 備考
+     */
+    @Column(length = 15)
+    private String biko;
 
-	/**
-	 * 外部キー
-	 */
-	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "workId", nullable = false, insertable = false, updatable = false)
-	private Hymn hymn;
+    /**
+     * 外部キー
+     */
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "workId", nullable = false, insertable = false, updatable = false)
+    private Hymn hymn;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof final HymnsWork other)) {
-			return false;
-		}
-		return Objects.equals(this.biko, other.biko) && Objects.equals(this.hymn, other.hymn)
-				&& Objects.equals(this.id, other.id) && Objects.equals(this.nameJpRa, other.nameJpRa)
-				&& Arrays.equals(this.score, other.score) && Objects.equals(this.updatedTime, other.updatedTime)
-				&& Objects.equals(this.workId, other.workId);
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof final HymnsWork other)) {
+            return false;
+        }
+        return Objects.equals(this.biko, other.biko) && Objects.equals(this.hymn, other.hymn)
+                && Objects.equals(this.id, other.id) && Objects.equals(this.nameJpRa, other.nameJpRa)
+                && Arrays.equals(this.score, other.score) && Objects.equals(this.updatedTime, other.updatedTime)
+                && Objects.equals(this.workId, other.workId);
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(this.score);
-		result = prime * result
-				+ Objects.hash(this.biko, this.hymn, this.id, this.nameJpRa, this.updatedTime, this.workId);
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(this.score);
+        result = prime * result
+                + Objects.hash(this.biko, this.hymn, this.id, this.nameJpRa, this.updatedTime, this.workId);
+        return result;
+    }
 
-	@Contract(pure = true)
-	@Override
-	public @NotNull String toString() {
-		return "HymnsWork [id=" + this.id + ", workId=" + this.workId + ", score=" + Arrays.toString(this.score)
-				+ ", updatedTime=" + this.updatedTime + ", nameJpRa=" + this.nameJpRa + ", biko=" + this.biko
-				+ ", hymn=" + this.hymn + "]";
-	}
+    @Contract(pure = true)
+    @Override
+    public @NotNull
+    String toString() {
+        return "HymnsWork [id=" + this.id + ", workId=" + this.workId + ", score=" + Arrays.toString(this.score)
+                + ", updatedTime=" + this.updatedTime + ", nameJpRa=" + this.nameJpRa + ", biko=" + this.biko
+                + ", hymn=" + this.hymn + "]";
+    }
 
 }
