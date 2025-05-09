@@ -12,7 +12,6 @@ import org.apache.struts2.action.ServletRequestAware;
 import org.apache.struts2.dispatcher.DefaultActionSupport;
 import org.hibernate.HibernateError;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -133,19 +132,13 @@ public class ScoreUploadHandler extends DefaultActionSupport implements ServletR
             throw hymnInfoById.getErr();
         }
         final HymnDto hymnDto = hymnInfoById.getData();
-        if (CoProjectUtils.isEqual(ProjectConstants.ATTRNAME_PDF, hymnDto.biko())) {
-            this.setContentType(MediaType.APPLICATION_PDF_VALUE);
-            this.setFileName(hymnDto.id() + CoProjectUtils.DOT.concat(hymnDto.biko()));
-
+        final String biko = hymnDto.biko();
+        if (CoProjectUtils.isNotEmpty(biko)) {
+            final int indexOf = biko.indexOf(CoProjectUtils.SLASH) + 1;
+            this.setContentType(biko);
+            this.setFileName(hymnDto.id() + CoProjectUtils.DOT.concat(biko.substring(indexOf)));
         } else {
-            final String biko = hymnDto.biko();
-            if (CoProjectUtils.isNotEmpty(biko)) {
-                final int indexOf = biko.indexOf(CoProjectUtils.SLASH) + 1;
-                this.setContentType(biko);
-                this.setFileName(hymnDto.id() + CoProjectUtils.DOT.concat(biko.substring(indexOf)));
-            } else {
-                throw new HibernateError(ProjectConstants.MESSAGE_STRING_FATAL_ERROR);
-            }
+            throw new HibernateError(ProjectConstants.MESSAGE_STRING_FATAL_ERROR);
         }
         this.setFileData(hymnDto.score());
         return SUCCESS;
