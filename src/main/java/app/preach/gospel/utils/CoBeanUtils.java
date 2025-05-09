@@ -22,35 +22,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CoBeanUtils extends BeanUtils {
 
-	/**
-	 * NULLではないプロパティだけコピーする
-	 *
-	 * @param source コピー元
-	 * @param target コピー先
-	 * @throws BeansException 例外
-	 */
-	public static void copyNullableProperties(final Object source, final Object target) throws BeansException {
-		BeanUtils.copyProperties(source, target, CoBeanUtils.getNullProperties(source));
-	}
+    /**
+     * NULLではないプロパティだけコピーする
+     *
+     * @param source コピー元
+     * @param target コピー先
+     * @throws BeansException 例外
+     */
+    public static void copyNullableProperties(final Object source, final Object target) throws BeansException {
+        BeanUtils.copyProperties(source, target, CoBeanUtils.getNullProperties(source));
+    }
 
-	/**
-	 * コピー元のNULLプロパティを取得する
-	 *
-	 * @param source コピー元
-	 * @return NULLプロパティ
-	 */
-	private static String @NotNull [] getNullProperties(final Object source) {
-		final BeanWrapper beanWrapper = new BeanWrapperImpl(source);
-		final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
-		final Set<String> nullFields = new HashSet<>();
-		for (final PropertyDescriptor p : propertyDescriptors) {
-			final String name = p.getName();
-			final Object value = beanWrapper.getPropertyValue(name);
-			if (value == null) {
-				nullFields.add(name);
-			}
-		}
-		return nullFields.toArray(new String[0]);
-	}
+    /**
+     * コピー元のNULLプロパティを取得する
+     *
+     * @param source コピー元
+     * @return NULLプロパティ
+     */
+    private static String @NotNull [] getNullProperties(final Object source) {
+        final BeanWrapper beanWrapper = new BeanWrapperImpl(source);
+        final PropertyDescriptor[] propertyDescriptors = beanWrapper.getPropertyDescriptors();
+        final Set<String> nullFields = new HashSet<>();
+        for (final PropertyDescriptor p : propertyDescriptors) {
+            final String name = p.getName();
+            final Object value = beanWrapper.getPropertyValue(name);
+            if (value == null) {
+                nullFields.add(name);
+            }
+        }
+        return nullFields.toArray(String[]::new);
+    }
 
 }
