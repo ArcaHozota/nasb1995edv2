@@ -266,6 +266,7 @@ public class HymnsHandler extends DefaultActionSupport implements ServletRequest
         if (!kanumiList.isOk()) {
             throw kanumiList.getErr();
         }
+        Thread.sleep(150000);
         final List<HymnDto> hymnDtos = kanumiList.getData();
         this.setResponseJsonData(JSON.toJSON(hymnDtos));
         return NONE;

@@ -23,7 +23,7 @@ $kanumiSearchBtn.on("click", (e) => {
     } else {
         Swal.fire({
             title: "HINT",
-            text: "選択された曲に基づく歌詞が似てる三つの曲を検索します。検索が約1分間ぐらいかかりますので行ってよろしいでしょうか。",
+            text: "選択された曲に基づく歌詞が似てる三つの曲を検索します。検索が約3分間ぐらいかかりますので行ってよろしいでしょうか。",
             footer: '<p style="font-size: 13px;">※この画面及び検索は金海嶺氏のアイディアによって作成されたものです。</p>',
             icon: "info",
             showDenyButton: true,
@@ -44,7 +44,7 @@ $kanumiSearchBtn.on("click", (e) => {
                     let slashIndex = nameJp.indexOf('/');
                     $nameDisplay.text('検索完了---' + nameJp.substring(0, slashIndex));
                     $nameDisplay.attr('data-id-val', 0);
-                }, 66000);
+                }, 1650000);
             }
         });
     }
