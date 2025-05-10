@@ -44,7 +44,7 @@ $kanumiSearchBtn.on("click", (e) => {
                     let slashIndex = nameJp.indexOf('/');
                     $nameDisplay.text('検索完了---' + nameJp.substring(0, slashIndex));
                     $nameDisplay.attr('data-id-val', 0);
-                }, 1650000);
+                }, 165000);
             }
         });
     }
