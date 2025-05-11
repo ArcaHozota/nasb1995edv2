@@ -4,6 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
@@ -11,8 +14,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 役割権限連携エンティティ
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "role_auths")
+@Table(name = "role_auth")
 @IdClass(RoleAuthIds.class)
 public final class RoleAuthority implements Serializable {
 
@@ -48,10 +49,10 @@ public final class RoleAuthority implements Serializable {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof RoleAuthority other)) {
+		if (!(obj instanceof final RoleAuthority other)) {
 			return false;
 		}
-        return Objects.equals(this.authId, other.authId) && Objects.equals(this.roleId, other.roleId);
+		return Objects.equals(this.authId, other.authId) && Objects.equals(this.roleId, other.roleId);
 	}
 
 	@Override
