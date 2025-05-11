@@ -371,6 +371,7 @@ public final class HymnServiceImpl implements IHymnService {
 
 	@Override
 	public @NotNull CoResult<List<HymnDto>, Exception> getKanumiList(final Long id) {
+		log.info("金海氏の検索開始");
 		final Specification<Hymn> specification1 = (root, query, criteriaBuilder) -> criteriaBuilder
 				.equal(root.get("id"), id);
 		final CoResult<List<HymnDto>, Exception> result = CoResult.getInstance();
@@ -386,6 +387,7 @@ public final class HymnServiceImpl implements IHymnService {
 			hymnDtos.addAll(list);
 			result.setSelf(CoResult.ok(hymnDtos));
 		}, () -> result.setSelf(CoResult.err(new HibernateException(ProjectConstants.MESSAGE_HYMN_NOT_FOUND))));
+		log.info("金海氏の検索終了");
 		return result;
 	}
 
